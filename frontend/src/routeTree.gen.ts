@@ -11,79 +11,206 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as AboutImport } from './routes/about'
-import { Route as IndexImport } from './routes/index'
+import { Route as HomeLayoutImport } from './routes/_homeLayout'
+import { Route as HomeLayoutIndexImport } from './routes/_homeLayout/index'
+import { Route as HomeLayoutVacancyImport } from './routes/_homeLayout/vacancy'
+import { Route as HomeLayoutStudyProgramProfileImport } from './routes/_homeLayout/studyProgramProfile'
+import { Route as HomeLayoutStudentsAssociationInfoImport } from './routes/_homeLayout/studentsAssociationInfo'
+import { Route as HomeLayoutAnnouncementImport } from './routes/_homeLayout/announcement'
+import { Route as HomeLayoutAboutImport } from './routes/_homeLayout/about'
 
 // Create/Update Routes
 
-const AboutRoute = AboutImport.update({
-  id: '/about',
-  path: '/about',
+const HomeLayoutRoute = HomeLayoutImport.update({
+  id: '/_homeLayout',
   getParentRoute: () => rootRoute,
 } as any)
 
-const IndexRoute = IndexImport.update({
+const HomeLayoutIndexRoute = HomeLayoutIndexImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => HomeLayoutRoute,
+} as any)
+
+const HomeLayoutVacancyRoute = HomeLayoutVacancyImport.update({
+  id: '/vacancy',
+  path: '/vacancy',
+  getParentRoute: () => HomeLayoutRoute,
+} as any)
+
+const HomeLayoutStudyProgramProfileRoute =
+  HomeLayoutStudyProgramProfileImport.update({
+    id: '/studyProgramProfile',
+    path: '/studyProgramProfile',
+    getParentRoute: () => HomeLayoutRoute,
+  } as any)
+
+const HomeLayoutStudentsAssociationInfoRoute =
+  HomeLayoutStudentsAssociationInfoImport.update({
+    id: '/studentsAssociationInfo',
+    path: '/studentsAssociationInfo',
+    getParentRoute: () => HomeLayoutRoute,
+  } as any)
+
+const HomeLayoutAnnouncementRoute = HomeLayoutAnnouncementImport.update({
+  id: '/announcement',
+  path: '/announcement',
+  getParentRoute: () => HomeLayoutRoute,
+} as any)
+
+const HomeLayoutAboutRoute = HomeLayoutAboutImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => HomeLayoutRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexImport
+    '/_homeLayout': {
+      id: '/_homeLayout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof HomeLayoutImport
       parentRoute: typeof rootRoute
     }
-    '/about': {
-      id: '/about'
+    '/_homeLayout/about': {
+      id: '/_homeLayout/about'
       path: '/about'
       fullPath: '/about'
-      preLoaderRoute: typeof AboutImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof HomeLayoutAboutImport
+      parentRoute: typeof HomeLayoutImport
+    }
+    '/_homeLayout/announcement': {
+      id: '/_homeLayout/announcement'
+      path: '/announcement'
+      fullPath: '/announcement'
+      preLoaderRoute: typeof HomeLayoutAnnouncementImport
+      parentRoute: typeof HomeLayoutImport
+    }
+    '/_homeLayout/studentsAssociationInfo': {
+      id: '/_homeLayout/studentsAssociationInfo'
+      path: '/studentsAssociationInfo'
+      fullPath: '/studentsAssociationInfo'
+      preLoaderRoute: typeof HomeLayoutStudentsAssociationInfoImport
+      parentRoute: typeof HomeLayoutImport
+    }
+    '/_homeLayout/studyProgramProfile': {
+      id: '/_homeLayout/studyProgramProfile'
+      path: '/studyProgramProfile'
+      fullPath: '/studyProgramProfile'
+      preLoaderRoute: typeof HomeLayoutStudyProgramProfileImport
+      parentRoute: typeof HomeLayoutImport
+    }
+    '/_homeLayout/vacancy': {
+      id: '/_homeLayout/vacancy'
+      path: '/vacancy'
+      fullPath: '/vacancy'
+      preLoaderRoute: typeof HomeLayoutVacancyImport
+      parentRoute: typeof HomeLayoutImport
+    }
+    '/_homeLayout/': {
+      id: '/_homeLayout/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof HomeLayoutIndexImport
+      parentRoute: typeof HomeLayoutImport
     }
   }
 }
 
 // Create and export the route tree
 
+interface HomeLayoutRouteChildren {
+  HomeLayoutAboutRoute: typeof HomeLayoutAboutRoute
+  HomeLayoutAnnouncementRoute: typeof HomeLayoutAnnouncementRoute
+  HomeLayoutStudentsAssociationInfoRoute: typeof HomeLayoutStudentsAssociationInfoRoute
+  HomeLayoutStudyProgramProfileRoute: typeof HomeLayoutStudyProgramProfileRoute
+  HomeLayoutVacancyRoute: typeof HomeLayoutVacancyRoute
+  HomeLayoutIndexRoute: typeof HomeLayoutIndexRoute
+}
+
+const HomeLayoutRouteChildren: HomeLayoutRouteChildren = {
+  HomeLayoutAboutRoute: HomeLayoutAboutRoute,
+  HomeLayoutAnnouncementRoute: HomeLayoutAnnouncementRoute,
+  HomeLayoutStudentsAssociationInfoRoute:
+    HomeLayoutStudentsAssociationInfoRoute,
+  HomeLayoutStudyProgramProfileRoute: HomeLayoutStudyProgramProfileRoute,
+  HomeLayoutVacancyRoute: HomeLayoutVacancyRoute,
+  HomeLayoutIndexRoute: HomeLayoutIndexRoute,
+}
+
+const HomeLayoutRouteWithChildren = HomeLayoutRoute._addFileChildren(
+  HomeLayoutRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '': typeof HomeLayoutRouteWithChildren
+  '/about': typeof HomeLayoutAboutRoute
+  '/announcement': typeof HomeLayoutAnnouncementRoute
+  '/studentsAssociationInfo': typeof HomeLayoutStudentsAssociationInfoRoute
+  '/studyProgramProfile': typeof HomeLayoutStudyProgramProfileRoute
+  '/vacancy': typeof HomeLayoutVacancyRoute
+  '/': typeof HomeLayoutIndexRoute
 }
 
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/about': typeof HomeLayoutAboutRoute
+  '/announcement': typeof HomeLayoutAnnouncementRoute
+  '/studentsAssociationInfo': typeof HomeLayoutStudentsAssociationInfoRoute
+  '/studyProgramProfile': typeof HomeLayoutStudyProgramProfileRoute
+  '/vacancy': typeof HomeLayoutVacancyRoute
+  '/': typeof HomeLayoutIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/_homeLayout': typeof HomeLayoutRouteWithChildren
+  '/_homeLayout/about': typeof HomeLayoutAboutRoute
+  '/_homeLayout/announcement': typeof HomeLayoutAnnouncementRoute
+  '/_homeLayout/studentsAssociationInfo': typeof HomeLayoutStudentsAssociationInfoRoute
+  '/_homeLayout/studyProgramProfile': typeof HomeLayoutStudyProgramProfileRoute
+  '/_homeLayout/vacancy': typeof HomeLayoutVacancyRoute
+  '/_homeLayout/': typeof HomeLayoutIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about'
+  fullPaths:
+    | ''
+    | '/about'
+    | '/announcement'
+    | '/studentsAssociationInfo'
+    | '/studyProgramProfile'
+    | '/vacancy'
+    | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about'
-  id: '__root__' | '/' | '/about'
+  to:
+    | '/about'
+    | '/announcement'
+    | '/studentsAssociationInfo'
+    | '/studyProgramProfile'
+    | '/vacancy'
+    | '/'
+  id:
+    | '__root__'
+    | '/_homeLayout'
+    | '/_homeLayout/about'
+    | '/_homeLayout/announcement'
+    | '/_homeLayout/studentsAssociationInfo'
+    | '/_homeLayout/studyProgramProfile'
+    | '/_homeLayout/vacancy'
+    | '/_homeLayout/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
+  HomeLayoutRoute: typeof HomeLayoutRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
+  HomeLayoutRoute: HomeLayoutRouteWithChildren,
 }
 
 export const routeTree = rootRoute
@@ -96,15 +223,43 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/",
-        "/about"
+        "/_homeLayout"
       ]
     },
-    "/": {
-      "filePath": "index.tsx"
+    "/_homeLayout": {
+      "filePath": "_homeLayout.tsx",
+      "children": [
+        "/_homeLayout/about",
+        "/_homeLayout/announcement",
+        "/_homeLayout/studentsAssociationInfo",
+        "/_homeLayout/studyProgramProfile",
+        "/_homeLayout/vacancy",
+        "/_homeLayout/"
+      ]
     },
-    "/about": {
-      "filePath": "about.tsx"
+    "/_homeLayout/about": {
+      "filePath": "_homeLayout/about.tsx",
+      "parent": "/_homeLayout"
+    },
+    "/_homeLayout/announcement": {
+      "filePath": "_homeLayout/announcement.tsx",
+      "parent": "/_homeLayout"
+    },
+    "/_homeLayout/studentsAssociationInfo": {
+      "filePath": "_homeLayout/studentsAssociationInfo.tsx",
+      "parent": "/_homeLayout"
+    },
+    "/_homeLayout/studyProgramProfile": {
+      "filePath": "_homeLayout/studyProgramProfile.tsx",
+      "parent": "/_homeLayout"
+    },
+    "/_homeLayout/vacancy": {
+      "filePath": "_homeLayout/vacancy.tsx",
+      "parent": "/_homeLayout"
+    },
+    "/_homeLayout/": {
+      "filePath": "_homeLayout/index.tsx",
+      "parent": "/_homeLayout"
     }
   }
 }
