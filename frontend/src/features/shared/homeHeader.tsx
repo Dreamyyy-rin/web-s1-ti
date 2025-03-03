@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { BaseHeader } from "@/components/ui/header/base-header";
+import { BaseHeader } from "@/components/ui/base-header";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -25,7 +25,6 @@ export function HomeHeader() {
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
-           
           </NavigationMenuList>
         </NavigationMenu>
         <NavigationMenu className="me-auto">
@@ -69,14 +68,20 @@ export function HomeHeader() {
               </li> */}
                   <Link to="/announcement">
                     <NavigationMenuLink
-                      className={cn(navigationMenuTriggerStyle(), "w-full justify-start")}
+                      className={cn(
+                        navigationMenuTriggerStyle(),
+                        "w-full justify-start",
+                      )}
                     >
                       Pengumuman
                     </NavigationMenuLink>
                   </Link>
                   <Link to="/vacancy">
                     <NavigationMenuLink
-                      className={cn(navigationMenuTriggerStyle(), "w-full justify-start")}
+                      className={cn(
+                        navigationMenuTriggerStyle(),
+                        "w-full justify-start",
+                      )}
                     >
                       Lowongan Asisten Dosen
                     </NavigationMenuLink>
@@ -119,21 +124,30 @@ export function HomeHeader() {
               </li> */}
                   <Link to="/about">
                     <NavigationMenuLink
-                      className={cn(navigationMenuTriggerStyle(), "w-full justify-start")}
+                      className={cn(
+                        navigationMenuTriggerStyle(),
+                        "w-full justify-start",
+                      )}
                     >
                       Tentang Kami
                     </NavigationMenuLink>
                   </Link>
                   <Link to="/studyProgramProfile">
                     <NavigationMenuLink
-                      className={cn(navigationMenuTriggerStyle(), "w-full justify-start")}
+                      className={cn(
+                        navigationMenuTriggerStyle(),
+                        "w-full justify-start",
+                      )}
                     >
                       Profil Program Studi
                     </NavigationMenuLink>
                   </Link>
                   <Link to="/studentsAssociationInfo">
                     <NavigationMenuLink
-                      className={cn(navigationMenuTriggerStyle(), "w-full justify-start")}
+                      className={cn(
+                        navigationMenuTriggerStyle(),
+                        "w-full justify-start",
+                      )}
                     >
                       Profil Himpunan Mahasiswa
                     </NavigationMenuLink>
@@ -155,7 +169,7 @@ export function HomeHeader() {
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
-          <Button>Login</Button>
+        <Button>Login</Button>
       </div>
     </BaseHeader>
   );

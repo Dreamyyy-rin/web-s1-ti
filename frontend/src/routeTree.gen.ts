@@ -13,6 +13,8 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as HomeLayoutImport } from './routes/_homeLayout'
 import { Route as HomeLayoutIndexImport } from './routes/_homeLayout/index'
+import { Route as AuthRegisterImport } from './routes/auth/register'
+import { Route as AuthLoginImport } from './routes/auth/login'
 import { Route as HomeLayoutVacancyImport } from './routes/_homeLayout/vacancy'
 import { Route as HomeLayoutStudyProgramProfileImport } from './routes/_homeLayout/studyProgramProfile'
 import { Route as HomeLayoutStudentsAssociationInfoImport } from './routes/_homeLayout/studentsAssociationInfo'
@@ -30,6 +32,18 @@ const HomeLayoutIndexRoute = HomeLayoutIndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => HomeLayoutRoute,
+} as any)
+
+const AuthRegisterRoute = AuthRegisterImport.update({
+  id: '/auth/register',
+  path: '/auth/register',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthLoginRoute = AuthLoginImport.update({
+  id: '/auth/login',
+  path: '/auth/login',
+  getParentRoute: () => rootRoute,
 } as any)
 
 const HomeLayoutVacancyRoute = HomeLayoutVacancyImport.update({
@@ -110,6 +124,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HomeLayoutVacancyImport
       parentRoute: typeof HomeLayoutImport
     }
+    '/auth/login': {
+      id: '/auth/login'
+      path: '/auth/login'
+      fullPath: '/auth/login'
+      preLoaderRoute: typeof AuthLoginImport
+      parentRoute: typeof rootRoute
+    }
+    '/auth/register': {
+      id: '/auth/register'
+      path: '/auth/register'
+      fullPath: '/auth/register'
+      preLoaderRoute: typeof AuthRegisterImport
+      parentRoute: typeof rootRoute
+    }
     '/_homeLayout/': {
       id: '/_homeLayout/'
       path: '/'
@@ -152,6 +180,8 @@ export interface FileRoutesByFullPath {
   '/studentsAssociationInfo': typeof HomeLayoutStudentsAssociationInfoRoute
   '/studyProgramProfile': typeof HomeLayoutStudyProgramProfileRoute
   '/vacancy': typeof HomeLayoutVacancyRoute
+  '/auth/login': typeof AuthLoginRoute
+  '/auth/register': typeof AuthRegisterRoute
   '/': typeof HomeLayoutIndexRoute
 }
 
@@ -161,6 +191,8 @@ export interface FileRoutesByTo {
   '/studentsAssociationInfo': typeof HomeLayoutStudentsAssociationInfoRoute
   '/studyProgramProfile': typeof HomeLayoutStudyProgramProfileRoute
   '/vacancy': typeof HomeLayoutVacancyRoute
+  '/auth/login': typeof AuthLoginRoute
+  '/auth/register': typeof AuthRegisterRoute
   '/': typeof HomeLayoutIndexRoute
 }
 
@@ -172,6 +204,8 @@ export interface FileRoutesById {
   '/_homeLayout/studentsAssociationInfo': typeof HomeLayoutStudentsAssociationInfoRoute
   '/_homeLayout/studyProgramProfile': typeof HomeLayoutStudyProgramProfileRoute
   '/_homeLayout/vacancy': typeof HomeLayoutVacancyRoute
+  '/auth/login': typeof AuthLoginRoute
+  '/auth/register': typeof AuthRegisterRoute
   '/_homeLayout/': typeof HomeLayoutIndexRoute
 }
 
@@ -184,6 +218,8 @@ export interface FileRouteTypes {
     | '/studentsAssociationInfo'
     | '/studyProgramProfile'
     | '/vacancy'
+    | '/auth/login'
+    | '/auth/register'
     | '/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -192,6 +228,8 @@ export interface FileRouteTypes {
     | '/studentsAssociationInfo'
     | '/studyProgramProfile'
     | '/vacancy'
+    | '/auth/login'
+    | '/auth/register'
     | '/'
   id:
     | '__root__'
@@ -201,16 +239,22 @@ export interface FileRouteTypes {
     | '/_homeLayout/studentsAssociationInfo'
     | '/_homeLayout/studyProgramProfile'
     | '/_homeLayout/vacancy'
+    | '/auth/login'
+    | '/auth/register'
     | '/_homeLayout/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   HomeLayoutRoute: typeof HomeLayoutRouteWithChildren
+  AuthLoginRoute: typeof AuthLoginRoute
+  AuthRegisterRoute: typeof AuthRegisterRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   HomeLayoutRoute: HomeLayoutRouteWithChildren,
+  AuthLoginRoute: AuthLoginRoute,
+  AuthRegisterRoute: AuthRegisterRoute,
 }
 
 export const routeTree = rootRoute
@@ -223,7 +267,9 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/_homeLayout"
+        "/_homeLayout",
+        "/auth/login",
+        "/auth/register"
       ]
     },
     "/_homeLayout": {
@@ -256,6 +302,12 @@ export const routeTree = rootRoute
     "/_homeLayout/vacancy": {
       "filePath": "_homeLayout/vacancy.tsx",
       "parent": "/_homeLayout"
+    },
+    "/auth/login": {
+      "filePath": "auth/login.tsx"
+    },
+    "/auth/register": {
+      "filePath": "auth/register.tsx"
     },
     "/_homeLayout/": {
       "filePath": "_homeLayout/index.tsx",
