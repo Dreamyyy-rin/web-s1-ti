@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { z } from "zod";
 import {
   Form,
   FormControl,
@@ -22,29 +21,45 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { GalleryVerticalEnd } from "lucide-react";
-import { axiosBackendInstance } from "@/services/axiosInstance";
+import { useLogin } from "@/features/auth/hooks/useLogin";
+import { useToast } from "@/hooks/use-toast";
+import {
+  LoginSchema,
+  loginSchema,
+} from "@/features/auth/types/loginSchema.type";
+import { Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/auth/login")({
-  component: RouteComponent,
+  component: LoginComponent,
 });
 
-const formSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(6),
-});
-
-function RouteComponent() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+function LoginComponent() {
+  const { toast } = useToast();
+  const form = useForm<LoginSchema>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: ""
+    }
   });
 
-  const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    console.log(data);
-    const response = await axiosBackendInstance.post("/login", data);
-    console.log("response: ", response.data);
-    const token = response.data.token;
-    console.log("token: ", token);
-    // TODO: simpan ke localstorage
+  const { mutate: login } = useLogin();
+
+  const onSubmit = async (data: LoginSchema) => {
+    login(data, {
+      onSuccess: (data) => {
+        toast({
+          title: "Login berhasil",
+          description: `Selamat datang ${data.user.name}!`,
+        });
+      },
+      onError: (error) => {
+        toast({
+          title: "Login gagal",
+          description: error ? error.message : "Kesalahan tidak diketahui",
+        });
+      },
+    });
   };
 
   return (
@@ -62,10 +77,10 @@ function RouteComponent() {
           </a>
           <div className="container flex flex-col gap-6 mx-auto min-w-96">
             <Card>
-              <CardHeader>
-                <CardTitle>Welcome</CardTitle>
+              <CardHeader className="flex items-center">
+                <CardTitle>Selamat Datang</CardTitle>
                 <CardDescription>
-                  Login using email and password
+                  Silakan isi data diri Anda
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -79,17 +94,15 @@ function RouteComponent() {
                       name="email"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Username</FormLabel>
+                          <FormLabel>Email</FormLabel>
                           <FormControl>
-                            <Input placeholder="Jojo" {...field} />
+                            <Input placeholder="admin@example.com" {...field} />
                           </FormControl>
-                          <FormDescription>
-                            This is your public display name.
-                          </FormDescription>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
+
                     <FormField
                       control={form.control}
                       name="password"
@@ -97,7 +110,7 @@ function RouteComponent() {
                         <FormItem>
                           <FormLabel>Password</FormLabel>
                           <FormControl>
-                            <Input placeholder="password" {...field} />
+                            <Input placeholder="Enter password" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -108,8 +121,31 @@ function RouteComponent() {
                         Submit
                       </Button>
                     </div>
+                    <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
+                      <span className="relative z-10 bg-background px-2 text-muted-foreground">
+                        Atau login dengan
+                      </span>
+                    </div>
+                    <Button variant="outline" className="w-full">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"
+                          fill="currentColor"
+                        />
+                      </svg>
+                      Login with Google
+                    </Button>
                   </form>
                 </Form>
+                <div className="text-center text-sm mt-5">
+                  Belum punya akun?&nbsp;
+                  <Link to="/auth/register" className="underline underline-offset-4">
+                    Daftar
+                  </Link>
+                </div>
               </CardContent>
             </Card>
           </div>
