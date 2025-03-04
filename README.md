@@ -2,23 +2,11 @@
 
 ## Fitur
 
--   Autentikasi User
--   [Daftar fitur lainnya]
+- Pengumuman untuk mahasiswa S1 TI
+- Lowongan asisten dosen untuk mahasiswa S1 TI
 
-## Kontribusi
+## Authors
 
-1. Fork repositori
-2. Buat branch fitur (`git checkout -b feature/AmazingFeature`)
-3. Commit perubahan (`git commit -m 'Add some AmazingFeature'`)
-4. Push ke branch (`git push origin feature/AmazingFeature`)
-5. Buat Pull Request
-
-## Lisensi
-
-[Jenis Lisensi]
-
-## Kontak
-
-[Nama Anda] - [email@example.com]
-
-Link Proyek: [https://github.com/username/web-s1-ti](https://github.com/username/web-s1-ti)
+- [Christian Adi Ananta](https://github.com/Chr1ztt)
+- [Muhamad Yong Wicaksono](https://github.com/My9W)
+- [Jauza Panca Erucakra](https://github.com/Panca16)
