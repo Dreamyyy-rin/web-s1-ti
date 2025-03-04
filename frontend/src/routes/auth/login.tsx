@@ -1,11 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -23,24 +22,35 @@ import {
 import { GalleryVerticalEnd } from "lucide-react";
 import { useLogin } from "@/features/auth/hooks/useLogin";
 import { useToast } from "@/hooks/use-toast";
+import { zodValidator } from "@tanstack/zod-adapter";
+
 import {
   LoginSchema,
   loginSchema,
 } from "@/features/auth/types/loginSchema.type";
 import { Link } from "@tanstack/react-router";
+import { z } from "zod";
+
+const loginSearchSchema = z.object({
+  redirect: z.string().optional(),
+});
 
 export const Route = createFileRoute("/auth/login")({
+  validateSearch: zodValidator(loginSearchSchema),
   component: LoginComponent,
 });
 
 function LoginComponent() {
+  const { redirect } = Route.useSearch();
+  const router = useRouter();
+
   const { toast } = useToast();
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
-      password: ""
-    }
+      password: "",
+    },
   });
 
   const { mutate: login } = useLogin();
@@ -52,6 +62,11 @@ function LoginComponent() {
           title: "Login berhasil",
           description: `Selamat datang ${data.user.name}!`,
         });
+        if (redirect) {
+          router.navigate({ to: redirect });
+        } else {
+          router.navigate({ to: "/admin" });
+        }
       },
       onError: (error) => {
         toast({
@@ -79,9 +94,7 @@ function LoginComponent() {
             <Card>
               <CardHeader className="flex items-center">
                 <CardTitle>Selamat Datang</CardTitle>
-                <CardDescription>
-                  Silakan isi data diri Anda
-                </CardDescription>
+                <CardDescription>Silakan isi data diri Anda</CardDescription>
               </CardHeader>
               <CardContent>
                 <Form {...form}>
@@ -142,7 +155,10 @@ function LoginComponent() {
                 </Form>
                 <div className="text-center text-sm mt-5">
                   Belum punya akun?&nbsp;
-                  <Link to="/auth/register" className="underline underline-offset-4">
+                  <Link
+                    to="/auth/register"
+                    className="underline underline-offset-4"
+                  >
                     Daftar
                   </Link>
                 </div>

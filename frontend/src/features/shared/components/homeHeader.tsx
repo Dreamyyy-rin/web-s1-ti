@@ -169,7 +169,9 @@ export function HomeHeader() {
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
-        <Button>Login</Button>
+        <Link to="/auth/login">
+          <Button>Login</Button>
+        </Link>
       </div>
     </BaseHeader>
   );

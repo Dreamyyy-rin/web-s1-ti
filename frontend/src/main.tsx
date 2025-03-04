@@ -3,15 +3,20 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 
 import { routeTree } from "./routeTree.gen";
-import { createRouter, RouterProvider } from "@tanstack/react-router";
+import { createBrowserHistory, createRouter, RouterProvider } from "@tanstack/react-router";
+import { checkEnv } from "./env";
 
-const router = createRouter({ routeTree });
+const browserHistory = createBrowserHistory();
+
+const router = createRouter({ routeTree, history: browserHistory });
 
 declare module "@tanstack/react-router" {
   interface Register {
     router: typeof router;
   }
 }
+
+checkEnv()
 
 const rootElement = document.getElementById("root")!;
 if (!rootElement.innerHTML) {

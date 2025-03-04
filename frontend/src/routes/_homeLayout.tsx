@@ -1,4 +1,4 @@
-import { HomeHeader } from "@/features/shared/homeHeader";
+import { HomeHeader } from "@/features/shared/components/homeHeader";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_homeLayout")({
