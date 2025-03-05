@@ -1,5 +1,5 @@
 import { useTheme } from "@/hooks/useTheme";
-import { Button } from "../button";
+import { Button } from "../../button";
 import { MoonIcon, SunIcon } from "lucide-react";
 import React from "react";
 import { cn } from "@/lib/utils";

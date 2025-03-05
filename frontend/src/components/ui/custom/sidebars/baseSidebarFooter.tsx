@@ -94,13 +94,13 @@ const BaseSidebarFooter = React.forwardRef<
               <DropdownMenuItem className="p-0">
                 <Button
                   variant="ghost"
-                  className="w-full justify-start full flex gap-2 p-2"
+                  className="w-full justify-start m-0 font-normal flex gap-2 p-2"
                   onClick={handleOnClickLogout}
                 >
                   <div className="flex size-6 items-center justify-center rounded-sm">
                     <LogOut className="size-4 shrink-0" />
                   </div>
-                  Logout
+                  Log out
                 </Button>
               </DropdownMenuItem>
             </DropdownMenuGroup>

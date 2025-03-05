@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { BaseHeader } from "@/components/ui/custom/base-header";
+import { BaseHeader } from "@/components/ui/custom/header/baseHeader";
+import HeaderProfileDropdown from "@/components/ui/custom/header/headerProfileDropdown";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -10,9 +11,13 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
+import { useAuthStore } from "@/stores/auth.store";
 import { Link } from "@tanstack/react-router";
+import { LogIn } from "lucide-react";
 
 export function HomeHeader() {
+  const user = useAuthStore((state) => state.user);
+
   return (
     <BaseHeader>
       <div className="w-full flex gap-1 justify-between items-center">
@@ -169,9 +174,16 @@ export function HomeHeader() {
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
-        <Link to="/auth/login">
-          <Button>Login</Button>
-        </Link>
+        {user ? (
+          <HeaderProfileDropdown />
+        ) : (
+          <Link to="/auth/login">
+            <Button className="sm:hidden w-4">
+              <LogIn />
+            </Button>
+            <Button className="hidden sm:block">Login</Button>
+          </Link>
+        )}
       </div>
     </BaseHeader>
   );

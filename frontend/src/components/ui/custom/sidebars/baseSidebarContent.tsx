@@ -1,5 +1,5 @@
 import { SidebarContentData } from "@/types/sidebar";
-import React, { useEffect } from "react";
+import React from "react";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -7,7 +7,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "../../sidebar";
-import { Link, useLocation, } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
 
 const BaseSidebarContent = React.forwardRef<
   HTMLDivElement,
@@ -16,7 +16,6 @@ const BaseSidebarContent = React.forwardRef<
   const { pathname } = useLocation();
   // const [pathname, setPathname] = useState<string>();
 
-
   return data.map((service) => (
     <SidebarGroup key={service.title} ref={ref}>
       <SidebarGroupLabel>{service.title}</SidebarGroupLabel>
@@ -24,9 +23,7 @@ const BaseSidebarContent = React.forwardRef<
         {service.items.map((item) => (
           <SidebarMenuItem key={item.title}>
             <SidebarMenuButton asChild>
-              <Link 
-
-
+              <Link
                 disabled={pathname.includes(item.url)}
                 to={item.url}
                 // className="disabled:bg-foreground disabled:text-foreground"

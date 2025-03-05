@@ -11,7 +11,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "../../dropdown-menu";
 import { ChevronsUpDown } from "lucide-react";
@@ -56,11 +55,11 @@ const BaseSidebarHeader = React.forwardRef<
             sideOffset={4}
           >
             <DropdownMenuLabel className="text-xs text-muted-foreground">
-              Teams
+              UKSW
             </DropdownMenuLabel>
             {data.map((item, index) => (
               <DropdownMenuItem
-                key={item.title}
+                key={index}
                 onClick={() => setActiveTeam(item)}
                 className="gap-2 p-2"
               >
@@ -68,7 +67,6 @@ const BaseSidebarHeader = React.forwardRef<
                   <item.icon className="size-4 shrink-0" />
                 </div>
                 {item.title}
-                <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
               </DropdownMenuItem>
             ))}
           </DropdownMenuContent>
