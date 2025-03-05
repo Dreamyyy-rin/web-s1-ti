@@ -12,5 +12,6 @@ export const ENV = {
     TOKEN_ENCRYPTION_KEY: import.meta.env.VITE_APP_TOKEN_ENCRYPTION_KEY,
     USER_ENCRYPTION_KEY: import.meta.env.VITE_APP_USER_ENCRYPTION_KEY,
     BACKEND_URL: import.meta.env.VITE_APP_BACKEND_URL,
+    FRONTEND_URL: import.meta.env.VITE_APP_FRONTEND_URL,
   },
 };

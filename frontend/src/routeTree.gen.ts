@@ -16,7 +16,7 @@ import { Route as HomeLayoutImport } from './routes/_homeLayout'
 import { Route as HomeLayoutIndexImport } from './routes/_homeLayout/index'
 import { Route as AuthRegisterImport } from './routes/auth/register'
 import { Route as AuthLoginImport } from './routes/auth/login'
-import { Route as AdminAdminLayoutImport } from './routes/admin/adminLayout'
+import { Route as AdminAdminLayoutImport } from './routes/admin/_adminLayout'
 import { Route as HomeLayoutVacancyImport } from './routes/_homeLayout/vacancy'
 import { Route as HomeLayoutStudyProgramProfileImport } from './routes/_homeLayout/studyProgramProfile'
 import { Route as HomeLayoutStudentsAssociationInfoImport } from './routes/_homeLayout/studentsAssociationInfo'
@@ -58,8 +58,7 @@ const AuthLoginRoute = AuthLoginImport.update({
 } as any)
 
 const AdminAdminLayoutRoute = AdminAdminLayoutImport.update({
-  id: '/adminLayout',
-  path: '/adminLayout',
+  id: '/_adminLayout',
   getParentRoute: () => AdminRoute,
 } as any)
 
@@ -96,22 +95,22 @@ const HomeLayoutAboutRoute = HomeLayoutAboutImport.update({
 } as any)
 
 const AdminAdminLayoutIndexRoute = AdminAdminLayoutIndexImport.update({
-  id: '/_adminLayout/',
+  id: '/',
   path: '/',
-  getParentRoute: () => AdminRoute,
+  getParentRoute: () => AdminAdminLayoutRoute,
 } as any)
 
 const AdminAdminLayoutVacancyRoute = AdminAdminLayoutVacancyImport.update({
-  id: '/_adminLayout/vacancy',
+  id: '/vacancy',
   path: '/vacancy',
-  getParentRoute: () => AdminRoute,
+  getParentRoute: () => AdminAdminLayoutRoute,
 } as any)
 
 const AdminAdminLayoutAnnouncementRoute =
   AdminAdminLayoutAnnouncementImport.update({
-    id: '/_adminLayout/announcement',
+    id: '/announcement',
     path: '/announcement',
-    getParentRoute: () => AdminRoute,
+    getParentRoute: () => AdminAdminLayoutRoute,
   } as any)
 
 // Populate the FileRoutesByPath interface
@@ -167,10 +166,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HomeLayoutVacancyImport
       parentRoute: typeof HomeLayoutImport
     }
-    '/admin/adminLayout': {
-      id: '/admin/adminLayout'
-      path: '/adminLayout'
-      fullPath: '/admin/adminLayout'
+    '/admin/_adminLayout': {
+      id: '/admin/_adminLayout'
+      path: ''
+      fullPath: '/admin'
       preLoaderRoute: typeof AdminAdminLayoutImport
       parentRoute: typeof AdminImport
     }
@@ -200,21 +199,21 @@ declare module '@tanstack/react-router' {
       path: '/announcement'
       fullPath: '/admin/announcement'
       preLoaderRoute: typeof AdminAdminLayoutAnnouncementImport
-      parentRoute: typeof AdminImport
+      parentRoute: typeof AdminAdminLayoutImport
     }
     '/admin/_adminLayout/vacancy': {
       id: '/admin/_adminLayout/vacancy'
       path: '/vacancy'
       fullPath: '/admin/vacancy'
       preLoaderRoute: typeof AdminAdminLayoutVacancyImport
-      parentRoute: typeof AdminImport
+      parentRoute: typeof AdminAdminLayoutImport
     }
     '/admin/_adminLayout/': {
       id: '/admin/_adminLayout/'
       path: '/'
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminAdminLayoutIndexImport
-      parentRoute: typeof AdminImport
+      parentRoute: typeof AdminAdminLayoutImport
     }
   }
 }
@@ -244,31 +243,39 @@ const HomeLayoutRouteWithChildren = HomeLayoutRoute._addFileChildren(
   HomeLayoutRouteChildren,
 )
 
-interface AdminRouteChildren {
-  AdminAdminLayoutRoute: typeof AdminAdminLayoutRoute
+interface AdminAdminLayoutRouteChildren {
   AdminAdminLayoutAnnouncementRoute: typeof AdminAdminLayoutAnnouncementRoute
   AdminAdminLayoutVacancyRoute: typeof AdminAdminLayoutVacancyRoute
   AdminAdminLayoutIndexRoute: typeof AdminAdminLayoutIndexRoute
 }
 
-const AdminRouteChildren: AdminRouteChildren = {
-  AdminAdminLayoutRoute: AdminAdminLayoutRoute,
+const AdminAdminLayoutRouteChildren: AdminAdminLayoutRouteChildren = {
   AdminAdminLayoutAnnouncementRoute: AdminAdminLayoutAnnouncementRoute,
   AdminAdminLayoutVacancyRoute: AdminAdminLayoutVacancyRoute,
   AdminAdminLayoutIndexRoute: AdminAdminLayoutIndexRoute,
+}
+
+const AdminAdminLayoutRouteWithChildren =
+  AdminAdminLayoutRoute._addFileChildren(AdminAdminLayoutRouteChildren)
+
+interface AdminRouteChildren {
+  AdminAdminLayoutRoute: typeof AdminAdminLayoutRouteWithChildren
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminAdminLayoutRoute: AdminAdminLayoutRouteWithChildren,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 export interface FileRoutesByFullPath {
   '': typeof HomeLayoutRouteWithChildren
-  '/admin': typeof AdminRouteWithChildren
+  '/admin': typeof AdminAdminLayoutRouteWithChildren
   '/about': typeof HomeLayoutAboutRoute
   '/announcement': typeof HomeLayoutAnnouncementRoute
   '/studentsAssociationInfo': typeof HomeLayoutStudentsAssociationInfoRoute
   '/studyProgramProfile': typeof HomeLayoutStudyProgramProfileRoute
   '/vacancy': typeof HomeLayoutVacancyRoute
-  '/admin/adminLayout': typeof AdminAdminLayoutRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
   '/': typeof HomeLayoutIndexRoute
@@ -278,18 +285,17 @@ export interface FileRoutesByFullPath {
 }
 
 export interface FileRoutesByTo {
+  '/admin': typeof AdminAdminLayoutIndexRoute
   '/about': typeof HomeLayoutAboutRoute
   '/announcement': typeof HomeLayoutAnnouncementRoute
   '/studentsAssociationInfo': typeof HomeLayoutStudentsAssociationInfoRoute
   '/studyProgramProfile': typeof HomeLayoutStudyProgramProfileRoute
   '/vacancy': typeof HomeLayoutVacancyRoute
-  '/admin/adminLayout': typeof AdminAdminLayoutRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
   '/': typeof HomeLayoutIndexRoute
   '/admin/announcement': typeof AdminAdminLayoutAnnouncementRoute
   '/admin/vacancy': typeof AdminAdminLayoutVacancyRoute
-  '/admin': typeof AdminAdminLayoutIndexRoute
 }
 
 export interface FileRoutesById {
@@ -301,7 +307,7 @@ export interface FileRoutesById {
   '/_homeLayout/studentsAssociationInfo': typeof HomeLayoutStudentsAssociationInfoRoute
   '/_homeLayout/studyProgramProfile': typeof HomeLayoutStudyProgramProfileRoute
   '/_homeLayout/vacancy': typeof HomeLayoutVacancyRoute
-  '/admin/adminLayout': typeof AdminAdminLayoutRoute
+  '/admin/_adminLayout': typeof AdminAdminLayoutRouteWithChildren
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
   '/_homeLayout/': typeof HomeLayoutIndexRoute
@@ -320,7 +326,6 @@ export interface FileRouteTypes {
     | '/studentsAssociationInfo'
     | '/studyProgramProfile'
     | '/vacancy'
-    | '/admin/adminLayout'
     | '/auth/login'
     | '/auth/register'
     | '/'
@@ -329,18 +334,17 @@ export interface FileRouteTypes {
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/admin'
     | '/about'
     | '/announcement'
     | '/studentsAssociationInfo'
     | '/studyProgramProfile'
     | '/vacancy'
-    | '/admin/adminLayout'
     | '/auth/login'
     | '/auth/register'
     | '/'
     | '/admin/announcement'
     | '/admin/vacancy'
-    | '/admin'
   id:
     | '__root__'
     | '/_homeLayout'
@@ -350,7 +354,7 @@ export interface FileRouteTypes {
     | '/_homeLayout/studentsAssociationInfo'
     | '/_homeLayout/studyProgramProfile'
     | '/_homeLayout/vacancy'
-    | '/admin/adminLayout'
+    | '/admin/_adminLayout'
     | '/auth/login'
     | '/auth/register'
     | '/_homeLayout/'
@@ -404,10 +408,7 @@ export const routeTree = rootRoute
     "/admin": {
       "filePath": "admin.tsx",
       "children": [
-        "/admin/adminLayout",
-        "/admin/_adminLayout/announcement",
-        "/admin/_adminLayout/vacancy",
-        "/admin/_adminLayout/"
+        "/admin/_adminLayout"
       ]
     },
     "/_homeLayout/about": {
@@ -430,9 +431,14 @@ export const routeTree = rootRoute
       "filePath": "_homeLayout/vacancy.tsx",
       "parent": "/_homeLayout"
     },
-    "/admin/adminLayout": {
-      "filePath": "admin/adminLayout.tsx",
-      "parent": "/admin"
+    "/admin/_adminLayout": {
+      "filePath": "admin/_adminLayout.tsx",
+      "parent": "/admin",
+      "children": [
+        "/admin/_adminLayout/announcement",
+        "/admin/_adminLayout/vacancy",
+        "/admin/_adminLayout/"
+      ]
     },
     "/auth/login": {
       "filePath": "auth/login.tsx"
@@ -446,15 +452,15 @@ export const routeTree = rootRoute
     },
     "/admin/_adminLayout/announcement": {
       "filePath": "admin/_adminLayout/announcement.tsx",
-      "parent": "/admin"
+      "parent": "/admin/_adminLayout"
     },
     "/admin/_adminLayout/vacancy": {
       "filePath": "admin/_adminLayout/vacancy.tsx",
-      "parent": "/admin"
+      "parent": "/admin/_adminLayout"
     },
     "/admin/_adminLayout/": {
       "filePath": "admin/_adminLayout/index.tsx",
-      "parent": "/admin"
+      "parent": "/admin/_adminLayout"
     }
   }
 }

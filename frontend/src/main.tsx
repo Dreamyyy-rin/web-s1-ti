@@ -3,12 +3,20 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 
 import { routeTree } from "./routeTree.gen";
-import { createBrowserHistory, createRouter, RouterProvider } from "@tanstack/react-router";
+import {
+  createBrowserHistory,
+  createRouter,
+  RouterProvider,
+} from "@tanstack/react-router";
 import { checkEnv } from "./env";
 
 const browserHistory = createBrowserHistory();
 
-const router = createRouter({ routeTree, history: browserHistory });
+const router = createRouter({
+  routeTree,
+  context: { title: "Web S1 TI" },
+  history: browserHistory,
+});
 
 declare module "@tanstack/react-router" {
   interface Register {
@@ -16,7 +24,7 @@ declare module "@tanstack/react-router" {
   }
 }
 
-checkEnv()
+checkEnv();
 
 const rootElement = document.getElementById("root")!;
 if (!rootElement.innerHTML) {

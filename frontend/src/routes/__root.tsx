@@ -1,7 +1,10 @@
 import App from "@/App";
-import { createRootRoute } from "@tanstack/react-router";
-// import { TanStackRouterDevtools } from "@tanstack/router-devtools";
+import { createRootRouteWithContext } from "@tanstack/react-router";
 
-export const Route = createRootRoute({
+interface RouteContext{
+  title: string;
+}
+
+export const Route = createRootRouteWithContext<RouteContext>()({
   component: App,
 });

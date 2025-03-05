@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { BaseHeader } from "@/components/ui/base-header";
+import { BaseHeader } from "@/components/ui/custom/base-header";
 import {
   NavigationMenu,
   NavigationMenuContent,
