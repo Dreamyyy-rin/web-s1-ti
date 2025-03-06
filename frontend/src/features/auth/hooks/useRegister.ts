@@ -1,26 +1,25 @@
 import { axiosBackendInstance } from "@/services/axiosInstance";
-import { useState } from "react";
-import { LoginSchema } from "../types/loginSchema.type";
-import { useMutation } from "@tanstack/react-query";
-import { handleAxiosError } from "@/lib/helpers";
+import { RegisterSchema } from "../types/registerSchema.type";
 import { AxiosError } from "axios";
 import { ErrorResponse } from "@/types/responses/errorResponse.type";
+import { handleAxiosError } from "@/lib/helpers";
+import { useMutation } from "@tanstack/react-query";
 import { useAuthStore } from "@/stores/auth.store";
+import { useState } from "react";
 
-export function login(data: LoginSchema) {
-  return axiosBackendInstance.post("/login", data);
+function register(data: RegisterSchema) {
+  return axiosBackendInstance.post("/register", data);
 }
 
-export function useLogin() {
+export function useRegister() {
   const [error, setError] = useState<string>(
     "Terjadi kesalahan yang tidak diketahui",
   );
-  const setToken = useAuthStore((state) => state.setToken);
   const setUser = useAuthStore((state) => state.setUser);
 
   const mutation = useMutation({
-    mutationFn: async (data: LoginSchema) => {
-      const response = await login(data);
+    mutationFn: async (data: RegisterSchema) => {
+      const response = await register(data);
       return response.data;
     },
     onSuccess: (data) => {
@@ -29,10 +28,10 @@ export function useLogin() {
         name: data.user.name,
         role: data.user.role,
       });
-      setToken(data.token);
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       const message = handleAxiosError(error)?.message;
+      // console.log("message:", message)
       if (message) {
         setError(message);
       }

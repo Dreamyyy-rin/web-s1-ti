@@ -1,5 +1,6 @@
 import BaseLayoutWithSidebar from "@/components/ui/custom/sidebars/baseLayoutWithSidebar";
 import { ENV } from "@/env";
+import { useAuthStore } from "@/stores/auth.store";
 import { SidebarData } from "@/types/sidebar";
 import { Briefcase, Megaphone, Rss, Settings } from "lucide-react";
 import React from "react";
@@ -8,6 +9,8 @@ export const AdminLayout = React.forwardRef<
   React.ElementRef<"div">,
   React.ComponentPropsWithoutRef<"div">
 >(({ children }, ref) => {
+
+  const user = useAuthStore((state) => state.user);
 
   const data: SidebarData = {
     header: [
@@ -37,8 +40,8 @@ export const AdminLayout = React.forwardRef<
     ],
     footer: {
       user: {
-        name: "Admin",
-        email: "admin@example.com",
+        name: user?.name ?? "",
+        email: user?.email ?? "",
         avatar: null,
       },
       items: [

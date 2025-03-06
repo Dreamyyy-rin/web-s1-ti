@@ -1,4 +1,7 @@
-import { createFileRoute, useRouter } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  useNavigate,
+} from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -30,6 +33,7 @@ import {
 } from "@/features/auth/types/loginSchema.type";
 import { Link } from "@tanstack/react-router";
 import { z } from "zod";
+import { handleAxiosError } from "@/lib/helpers";
 
 const loginSearchSchema = z.object({
   redirect: z.string().optional(),
@@ -42,7 +46,7 @@ export const Route = createFileRoute("/auth/login")({
 
 function LoginComponent() {
   const { redirect } = Route.useSearch();
-  const router = useRouter();
+  const navigate = useNavigate({ from: "/auth/login" });
 
   const { toast } = useToast();
   const form = useForm<LoginSchema>({
@@ -63,15 +67,16 @@ function LoginComponent() {
           description: `Selamat datang ${data.user.name}!`,
         });
         if (redirect) {
-          router.navigate({ to: redirect });
-        } else {
-          router.navigate({ to: "/admin" });
+          navigate({ to: redirect });
+          return;
         }
+        navigate({ to: "/admin" });
       },
       onError: (error) => {
+        const message = handleAxiosError(error)?.message;
         toast({
           title: "Login gagal",
-          description: error ? error.message : "Kesalahan tidak diketahui",
+          description: message ?? "Terjadi kesalahan yang tidak diketahui",
         });
       },
     });
@@ -81,15 +86,15 @@ function LoginComponent() {
     <>
       <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10">
         <div className="flex w-full max-w-sm flex-col gap-6">
-          <a
-            href="#"
+          <Link
+            to="/"
             className="flex items-center gap-2 self-center font-medium"
           >
             <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
               <GalleryVerticalEnd className="size-4" />
             </div>
             Web S1 TI
-          </a>
+          </Link>
           <div className="container flex flex-col gap-6 mx-auto min-w-96">
             <Card>
               <CardHeader className="flex items-center">
@@ -109,7 +114,12 @@ function LoginComponent() {
                         <FormItem>
                           <FormLabel>Email</FormLabel>
                           <FormControl>
-                            <Input placeholder="admin@example.com" {...field} />
+                            <Input
+                              required
+                              type="email"
+                              placeholder="admin@example.com"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -123,7 +133,12 @@ function LoginComponent() {
                         <FormItem>
                           <FormLabel>Password</FormLabel>
                           <FormControl>
-                            <Input placeholder="Enter password" {...field} />
+                            <Input
+                              required
+                              type="password"
+                              placeholder="Enter password"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
