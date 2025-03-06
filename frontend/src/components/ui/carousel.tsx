@@ -59,7 +59,7 @@ const Carousel = React.forwardRef<
         ...opts,
         axis: orientation === "horizontal" ? "x" : "y",
       },
-      [...plugins, Autoplay({ delay: 5000 })]  // Menambahkan plugin Autoplay dengan delay
+      [...plugins, Autoplay({ delay: 2000 })]  // Menambahkan plugin Autoplay dengan delay 2000ms
     )
 
     const [canScrollPrev, setCanScrollPrev] = React.useState(false)
