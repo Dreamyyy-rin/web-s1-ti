@@ -1,5 +1,5 @@
 import { axiosBackendInstance } from "@/services/axiosInstance";
-import { RegisterSchema } from "../types/registerSchema.type";
+import { RegisterSchema } from "../types/register.schema";
 import { AxiosError } from "axios";
 import { ErrorResponse } from "@/types/responses/errorResponse.type";
 import { handleAxiosError } from "@/lib/helpers";

@@ -1,20 +1,19 @@
 import { axiosBackendInstance } from "@/services/axiosInstance";
 import { useState } from "react";
-import { LoginSchema } from "../types/loginSchema.type";
+import { LoginSchema } from "../types/login.schema";
 import { useMutation } from "@tanstack/react-query";
 import { handleAxiosError } from "@/lib/helpers";
 import { AxiosError } from "axios";
 import { ErrorResponse } from "@/types/responses/errorResponse.type";
 import { useAuthStore } from "@/stores/auth.store";
+import { DEFAULT_ERROR_MESSAGE } from "@/constants/error.constant";
 
 export function login(data: LoginSchema) {
   return axiosBackendInstance.post("/login", data);
 }
 
 export function useLogin() {
-  const [error, setError] = useState<string>(
-    "Terjadi kesalahan yang tidak diketahui",
-  );
+  const [error, setError] = useState<string>(DEFAULT_ERROR_MESSAGE);
   const setToken = useAuthStore((state) => state.setToken);
   const setUser = useAuthStore((state) => state.setUser);
 

@@ -19,7 +19,7 @@ import { useRegister } from "@/features/auth/hooks/useRegister";
 import {
   registerSchema,
   RegisterSchema,
-} from "@/features/auth/types/registerSchema.type";
+} from "@/features/auth/types/register.schema";
 import { useToast } from "@/hooks/use-toast";
 import { handleAxiosError } from "@/lib/helpers";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -47,7 +47,7 @@ function RouteComponent() {
     },
   });
 
-  const { mutate: register , } = useRegister();
+  const { mutate: register } = useRegister();
 
   const onSubmit = async (data: RegisterSchema) => {
     register(data, {

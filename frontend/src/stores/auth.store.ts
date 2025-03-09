@@ -1,17 +1,17 @@
+import { User } from "@/features/user/types/user.type";
 import { axiosBackendInstance } from "@/services/axiosInstance";
-import { User } from "@/types/user.type";
 import { create, StateCreator } from "zustand";
 import { persist, devtools } from "zustand/middleware";
 
 // type AuthState = ExtractState<typeof useAuthStore>
 
 interface AuthState {
-  user: User | null;
+  user: Omit<User, "id"> | null;
   token: string | null;
 }
 
 export interface AuthAction {
-  setUser: (user: User | null) => void;
+  setUser: (user: Omit<User, "id"> | null) => void;
   setToken: (token: string | null) => void;
   isAuthenticated: () => Promise<boolean>;
 }
@@ -34,7 +34,7 @@ export const useAuthStore = create<AuthStore>()(
           return false;
         }
         const response = await axiosBackendInstance.get("/me", {});
-        const userProfile: User = {
+        const userProfile: Omit<User, "id"> = {
           email: response.data.email,
           name: response.data.name,
           role: response.data.role,
@@ -46,7 +46,7 @@ export const useAuthStore = create<AuthStore>()(
         return false;
       }
     },
-    setUser: (user: User | null) => set({ user: user }),
+    setUser: (user: Omit<User, "id"> | null) => set({ user: user }),
     setToken: (token: string | null) => set({ token: token }),
   })),
 );

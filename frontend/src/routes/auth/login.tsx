@@ -1,7 +1,4 @@
-import {
-  createFileRoute,
-  useNavigate,
-} from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -27,10 +24,7 @@ import { useLogin } from "@/features/auth/hooks/useLogin";
 import { useToast } from "@/hooks/use-toast";
 import { zodValidator } from "@tanstack/zod-adapter";
 
-import {
-  LoginSchema,
-  loginSchema,
-} from "@/features/auth/types/loginSchema.type";
+import { LoginSchema, loginSchema } from "@/features/auth/types/login.schema";
 import { Link } from "@tanstack/react-router";
 import { z } from "zod";
 import { handleAxiosError } from "@/lib/helpers";
