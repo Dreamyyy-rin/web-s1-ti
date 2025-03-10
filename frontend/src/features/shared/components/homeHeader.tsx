@@ -20,12 +20,12 @@ export function HomeHeader() {
 
   return (
     <BaseHeader>
-      <div className="w-full flex gap-1 justify-between items-center">
+      <div className="w-full flex gap-1 justify-between items-center ">
         <NavigationMenu>
           <NavigationMenuList>
-            <NavigationMenuItem className="">
+            <NavigationMenuItem className="" >
               <Link to="/">
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "bg-transparent")}>
                   Home
                 </NavigationMenuLink>
               </Link>
@@ -51,7 +51,7 @@ export function HomeHeader() {
           </NavigationMenuList> */}
           <NavigationMenuList>
             <NavigationMenuItem>
-              <NavigationMenuTrigger>Berita</NavigationMenuTrigger>
+              <NavigationMenuTrigger className="bg-transparent">Berita</NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="flex flex-col gap-1 px-1 py-2 md:w-[250px] lg:w-[300px] ">
                   {/* <li className="row-span-3">
@@ -107,7 +107,7 @@ export function HomeHeader() {
               </NavigationMenuContent>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuTrigger>Lainnya</NavigationMenuTrigger>
+              <NavigationMenuTrigger className="bg-transparent">Lainnya</NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid gap-1 md:w-[250px] px-1 py-2 lg:w-[300px] ">
                   {/* <li className="row-span-3">

@@ -21,13 +21,13 @@ import {
 } from "@/components/ui/card";
 import { GalleryVerticalEnd } from "lucide-react";
 import { useLogin } from "@/features/auth/hooks/useLogin";
-import { useToast } from "@/hooks/use-toast";
 import { zodValidator } from "@tanstack/zod-adapter";
 
 import { LoginSchema, loginSchema } from "@/features/auth/types/login.schema";
 import { Link } from "@tanstack/react-router";
 import { z } from "zod";
 import { handleAxiosError } from "@/lib/helpers";
+import { toast } from "sonner";
 
 const loginSearchSchema = z.object({
   redirect: z.string().optional(),
@@ -42,7 +42,6 @@ function LoginComponent() {
   const { redirect } = Route.useSearch();
   const navigate = useNavigate({ from: "/auth/login" });
 
-  const { toast } = useToast();
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -56,8 +55,7 @@ function LoginComponent() {
   const onSubmit = async (data: LoginSchema) => {
     login(data, {
       onSuccess: (data) => {
-        toast({
-          title: "Login berhasil",
+        toast("Login berhasil", {
           description: `Selamat datang ${data.user.name}!`,
         });
         if (redirect) {
@@ -68,8 +66,7 @@ function LoginComponent() {
       },
       onError: (error) => {
         const message = handleAxiosError(error)?.message;
-        toast({
-          title: "Login gagal",
+        toast("Login gagal", {
           description: message ?? "Terjadi kesalahan yang tidak diketahui",
         });
       },
