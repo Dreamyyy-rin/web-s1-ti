@@ -3,6 +3,9 @@ import { Button } from "../../button";
 import { MoonIcon, SunIcon } from "lucide-react";
 import React from "react";
 import { cn } from "@/lib/utils";
+import Logo from "@/assets/Logo.png"; 
+import { Link } from "@tanstack/react-router";
+
 
 export const BaseHeader = React.forwardRef<
   React.ElementRef<"header">,
@@ -19,6 +22,10 @@ export const BaseHeader = React.forwardRef<
       )}
     >
       <div className="mx-auto flex w-full h-full items-center justify-between px-2 gap-2">
+      <Link to="/" className="cursor-pointer">
+      <img src={Logo} alt="Logo" className="h-12 mr-4" />
+      </Link>
+
         {children}
         <Button
           variant="outline"
