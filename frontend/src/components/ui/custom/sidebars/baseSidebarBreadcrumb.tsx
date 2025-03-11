@@ -13,14 +13,27 @@ const BaseSidebarBreadcrumb = () => {
   const matches = useRouterState({ select: (s) => s.matches });
   const { pathname } = useLocation();
 
+  const normalizedPathname =
+    pathname.endsWith("/") && pathname !== "/"
+      ? pathname.slice(0, -1)
+      : pathname;
+
+  console.log("pathname: ", pathname);
+
   const breadcrumbs: { title: string; path: string }[] = [];
   for (const match of matches) {
     if (breadcrumbs.some((b) => b.title === match.context.title)) {
       continue;
     }
+
+    const normalizedPathname =
+      match.pathname.endsWith("/") && match.pathname !== "/"
+        ? match.pathname.slice(0, -1)
+        : match.pathname;
+
     breadcrumbs.push({
       title: match.context.title,
-      path: match.pathname,
+      path: normalizedPathname,
     });
   }
   return (
@@ -28,8 +41,8 @@ const BaseSidebarBreadcrumb = () => {
       <BreadcrumbList>
         {breadcrumbs.map((breadcrumb, index) => (
           <React.Fragment key={index}>
-            <BreadcrumbItem >
-              {breadcrumb.path === pathname ? (
+            <BreadcrumbItem>
+              {breadcrumb.path === normalizedPathname ? (
                 <BreadcrumbPage>{breadcrumb.title}</BreadcrumbPage>
               ) : (
                 <BreadcrumbLink asChild>

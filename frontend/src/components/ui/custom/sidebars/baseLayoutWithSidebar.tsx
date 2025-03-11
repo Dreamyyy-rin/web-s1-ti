@@ -17,23 +17,10 @@ const BaseLayoutWithSidebar = React.forwardRef<
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
             <Separator orientation="vertical" className="mr-2 h-4" />
-            <BaseSidebarBreadcrumb/>
-            {/* <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="#">
-                    Building Your Application
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator className="hidden md:block" />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb> */}
+            <BaseSidebarBreadcrumb />
           </div>
         </header>
-        {children}
+        <div className="p-2">{children}</div>
       </SidebarInset>
     </SidebarProvider>
   );
