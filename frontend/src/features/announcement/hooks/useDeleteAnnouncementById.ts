@@ -6,7 +6,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useState } from "react";
 
-function deleteAnnoundementById(id: number) {
+function deleteAnnoundementById(id: string) {
   return axiosBackendInstance.delete(`/pengumuman/${id}`);
 }
 
@@ -15,7 +15,7 @@ export function useDeleteAnnouncementById() {
   const [error, setError] = useState<string>(DEFAULT_ERROR_MESSAGE);
 
   const mutation = useMutation({
-    mutationFn: async ({ id }: { id: number }) =>
+    mutationFn: async ({ id }: { id: string }) =>
       await deleteAnnoundementById(id),
     onError: (error: AxiosError<ErrorResponse>) => {
       const message = handleAxiosError(error)?.message;

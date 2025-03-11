@@ -44,7 +44,7 @@ const HeaderProfileDropdown = React.forwardRef<
           <User />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56 m-1">
+      <DropdownMenuContent className="w-56 m-1" >
         <DropdownMenuLabel>
           <div className="grid flex-1 text-left text-sm leading-tight">
             <span className="truncate font-semibold">
