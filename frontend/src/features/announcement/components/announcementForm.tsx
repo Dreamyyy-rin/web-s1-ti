@@ -10,10 +10,9 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { ImageInput, Input } from "@/components/ui/input";
 import { MinimalTiptapEditor } from "@/components/ui/custom/minimal-tiptap";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AnnouncementView from "./announcementView";
@@ -21,16 +20,15 @@ import { useAuthStore } from "@/stores/auth.store";
 import { Button } from "@/components/ui/button";
 import ConfirmationAlert from "@/components/ui/custom/alert/confirmationAlert";
 import { useRouter } from "@tanstack/react-router";
-import { useCreateAnnouncement } from "../hooks/useCreateAnnouncement";
 import { Announcement } from "../types/announcement.type";
 
 const AnnouncementForm = React.forwardRef<
   React.ElementRef<"div">,
   React.ComponentPropsWithoutRef<"div"> & {
     onSave: (data: AnnouncementSchema) => Promise<void>;
-    data?: Announcement
+    data?: Announcement;
   }
->(({ onSave,  data }) => {
+>(({ onSave, data }) => {
   const handleOnSubmit = (data: AnnouncementSchema) => {
     onSave(data);
   };
@@ -38,31 +36,99 @@ const AnnouncementForm = React.forwardRef<
   const router = useRouter();
   const user = useAuthStore((state) => state.user);
 
+  const [url, setUrl] = React.useState<string | null>(null);
+
   const form = useForm<AnnouncementSchema>({
     resolver: zodResolver(announcementSchema),
-    defaultValues: data ?{
-      content: data.isi,
+    defaultValues: data? {
       title: data.judul,
-      file: "",
+      content: data.isi,
+      file: undefined,
     } : {
       title: "",
       content: "",
-      file: "",
+      file: undefined,
     },
+    // defaultValues: async () => {
+    //   if (!data) {
+    //     return {
+    //       title: "",
+    //       content: "",
+    //       file: undefined,
+    //     };
+    //   }
+    //   if (!data.file) {
+    //     return {
+    //       content: data.isi,
+    //       title: data.judul,
+    //       file: undefined,
+    //     };
+    //   }
+    //   const filename = data.file.split("/").pop() || "announcement-image";
+    //   // const response = await fetch(
+    //   //   `${ENV.APP.BACKEND_STORAGE_URL}/${data.file}`,
+    //   // );
+    //   const response = await axiosBackendInstance.get(
+    //     `${ENV.APP.BACKEND_STORAGE_URL}/${data.file}`,
+    //     {
+    //       responseType: "blob",
+    //     },
+    //   );
+    //   const blob = response.data;
+    //   // Extract file extension from the URL or content type
+    //   const fileExtension =
+    //     data.file.split(".").pop() ||
+    //     response.headers["content-type"]?.split("/").pop() ||
+    //     "jpg";
+    //   const file = new File([blob], filename || `image.${fileExtension}`, {
+    //     type: blob.type,
+    //   });
+    //   return {
+    //     content: data.isi,
+    //     title: data.judul,
+    //     file: file,
+    //   };
+    // },
   });
 
   const { title, content } = form.watch();
 
+
   return (
     <Form {...form}>
-      <form onSubmit={e => e.preventDefault()} className="space-y-2">
+      <form onSubmit={(e) => e.preventDefault()} className="space-y-2">
         <Tabs defaultValue="edit" className="flex flex-col ">
           <TabsList className="ms-auto">
             <TabsTrigger value="edit">Edit</TabsTrigger>
             <TabsTrigger value="preview">Preview</TabsTrigger>
           </TabsList>
           <TabsContent value="edit">
-            <div className="border rounded-sm py-4">
+            <div className="border rounded-sm py-4 px-2">
+              <FormField
+                control={form.control}
+                name="file"
+                render={({ field }) => (
+                  <FormItem className="mb-6">
+                    {/* <FormLabel>Judul</FormLabel> */}
+                    <FormControl>
+                      <ImageInput
+                        value={field.value}
+                        accept="image/jpeg,image/png,image/jpg"
+                        onUpload={(file: File) => {
+                          const reader = new FileReader();
+                          reader.onload = (e: ProgressEvent<FileReader>) => {
+                            setUrl(e.target?.result as string);
+                          };
+                          reader.readAsDataURL(file);
+                          form.setValue("file", file);
+                        }}
+                      />
+                      {/* <Input type="file" field:/> */}
+                    </FormControl>
+                    <FormMessage className="px-3" />
+                  </FormItem>
+                )}
+              />
               <FormField
                 control={form.control}
                 name="title"
@@ -111,6 +177,7 @@ const AnnouncementForm = React.forwardRef<
               data={{
                 id: 0,
                 judul: title,
+                file: url,
                 isi: content,
                 user_id: 0,
                 user: {
@@ -135,9 +202,8 @@ const AnnouncementForm = React.forwardRef<
           <ConfirmationAlert
             description="Periksa kembali data Anda sebelum disimpan."
             onConfirmation={form.handleSubmit(handleOnSubmit)}
-            
           >
-            <Button size="sm" type="button"  className="mt-2">
+            <Button size="sm" type="button" className="mt-2">
               Simpan
             </Button>
           </ConfirmationAlert>

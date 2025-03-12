@@ -20,32 +20,35 @@ export const Route = createFileRoute(
 function RouteComponent() {
   const navigate = useNavigate();
   const { mutate: updateAnnouncementbyId } = useUpdateAnnouncement();
-  const params = Route.useParams()
-  const { data } = useFetchAnnouncementById(params.announcementId)
+  const params = Route.useParams();
+  const { data, isLoading } = useFetchAnnouncementById(params.announcementId);
   const onUpdate = async (data: AnnouncementSchema) => {
-    updateAnnouncementbyId({
-      id: params.announcementId,
-      data: data,
-    }, {
-      onError: (error) => {
-        const message = handleAxiosError(error)?.message;
-        toast.error("Gagal menambahkan pengumuman", {
-          description: message,
-        });
+    updateAnnouncementbyId(
+      {
+        id: params.announcementId,
+        data: data,
       },
-      onSuccess: () => {
-        toast.success("Berhasil", {
-          description: "Pengumuman berhasil disimpan",
-        });
-        navigate({
-          to: "/admin/announcement",
-        });
+      {
+        onError: (error) => {
+          const message = handleAxiosError(error)?.message;
+          toast.error("Gagal menambahkan pengumuman", {
+            description: message,
+          });
+        },
+        onSuccess: () => {
+          toast.success("Berhasil", {
+            description: "Pengumuman berhasil disimpan",
+          });
+          navigate({
+            to: "/admin/announcement",
+          });
+        },
       },
-    });
+    );
   };
   return (
     <div>
-      <AnnouncementForm onSave={onUpdate} data={data}  />
+      {isLoading ? null : <AnnouncementForm onSave={onUpdate} data={data} />}
     </div>
   );
 }

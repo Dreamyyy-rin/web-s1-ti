@@ -9,7 +9,17 @@ export const announcementSchema = z.object({
     message: "deskripsi mengandung karakter yang tidak valid",
   }),
   file: z
-    .string({ message: "file mengandung karakter yang tidak valid" })
+    .instanceof(File, { message: "File harus diupload" })
+    .refine((file) => file.size <= 1024 * 1024 * 5, {
+      message: "Ukuran file maksimal 5MB",
+    })
+    .refine(
+      (file) =>
+        ["image/jpeg", "image/png", "image/jpg", "image/gif"].includes(
+          file.type,
+        ),
+      { message: "File harus berformat gambar" },
+    )
     .optional(),
 });
 

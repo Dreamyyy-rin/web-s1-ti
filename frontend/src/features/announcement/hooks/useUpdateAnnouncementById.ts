@@ -13,10 +13,19 @@ interface updateAnnouncementParams {
 }
 
 function updateAnnouncementById(params: updateAnnouncementParams) {
-  return axiosBackendInstance.post(`/pengumuman/${params.id}`, {
-    judul: params.data.title,
-    isi: params.data.content,
-  });
+  return axiosBackendInstance.post(
+    `/pengumuman/${params.id}`,
+    {
+      judul: params.data.title,
+      isi: params.data.content,
+      file: params.data.file,
+    },
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    },
+  );
 }
 
 export function useUpdateAnnouncement() {

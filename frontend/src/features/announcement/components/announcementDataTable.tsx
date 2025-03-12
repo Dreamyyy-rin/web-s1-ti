@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useFetchAnnouncements } from "../hooks/useFetchAnnouncements";
 import Datatable from "@/components/ui/custom/datatable/datatable";
 import { announcementColumns } from "./announcementColumn";
@@ -21,10 +20,6 @@ const AnnouncementTopToolbarSlot = () => {
 
 const AnnouncementDataTable = () => {
   const { data, isLoading } = useFetchAnnouncements();
-
-  useEffect(() => {
-    console.log("data: ", data);
-  }, [data]);
 
   return (
     <div>

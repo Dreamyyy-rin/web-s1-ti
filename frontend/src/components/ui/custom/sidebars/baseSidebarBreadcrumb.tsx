@@ -18,8 +18,6 @@ const BaseSidebarBreadcrumb = () => {
       ? pathname.slice(0, -1)
       : pathname;
 
-  console.log("pathname: ", pathname);
-
   const breadcrumbs: { title: string; path: string }[] = [];
   for (const match of matches) {
     if (breadcrumbs.some((b) => b.title === match.context.title)) {

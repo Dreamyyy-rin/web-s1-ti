@@ -1,3 +1,4 @@
+import { ENV } from "@/env";
 import { useAuthStore } from "@/stores/auth.store";
 import axios, { InternalAxiosRequestConfig } from "axios";
 
@@ -10,7 +11,7 @@ async function handleOnSendRequest(config: InternalAxiosRequestConfig) {
 }
 
 export const axiosBackendInstance = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND_URL,
+  baseURL: ENV.APP.BACKEND_URL,
   headers: {
     "Content-Type": "application/json",
   },

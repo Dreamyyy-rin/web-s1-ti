@@ -8,10 +8,20 @@ import { AxiosError } from "axios";
 import { DEFAULT_ERROR_MESSAGE } from "@/constants/error.constant";
 
 function createAnnouncement(data: AnnouncementSchema) {
-  return axiosBackendInstance.post("/pengumuman", {
-    judul: data.title,
-    isi: data.content,
-  });
+  console.log("data to send: ", data)
+  return axiosBackendInstance.post(
+    "/pengumuman",
+    {
+      judul: data.title,
+      isi: data.content,
+      file: data.file,
+    },
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    },
+  );
 }
 
 export function useCreateAnnouncement() {

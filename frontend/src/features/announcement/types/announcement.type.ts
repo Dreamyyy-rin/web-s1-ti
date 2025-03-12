@@ -4,7 +4,7 @@ export interface Announcement{
   id: number;
   judul: string;
   isi: string;
-  // file: string | null;
+  file: string | null;
   user_id: number;
   created_at: string;
   updated_at: string;
