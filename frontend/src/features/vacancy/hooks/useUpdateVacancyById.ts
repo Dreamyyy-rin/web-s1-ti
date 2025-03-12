@@ -8,17 +8,25 @@ import { handleAxiosError } from "@/lib/helpers";
 import { VacancySchema } from "../types/vacancy.schema";
 
 interface updateVacancyParams {
-  id: number;
+  id: string;
   data: VacancySchema;
 }
 
 function updateVacancyById(params: updateVacancyParams) {
-  return axiosBackendInstance.post(`/lowongan/${params.id}`, {
-    judul: params.data.title,
-    deskripsi: params.data.description,
-    link_pendaftaran: params.data.link_pendaftaran,
-    // file: data.file,
-  });
+  return axiosBackendInstance.post(
+    `/lowongan/${params.id}`,
+    {
+      judul: params.data.title,
+      deskripsi: params.data.description,
+      link_pendaftaran: params.data.registration_link,
+      file: params.data.file,
+    },
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    },
+  );
 }
 
 export function useUpdateVacancyById() {

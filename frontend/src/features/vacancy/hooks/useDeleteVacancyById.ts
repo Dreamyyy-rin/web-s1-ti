@@ -6,7 +6,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useState } from "react";
 
-function deleteVacancyById(id: number) {
+function deleteVacancyById(id: string) {
   return axiosBackendInstance.delete(`/lowongan/${id}`);
 }
 
@@ -15,7 +15,7 @@ export function useDeleteVacancyById() {
   const [error, setError] = useState<string>(DEFAULT_ERROR_MESSAGE);
 
   const mutation = useMutation({
-    mutationFn: async ({ id }: { id: number }) => await deleteVacancyById(id),
+    mutationFn: async ({ id }: { id: string }) => await deleteVacancyById(id),
     onError: (error: AxiosError<ErrorResponse>) => {
       const message = handleAxiosError(error)?.message;
       if (message) {

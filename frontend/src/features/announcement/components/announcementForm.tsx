@@ -153,7 +153,6 @@ const AnnouncementForm = React.forwardRef<
                 name="content"
                 render={({ field }) => (
                   <FormItem>
-                    {/* <FormLabel>Judul</FormLabel> */}
                     <FormControl>
                       <MinimalTiptapEditor
                         className="rounded-sm shadow-none ring-0 focus-visible:ring-0 focus-within:border-input border-t border-l-0 border-r-0 border-b-0"

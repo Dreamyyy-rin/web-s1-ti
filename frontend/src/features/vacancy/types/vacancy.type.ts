@@ -4,7 +4,7 @@ export interface Vacancy {
   id: number;
   judul: string;
   deskripsi: string;
-  // file: string | null;
+  file: string | null;
   link_pendaftaran: string;
   user_id: number;
   created_at: string;

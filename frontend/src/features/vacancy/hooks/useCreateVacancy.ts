@@ -8,12 +8,20 @@ import { DEFAULT_ERROR_MESSAGE } from "@/constants/error.constant";
 import { VacancySchema } from "../types/vacancy.schema";
 
 function createVacancy(data: VacancySchema) {
-  return axiosBackendInstance.post("/lowongan", {
-    judul: data.title,
-    deskripsi: data.description,
-    link_pendaftaran: data.link_pendaftaran,
-    // file: data.file,
-  });
+  return axiosBackendInstance.post(
+    "/lowongan",
+    {
+      judul: data.title,
+      deskripsi: data.description,
+      link_pendaftaran: data.registration_link,
+      file: data.file,
+    },
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    },
+  );
 }
 
 export function useCreateVacancy() {

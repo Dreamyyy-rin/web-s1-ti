@@ -5,7 +5,7 @@ function fetchVacanciesById(id: string) {
   return axiosBackendInstance.get(`/lowongan/${id}`);
 }
 
-export function useFetchVacancies(id: string) {
+export function useFetchVacancyById(id: string) {
   return useQuery({
     queryKey: ["vacancy", id, "fetch"],
     queryFn: async () => {

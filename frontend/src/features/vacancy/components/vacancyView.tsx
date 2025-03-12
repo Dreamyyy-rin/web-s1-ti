@@ -1,19 +1,20 @@
 import { EditorContent } from "@tiptap/react";
-import { Announcement } from "../types/announcement.type";
 import useMinimalTiptapEditor from "@/components/ui/custom/minimal-tiptap/hooks/use-minimal-tiptap";
 import { ENV } from "@/env";
+import { Vacancy } from "../types/vacancy.type";
+import { Button } from "@/components/ui/button";
 
 
-const AnnouncementView = ({ data }: { data: Announcement }) => {
+const VacancyView = ({ data }: { data: Vacancy }) => {
   const editor = useMinimalTiptapEditor({
-    value: data.isi,
+    value: data.deskripsi,
     editable: false,
   });
   if (!editor) {
     return null;
   }
 
-  const url = data.file?.includes("pengumuman_files")
+  const url = data.file?.includes("lowongan_files")
     ? `${ENV.APP.BACKEND_STORAGE_URL}/${data.file}`
     : data.file;
 
@@ -24,7 +25,7 @@ const AnnouncementView = ({ data }: { data: Announcement }) => {
           {url && (
             <img
               src={url}
-              alt="announcement"
+              alt="lowongan"
               className=""
             />
           )}
@@ -38,8 +39,13 @@ const AnnouncementView = ({ data }: { data: Announcement }) => {
           className="minimal-tiptap-editor space-y-2"
         />
       </div>
+      <div className="w-full">
+        <a href={data.link_pendaftaran} target="_blank" className="w-full">
+          <Button className="w-full">Daftar Sekarang</Button>
+        </a>
+      </div>
     </div>
   );
 };
 
-export default AnnouncementView;
+export default VacancyView;
