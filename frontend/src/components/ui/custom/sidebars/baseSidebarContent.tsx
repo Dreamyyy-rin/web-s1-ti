@@ -22,15 +22,17 @@ const BaseSidebarContent = React.forwardRef<
       <SidebarMenu>
         {service.items.map((item) => (
           <SidebarMenuItem key={item.title}>
-            <SidebarMenuButton asChild>
+            <SidebarMenuButton
+              asChild
+              className={
+                pathname.includes(item.url)
+                  ? "bg-foreground  text-background hover:bg-foreground hover:text-background opacity-100 aria-disabled:opacity-100 disabled:opacity-100"
+                  : ""
+              }
+            >
               <Link
                 disabled={pathname.includes(item.url)}
                 to={item.url}
-                // className="disabled:bg-foreground disabled:text-foreground"
-                activeProps={{
-                  className:
-                    "bg-foreground  text-background hover:bg-foreground hover:text-background aria-disabled:opacity-100 disabled:opacity-100",
-                }}
               >
                 <item.icon className="" />
                 <span>{item.title}</span>
