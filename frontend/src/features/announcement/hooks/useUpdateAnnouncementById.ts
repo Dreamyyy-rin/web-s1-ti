@@ -8,7 +8,7 @@ import { ErrorResponse } from "@/types/responses/errorResponse.type";
 import { handleAxiosError } from "@/lib/helpers";
 
 interface updateAnnouncementParams {
-  id: number;
+  id: string;
   data: AnnouncementSchema;
 }
 

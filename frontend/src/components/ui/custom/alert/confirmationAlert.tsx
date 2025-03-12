@@ -15,8 +15,11 @@ const ConfirmationAlert = React.forwardRef<
   HTMLDivElement,
   React.ComponentPropsWithoutRef<"div"> & {
     onConfirmation: () => void;
+    description?: string;
+    title?: string;
+    confirmSlot?: React.ReactNode
   }
->(({ onConfirmation, children = true }) => {
+>(({ onConfirmation, title, description, confirmSlot, children = true }) => {
   const [open, setOpen] = useState(false);
 
   const handleOnClickConfirm = () => {
@@ -32,15 +35,15 @@ const ConfirmationAlert = React.forwardRef<
       <AlertDialogTrigger asChild onClick={() => setOpen(false)}>{children}</AlertDialogTrigger>
       <AlertDialogContent className="w-[80vw] rounded-md" >
         <AlertDialogHeader>
-          <AlertDialogTitle>Apakah Anda yakin?</AlertDialogTitle>
+          <AlertDialogTitle>{title ?? "Apakah Anda yakin?"}</AlertDialogTitle>
           <AlertDialogDescription>
-            Tindakan ini tidak dapat dikembalikan setelah dieksekusi.
+           {description ?? " Tindakan ini tidak dapat dikembalikan setelah dieksekusi."}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel className="w-full">Batal</AlertDialogCancel>
           <AlertDialogAction className="w-full" onClick={handleOnClickConfirm}>
-            Konfirmasi
+            {confirmSlot ?? "Konfirmasi"}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

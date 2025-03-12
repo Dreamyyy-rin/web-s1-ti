@@ -4,6 +4,8 @@ import DatatableDropdown from "@/components/ui/custom/datatable/datatableDropdow
 import { useDeleteAnnouncementById } from "../hooks/useDeleteAnnouncementById";
 import React from "react";
 import { useNavigate } from "@tanstack/react-router";
+import { convertToIndonesianDate, handleAxiosError } from "@/lib/helpers";
+import { toast } from "sonner";
 
 const AnnouncementActionCell = React.forwardRef<
   HTMLDivElement,
@@ -24,7 +26,22 @@ const AnnouncementActionCell = React.forwardRef<
     });
   };
   const handleOnClickDelete = () => {
-    mutate({ id: String(data.id) });
+    mutate(
+      { id: String(data.id) },
+      {
+        onSuccess: () => {
+          toast.success("Berhasil", {
+            description: "Pengumuman berhasil dihapus",
+          });
+        },
+        onError: (error) => {
+          const message = handleAxiosError(error)?.message;
+          toast.success("Gagal", {
+            description: message,
+          });
+        },
+      },
+    );
   };
   return (
     <div className="text-right">
@@ -48,12 +65,13 @@ export const announcementColumns: ColumnDef<Announcement>[] = [
     },
   },
   {
-    id: "content",
-    accessorKey: "isi",
-    header: () => <div className="text-start">Isi</div>,
+    id: "last_updated",
+    accessorKey: "updated_at",
+    header: () => <div className="text-start">Terakhir Diperbarui</div>,
     cell: ({ row }) => {
-      const content = String(row.getValue("content"));
-      return <div className="text-start font-medium">{content}</div>;
+      const lastUpdated = String(row.getValue("last_updated"));
+      const formattedDate = convertToIndonesianDate(new Date(lastUpdated));
+      return <div className="text-start font-medium">{formattedDate}</div>;
     },
   },
   {

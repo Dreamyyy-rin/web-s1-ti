@@ -5,8 +5,9 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   useReactTable,
+  VisibilityState,
 } from "@tanstack/react-table";
-import React from "react";
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -37,6 +38,9 @@ const Datatable = <TData extends object, TValue = unknown>(
   }: React.ComponentPropsWithoutRef<"div"> & DataTableProps<TData, TValue>,
   ref: React.ForwardedRef<HTMLDivElement>,
 ) => {
+
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
+  
   const table = useReactTable({
     data,
     columns,
@@ -44,15 +48,16 @@ const Datatable = <TData extends object, TValue = unknown>(
     getPaginationRowModel: getPaginationRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     globalFilterFn: "includesString",
+    onColumnVisibilityChange: setColumnVisibility,
     initialState: {
       pagination: {
         pageIndex: 0,
         pageSize: 10,
       },
     },
-    // state: {
-    //   globalFilter
-    // }
+    state: {
+      columnVisibility
+    }
   });
   return (
     <div ref={ref} {...props} className={cn("rounded-md space-y-2", className)}>
