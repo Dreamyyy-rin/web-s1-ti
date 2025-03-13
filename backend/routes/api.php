@@ -18,7 +18,7 @@ Route::get('/files/{folder}/{filename}', function ($folder, $filename) {
         return response()->json(['message' => 'File tidak ditemukan'], 404);
     }
 
-    return Response::file($path, [
+    return response()->file($path, [
         'Access-Control-Allow-Origin' => '*',
         'Content-Type' => mime_content_type($path),
     ]);

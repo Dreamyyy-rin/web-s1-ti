@@ -11,7 +11,13 @@ class Pengumuman extends Model
 
     protected $table = 'pengumuman'; 
     protected $fillable = ['judul', 'isi', 'file', 'user_id']; 
-
+    //kalau mau liat urlnya di json reponse
+    //protected $appends = ['file_url'];
+    
+    public function getFileUrlAttribute()
+    {
+    return $this->file ? asset("storage/{$this->file}") : null;
+    }
     // ambil foregin key dari admin id
     public function user()
     {
