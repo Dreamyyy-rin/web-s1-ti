@@ -24,25 +24,26 @@ class LowonganController extends Controller
             'file' => 'nullable|mimes:jpg,jpeg,png,pdf,mp4|max:20480',
             'link_pendaftaran' => 'nullable|url',
         ]);
-
+    
         $filePath = null;
         if ($request->hasFile('file')) {
             $filePath = $request->file('file')->store('lowongan_files', 'public');
         }
-
+    
         $lowongan = Lowongan::create([
             'judul' => $request->judul,
             'deskripsi' => $request->deskripsi,
-            'file' => $filePath,
+            'file' => $filePath ? url('/api/files/' . str_replace('public/', '', $filePath)) : null,
             'link_pendaftaran' => $request->link_pendaftaran,
             'user_id' => auth()->id(),
         ]);
-
+    
         return response()->json([
             'message' => 'Lowongan berhasil dibuat!',
             'lowongan' => $lowongan
         ], Response::HTTP_CREATED);
     }
+    
 
     // Get detail lowongan
     public function show($id)
@@ -51,49 +52,53 @@ class LowonganController extends Controller
         return response()->json($lowongan, Response::HTTP_OK);
     }
 
-    // Update lowongan
     public function update(Request $request, $id)
     {
         $lowongan = Lowongan::findOrFail($id);
-
+    
         $request->validate([
             'judul' => 'required|string|max:255',
             'deskripsi' => 'required|string',
             'file' => 'nullable|mimes:jpg,jpeg,png,pdf,mp4|max:20480',
             'link_pendaftaran' => 'nullable|url',
         ]);
-
+    
         if ($request->hasFile('file')) {
+            // Hapus file lama jika ada
             if ($lowongan->file) {
-                Storage::disk('public')->delete($lowongan->file);
+                Storage::disk('public')->delete(str_replace(url('/api/files/'), '', $lowongan->file));
             }
-            $lowongan->file = $request->file('file')->store('lowongan_files', 'public');
+            $filePath = $request->file('file')->store('lowongan_files', 'public');
+            $lowongan->file = url('/api/files/' . str_replace('public/', '', $filePath));
         }
-
+    
         $lowongan->update([
             'judul' => $request->judul,
             'deskripsi' => $request->deskripsi,
             'link_pendaftaran' => $request->link_pendaftaran,
         ]);
-
+    
         return response()->json([
             'message' => 'Lowongan berhasil diperbarui!',
             'lowongan' => $lowongan
         ], Response::HTTP_OK);
     }
+    
 
     // Hapus lowongan
     public function destroy($id)
     {
         $lowongan = Lowongan::findOrFail($id);
-
+    
+        // Hapus file jika ada
         if ($lowongan->file) {
-            Storage::disk('public')->delete($lowongan->file);
+            Storage::disk('public')->delete(str_replace(url('/api/files/'), '', $lowongan->file));
         }
-
+    
         $lowongan->delete();
-
+    
         return response()->json(['message' => 'Lowongan berhasil dihapus!'], Response::HTTP_OK);
     }
+    
 }
 

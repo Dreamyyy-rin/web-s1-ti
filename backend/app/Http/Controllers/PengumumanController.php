@@ -23,24 +23,25 @@ class PengumumanController extends Controller
             'isi' => 'required|string',
             'file' => 'nullable|mimes:jpg,jpeg,png,pdf,mp4|max:20480',
         ]);
-
+    
         $filePath = null;
         if ($request->hasFile('file')) {
             $filePath = $request->file('file')->store('pengumuman_files', 'public');
         }
-
+    
         $pengumuman = Pengumuman::create([
             'judul' => $request->judul,
             'isi' => $request->isi,
-            'file' => $filePath,
+            'file' => $filePath ? url('/api/files/' . str_replace('public/', '', $filePath)) : null,
             'user_id' => auth()->id(),
         ]);
-
+    
         return response()->json([
             'message' => 'Pengumuman berhasil dibuat!',
             'pengumuman' => $pengumuman
         ], Response::HTTP_CREATED);
     }
+    
 
     // Get detail pengumuman
     public function show($id)
@@ -51,46 +52,50 @@ class PengumumanController extends Controller
 
     // Update pengumuman
     public function update(Request $request, $id)
-    {
-        $pengumuman = Pengumuman::findOrFail($id);
+{
+    $pengumuman = Pengumuman::findOrFail($id);
 
-        $request->validate([
-            'judul' => 'required|string|max:255',
-            'isi' => 'required|string',
-            'file' => 'nullable|mimes:jpg,jpeg,png,pdf,mp4|max:20480',
-        ]);
+    $request->validate([
+        'judul' => 'required|string|max:255',
+        'isi' => 'required|string',
+        'file' => 'nullable|mimes:jpg,jpeg,png,pdf,mp4|max:20480',
+    ]);
 
-        if ($request->hasFile('file')) {
-            if ($pengumuman->file) {
-                Storage::disk('public')->delete($pengumuman->file);
-            }
-            $pengumuman->file = $request->file('file')->store('pengumuman_files', 'public');
+    if ($request->hasFile('file')) {
+        if ($pengumuman->file) {
+            Storage::disk('public')->delete(str_replace(url('/api/files/'), '', $pengumuman->file));
         }
-
-        $pengumuman->update([
-            'judul' => $request->judul,
-            'isi' => $request->isi,
-        ]);
-
-        return response()->json([
-            'message' => 'Pengumuman berhasil diperbarui!',
-            'pengumuman' => $pengumuman
-        ], Response::HTTP_OK);
+        $filePath = $request->file('file')->store('pengumuman_files', 'public');
+        $pengumuman->file = url('/api/files/' . str_replace('public/', '', $filePath));
     }
+
+    $pengumuman->update([
+        'judul' => $request->judul,
+        'isi' => $request->isi,
+    ]);
+
+    return response()->json([
+        'message' => 'Pengumuman berhasil diperbarui!',
+        'pengumuman' => $pengumuman
+    ], Response::HTTP_OK);
+}
+
 
     // Hapus pengumuman
     public function destroy($id)
     {
         $pengumuman = Pengumuman::findOrFail($id);
-
+    
+        // Hapus file jika ada
         if ($pengumuman->file) {
-            Storage::disk('public')->delete($pengumuman->file);
+            Storage::disk('public')->delete(str_replace(url('/api/files/'), '', $pengumuman->file));
         }
-
+    
         $pengumuman->delete();
-
+    
         return response()->json(['message' => 'Pengumuman berhasil dihapus!'], Response::HTTP_OK);
     }
+    
 }
 
 
