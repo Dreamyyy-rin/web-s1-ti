@@ -19,6 +19,7 @@ import { useRouter } from "@tanstack/react-router";
 import { vacancySchema, VacancySchema } from "../types/vacancy.schema";
 import { Vacancy } from "../types/vacancy.type";
 import VacancyView from "./vacancyView";
+import { fetchFileFromUrl, getUrlFromFile } from "@/lib/helpers";
 
 const VacancyForm = React.forwardRef<
   React.ElementRef<"div">,
@@ -38,19 +39,45 @@ const VacancyForm = React.forwardRef<
 
   const form = useForm<VacancySchema>({
     resolver: zodResolver(vacancySchema),
-    defaultValues: data
-      ? {
-          title: data.judul,
-          description: data.deskripsi,
-          registration_link: data.link_pendaftaran,
-          file: undefined,
-        }
-      : {
+    // defaultValues: data
+    //   ? {
+    //       title: data.judul,
+    //       description: data.deskripsi,
+    //       registration_link: data.link_pendaftaran,
+    //       file: undefined,
+    //     }
+    //   : {
+    //       title: "",
+    //       description: "",
+    //       registration_link: "",
+    //       file: undefined,
+    //     },
+    defaultValues: async () => {
+      if (!data) {
+        return {
           title: "",
           description: "",
           registration_link: "",
           file: undefined,
-        },
+        };
+      }
+      if (!data.file) {
+        return {
+          description: data.deskripsi,
+          registration_link: data.link_pendaftaran,
+          title: data.judul,
+          file: undefined,
+        };
+      }
+      const file = await fetchFileFromUrl(data.file)
+      getUrlFromFile(file, setUrl)
+      return {
+        description: data.deskripsi,
+        registration_link: data.link_pendaftaran,
+        title: data.judul,
+        file: file,
+      };
+    },
   });
 
   const { title, description, registration_link } = form.watch();
@@ -70,21 +97,15 @@ const VacancyForm = React.forwardRef<
                 name="file"
                 render={({ field }) => (
                   <FormItem className="mb-6">
-                    {/* <FormLabel>Judul</FormLabel> */}
                     <FormControl>
                       <ImageInput
                         value={field.value}
                         accept="image/jpeg,image/png,image/jpg"
                         onUpload={(file: File) => {
-                          const reader = new FileReader();
-                          reader.onload = (e: ProgressEvent<FileReader>) => {
-                            setUrl(e.target?.result as string);
-                          };
-                          reader.readAsDataURL(file);
+                          getUrlFromFile(file, setUrl)
                           form.setValue("file", file);
                         }}
                       />
-                      {/* <Input type="file" field:/> */}
                     </FormControl>
                     <FormMessage className="px-3" />
                   </FormItem>
@@ -95,7 +116,6 @@ const VacancyForm = React.forwardRef<
                 name="title"
                 render={({ field }) => (
                   <FormItem className="mb-6">
-                    {/* <FormLabel>Judul</FormLabel> */}
                     <FormControl>
                       <Input
                         required
@@ -139,7 +159,9 @@ const VacancyForm = React.forwardRef<
                   {/* <FormLabel>Judul</FormLabel> */}
                   <FormControl>
                     <div className="flex flex-row items-center w-full mt-2">
-                      <FormLabel className="text-center min-w-56 ">Link Pendaftaran</FormLabel>
+                      <FormLabel className="text-center min-w-56 ">
+                        Link Pendaftaran
+                      </FormLabel>
                       <Input
                         required
                         type="text"

@@ -1,3 +1,5 @@
+import { ENV } from "@/env";
+import { axiosBackendInstance } from "@/services/axiosInstance";
 import { ErrorResponse } from "@/types/responses/errorResponse.type";
 import { AxiosError } from "axios";
 
@@ -5,7 +7,7 @@ export function handleAxiosError(
   error: AxiosError<ErrorResponse>,
 ): ErrorResponse | null {
   if (!error.response) {
-    return null
+    return null;
   }
   if (error.response.status >= 500) {
     return {
@@ -28,4 +30,37 @@ export function convertToIndonesianDate(date: Date): string {
       timeZone: "Asia/Jakarta",
     })
     .replace(/\./g, ":");
+}
+
+export const getUrlFromFile = (
+  file: File,
+  callback?: (url: string) => void,
+) => {
+  const reader = new FileReader();
+  reader.onload = (e: ProgressEvent<FileReader>) => {
+    // setUrl(e.target?.result as string);
+    if (callback) {
+      callback(e.target?.result as string);
+    }
+  };
+  reader.readAsDataURL(file);
+};
+
+export async function fetchFileFromUrl(url: string): Promise<File> {
+  const filename = url.split("/").pop() || "announcement-image";
+  const response = await axiosBackendInstance.get(
+    `${ENV.APP.BACKEND_URL}/files/${url}`,
+    {
+      responseType: "blob",
+    },
+  );
+  const blob = response.data;
+  const fileExtension =
+    url.split(".").pop() ||
+    response.headers["content-type"]?.split("/").pop() ||
+    "jpg";
+  const file = new File([blob], filename || `image.${fileExtension}`, {
+    type: blob.type,
+  });
+  return file
 }

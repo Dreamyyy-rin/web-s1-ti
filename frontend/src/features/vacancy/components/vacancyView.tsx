@@ -14,8 +14,10 @@ const VacancyView = ({ data }: { data: Vacancy }) => {
     return null;
   }
 
+  console.log("data.file : ", data.file)
+
   const url = data.file?.includes("lowongan_files")
-    ? `${ENV.APP.BACKEND_STORAGE_URL}/${data.file}`
+    ? `${ENV.APP.BACKEND_URL}/files/${data.file}`
     : data.file;
 
   return (
