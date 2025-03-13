@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'paths' => ['api/*', 'sanctum/csrf-cookie', 'storage/*'],
+    'paths' => ['api/*', 'sanctum/csrf-cookie', 'storage/*', 'files/*'],
     'allowed_methods' => ['GET, POST, PUT, OPTIONS'], // Bisa diganti dengan ['GET', 'POST', 'PUT', 'DELETE'] jika perlu
     'allowed_origins' => ['http://localhost:8000'], // Local Hostnya di ganti ya 
     'allowed_origins_patterns' => [],

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pengumuman;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 
 class PengumumanController extends Controller
@@ -11,16 +12,16 @@ class PengumumanController extends Controller
     // Ambil semua pengumuman
     public function index()
     {
-        return response()->json(Pengumuman::with('user:id,name')->latest()->get());
+        return response()->json(Pengumuman::with('user:id,name')->latest()->get(), Response::HTTP_OK);
     }
 
-    // Buat pengumuma
+    // Buat pengumuman
     public function store(Request $request)
     {
         $request->validate([
             'judul' => 'required|string|max:255',
             'isi' => 'required|string',
-            'file' => 'nullable|mimes:jpg,jpeg,png,pdf,mp4|max:20480', // File max 20MB bisa di ganti
+            'file' => 'nullable|mimes:jpg,jpeg,png,pdf,mp4|max:20480',
         ]);
 
         $filePath = null;
@@ -32,17 +33,20 @@ class PengumumanController extends Controller
             'judul' => $request->judul,
             'isi' => $request->isi,
             'file' => $filePath,
-            'user_id' => auth()->id(), // Ambil ID admin yang sedang login biar bisa di catat oleh dihapus nak ra perlu
+            'user_id' => auth()->id(),
         ]);
 
-        return response()->json(['message' => 'Pengumuman berhasil dibuat!', 'pengumuman' => $pengumuman]);
+        return response()->json([
+            'message' => 'Pengumuman berhasil dibuat!',
+            'pengumuman' => $pengumuman
+        ], Response::HTTP_CREATED);
     }
 
-    // Ambil pengumuman berdasarkan ID
+    // Get detail pengumuman
     public function show($id)
     {
         $pengumuman = Pengumuman::with('user:id,name')->findOrFail($id);
-        return response()->json($pengumuman);
+        return response()->json($pengumuman, Response::HTTP_OK);
     }
 
     // Update pengumuman
@@ -68,7 +72,10 @@ class PengumumanController extends Controller
             'isi' => $request->isi,
         ]);
 
-        return response()->json(['message' => 'Pengumuman berhasil diperbarui!', 'pengumuman' => $pengumuman]);
+        return response()->json([
+            'message' => 'Pengumuman berhasil diperbarui!',
+            'pengumuman' => $pengumuman
+        ], Response::HTTP_OK);
     }
 
     // Hapus pengumuman
@@ -82,7 +89,8 @@ class PengumumanController extends Controller
 
         $pengumuman->delete();
 
-        return response()->json(['message' => 'Pengumuman berhasil dihapus!']);
+        return response()->json(['message' => 'Pengumuman berhasil dihapus!'], Response::HTTP_OK);
     }
 }
+
 
