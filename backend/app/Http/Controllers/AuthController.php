@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
-    //  REGISTER
+    // REGISTER
     public function register(Request $request)
     {
         $request->validate([
@@ -24,16 +24,16 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => $request->role ?? 'admin', // Default 'admin' nak ra diisi
+            'role' => $request->role ?? 'admin',
         ]);
 
         return response()->json([
             'message' => 'User registered successfully',
             'user' => $user
-        ], 201);
+        ], Response::HTTP_CREATED);
     }
 
-    //  LOGIN
+    // LOGIN
     public function login(Request $request)
     {
         $request->validate([
@@ -42,7 +42,7 @@ class AuthController extends Controller
         ]);
 
         if (!Auth::attempt($request->only('email', 'password'))) {
-            return response()->json(['message' => 'Invalid credentials'], 401);
+            return response()->json(['message' => 'Invalid credentials'], Response::HTTP_UNAUTHORIZED);
         }
 
         $user = Auth::user();
@@ -52,21 +52,19 @@ class AuthController extends Controller
             'message' => 'Login successful',
             'token' => $token,
             'user' => $user
-        ]);
+        ], Response::HTTP_OK);
     }
 
-    //  LOGOUT
+    // LOGOUT
     public function logout(Request $request)
     {
         $request->user()->tokens()->delete();
-        return response()->json(['message' => 'Logged out successfully']);
+        return response()->json(['message' => 'Logged out successfully'], Response::HTTP_OK);
     }
 
-    //  Check Siapa yang login
+    // CHECK USER YANG LOGIN
     public function me(Request $request)
     {
-        return response()->json($request->user());
+        return response()->json($request->user(), Response::HTTP_OK);
     }
 }
-
-

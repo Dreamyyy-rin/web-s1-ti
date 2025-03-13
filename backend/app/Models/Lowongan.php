@@ -18,7 +18,14 @@ class Lowongan extends Model
         'link_pendaftaran',
         'user_id',
     ];
+    //kalau mau liat urlnya di json reponse
+    //protected $appends = ['file_url'];
 
+    
+    public function getFileUrlAttribute()
+    {
+    return $this->file ? asset("storage/{$this->file}") : null;
+    }
     public function user()
     {
         return $this->belongsTo(User::class);

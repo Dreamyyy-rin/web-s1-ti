@@ -14,7 +14,7 @@ const AnnouncementView = ({ data }: { data: Announcement }) => {
   }
 
   const url = data.file?.includes("pengumuman_files")
-    ? `${ENV.APP.BACKEND_STORAGE_URL}/${data.file}`
+    ? `${ENV.APP.BACKEND_URL}/files/${data.file}`
     : data.file;
 
   return (

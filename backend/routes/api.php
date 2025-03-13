@@ -3,10 +3,26 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\LowonganController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 
 // AUTH
 Route::post('/register', [AuthController::class, 'register']); // Register 
 Route::post('/login', [AuthController::class, 'login']); // Login 
+//MENGAKALI PAKE FILE LANGSUNG DI TEMBAK KE LARAVEL 
+Route::get('/files/{folder}/{filename}', function ($folder, $filename) {
+    $path = storage_path("app/public/{$folder}/{$filename}");
+
+    if (!file_exists($path)) {
+        return response()->json(['message' => 'File tidak ditemukan'], 404);
+    }
+
+    return response()->file($path, [
+        'Access-Control-Allow-Origin' => '*',
+        'Content-Type' => mime_content_type($path),
+    ]);
+});
 
 // PENGUMUMAN/Lowongan
 Route::get('/pengumuman', [PengumumanController::class, 'index']); // Get all pengumuman

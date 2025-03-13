@@ -21,6 +21,7 @@ import { Button } from "@/components/ui/button";
 import ConfirmationAlert from "@/components/ui/custom/alert/confirmationAlert";
 import { useRouter } from "@tanstack/react-router";
 import { Announcement } from "../types/announcement.type";
+import { fetchFileFromUrl, getUrlFromFile } from "@/lib/helpers";
 
 const AnnouncementForm = React.forwardRef<
   React.ElementRef<"div">,
@@ -35,64 +36,36 @@ const AnnouncementForm = React.forwardRef<
 
   const router = useRouter();
   const user = useAuthStore((state) => state.user);
-
   const [url, setUrl] = React.useState<string | null>(null);
 
   const form = useForm<AnnouncementSchema>({
     resolver: zodResolver(announcementSchema),
-    defaultValues: data? {
-      title: data.judul,
-      content: data.isi,
-      file: undefined,
-    } : {
-      title: "",
-      content: "",
-      file: undefined,
+    defaultValues: async () => {
+      if (!data) {
+        return {
+          title: "",
+          content: "",
+          file: undefined,
+        };
+      }
+      if (!data.file) {
+        return {
+          content: data.isi,
+          title: data.judul,
+          file: undefined,
+        };
+      }
+      const file = await fetchFileFromUrl(data.file);
+      getUrlFromFile(file, setUrl);
+      return {
+        content: data.isi,
+        title: data.judul,
+        file: file,
+      };
     },
-    // defaultValues: async () => {
-    //   if (!data) {
-    //     return {
-    //       title: "",
-    //       content: "",
-    //       file: undefined,
-    //     };
-    //   }
-    //   if (!data.file) {
-    //     return {
-    //       content: data.isi,
-    //       title: data.judul,
-    //       file: undefined,
-    //     };
-    //   }
-    //   const filename = data.file.split("/").pop() || "announcement-image";
-    //   // const response = await fetch(
-    //   //   `${ENV.APP.BACKEND_STORAGE_URL}/${data.file}`,
-    //   // );
-    //   const response = await axiosBackendInstance.get(
-    //     `${ENV.APP.BACKEND_STORAGE_URL}/${data.file}`,
-    //     {
-    //       responseType: "blob",
-    //     },
-    //   );
-    //   const blob = response.data;
-    //   // Extract file extension from the URL or content type
-    //   const fileExtension =
-    //     data.file.split(".").pop() ||
-    //     response.headers["content-type"]?.split("/").pop() ||
-    //     "jpg";
-    //   const file = new File([blob], filename || `image.${fileExtension}`, {
-    //     type: blob.type,
-    //   });
-    //   return {
-    //     content: data.isi,
-    //     title: data.judul,
-    //     file: file,
-    //   };
-    // },
   });
 
   const { title, content } = form.watch();
-
 
   return (
     <Form {...form}>
@@ -109,21 +82,15 @@ const AnnouncementForm = React.forwardRef<
                 name="file"
                 render={({ field }) => (
                   <FormItem className="mb-6">
-                    {/* <FormLabel>Judul</FormLabel> */}
                     <FormControl>
                       <ImageInput
                         value={field.value}
                         accept="image/jpeg,image/png,image/jpg"
                         onUpload={(file: File) => {
-                          const reader = new FileReader();
-                          reader.onload = (e: ProgressEvent<FileReader>) => {
-                            setUrl(e.target?.result as string);
-                          };
-                          reader.readAsDataURL(file);
+                          getUrlFromFile(file, setUrl);
                           form.setValue("file", file);
                         }}
                       />
-                      {/* <Input type="file" field:/> */}
                     </FormControl>
                     <FormMessage className="px-3" />
                   </FormItem>
@@ -134,7 +101,6 @@ const AnnouncementForm = React.forwardRef<
                 name="title"
                 render={({ field }) => (
                   <FormItem className="mb-6">
-                    {/* <FormLabel>Judul</FormLabel> */}
                     <FormControl>
                       <Input
                         required
