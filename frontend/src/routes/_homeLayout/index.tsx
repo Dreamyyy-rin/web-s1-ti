@@ -3,7 +3,7 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  // CarouselNext,
+  CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Content } from "@tiptap/react";
@@ -25,6 +25,7 @@ import aitiLink from "@/assets/aitiLink.png";
 import libraryLink from "@/assets/libraryLink.png";
 import sitaLink from "@/assets/sitaLink.png";
 import itexploreLink from "@/assets/itexploreLink.jpg";
+import Logo from "@/assets/logoFTI.png";
 import {
   Card,
   CardContent,
@@ -44,32 +45,35 @@ function Index() {
   return (
     <div>
       {/* Carousel */}
-      <Carousel>
-        <CarouselContent>
-          <CarouselItem>
-            <img
-              src={carousel1}
-              alt="Image 1"
-              className="w-full h-auto max-h-[500px] object-cover"
-            />
-          </CarouselItem>
-          <CarouselItem>
-            <img
-              src={carousel2}
-              alt="Image 2"
-              className="w-full h-auto max-h-[500px] object-cover"
-            />
-          </CarouselItem>
-          <CarouselItem>
-            <img
-              src={carousel1}
-              alt="Image 3"
-              className="w-full h-auto max-h-[500px] object-cover"
-            />
-          </CarouselItem>
-        </CarouselContent>
-        <CarouselPrevious />
-      </Carousel>
+      <div className="container mx-auto px-4 py-8">
+        <Carousel>
+          <CarouselContent>
+            <CarouselItem>
+              <img
+                src={carousel1}
+                alt="Image 1"
+                className="w-full h-auto max-h-[500px] object-cover"
+              />
+            </CarouselItem>
+            <CarouselItem>
+              <img
+                src={carousel2}
+                alt="Image 2"
+                className="w-full h-auto max-h-[500px] object-cover"
+              />
+            </CarouselItem>
+            <CarouselItem>
+              <img
+                src={carousel1}
+                alt="Image 3"
+                className="w-full h-auto max-h-[500px] object-cover"
+              />
+            </CarouselItem>
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
+      </div>
 
       <div className="flex justify-center gap-4 mt-6">
         <Button className="w-1/3 h-12">Lowongan Asisten Dosen</Button>
@@ -77,7 +81,7 @@ function Index() {
       </div>
 
       {/* Bagian Pengumuman */}
-      <div className="container mx-auto mt-20 px-4">
+      <div className="container mx-auto px-4 py-8">
         {/* Heading Pengumuman */}
         <div className="text-center mt-20">
           <h2 className="text-3xl font-semibold">Pengumuman</h2>
@@ -94,7 +98,7 @@ function Index() {
             />
             <CardContent>
               <CardHeader>
-                <CardTitle className="text-xl font-semibold text-gray-900 dark:text-white">
+                <CardTitle className="text-xl font-semibold text-gray-900">
                   Diskomvision 2024
                 </CardTitle>
                 <CardDescription className="text-gray-600 mt-2">
@@ -117,7 +121,7 @@ function Index() {
             />
             <CardContent>
               <CardHeader>
-                <CardTitle className="text-xl font-semibold">
+                <CardTitle className="text-xl font-semibold text-gray-900">
                   Judul Pengumuman 2
                 </CardTitle>
                 <CardDescription className="text-gray-600 mt-2">
@@ -140,7 +144,7 @@ function Index() {
             />
             <CardContent>
               <CardHeader>
-                <CardTitle className="text-xl font-semibold">
+                <CardTitle className="text-xl font-semibold text-gray-900">
                   Judul Pengumuman 3
                 </CardTitle>
                 <CardDescription className="text-gray-600 mt-2">
@@ -162,66 +166,68 @@ function Index() {
       </div>
 
       {/* Bagian Kerja Sama */}
-      <div className="text-center mt-16">
-        <h2 className="text-3xl font-semibold">Kerja Sama</h2>
-      </div>
+      <div className="container mx-auto px-4 py-8">
+        <div className="text-center mt-16">
+          <h2 className="text-3xl font-semibold">Kerja Sama</h2>
+        </div>
 
-      <div className="container mx-auto px-4 mt-6">
-        <div className="flex justify-center gap-28 items-center">
-          {/* Logo Alfamart */}
-          <a
-            href="https://www.alfamart.co.id/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="transition-transform duration-300 transform hover:scale-110 hover:rotate-3"
-          >
-            <img src={alfaLogo} alt="Alfamart" className="w-32 h-auto" />
-          </a>
+        <div className="container mx-auto px-4 mt-6">
+          <div className="flex justify-center gap-28 items-center">
+            {/* Logo Alfamart */}
+            <a
+              href="https://www.alfamart.co.id/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-transform duration-300 transform hover:scale-110 hover:rotate-3"
+            >
+              <img src={alfaLogo} alt="Alfamart" className="w-32 h-auto" />
+            </a>
 
-          {/* Logo CTI Group */}
-          <a
-            href="https://www.ctigroup.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="transition-transform duration-300 transform hover:scale-110 hover:rotate-3"
-          >
-            <img src={ctiLogo} alt="CTI Group" className="w-32 h-auto" />
-          </a>
+            {/* Logo CTI Group */}
+            <a
+              href="https://www.ctigroup.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-transform duration-300 transform hover:scale-110 hover:rotate-3"
+            >
+              <img src={ctiLogo} alt="CTI Group" className="w-32 h-auto" />
+            </a>
 
-          {/* Logo Pura */}
-          <a
-            href="https://www.pura.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="transition-transform duration-300 transform hover:scale-110 hover:rotate-3"
-          >
-            <img src={puraLogo} alt="Pura" className="w-32 h-auto" />
-          </a>
+            {/* Logo Pura */}
+            <a
+              href="https://www.pura.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-transform duration-300 transform hover:scale-110 hover:rotate-3"
+            >
+              <img src={puraLogo} alt="Pura" className="w-32 h-auto" />
+            </a>
 
-          {/* Logo Sinarmas */}
-          <a
-            href="https://www.sinarmas.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="transition-transform duration-300 transform hover:scale-110 hover:rotate-3"
-          >
-            <img src={sinarmasLogo} alt="Sinarmas" className="w-32 h-auto" />
-          </a>
+            {/* Logo Sinarmas */}
+            <a
+              href="https://www.sinarmas.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-transform duration-300 transform hover:scale-110 hover:rotate-3"
+            >
+              <img src={sinarmasLogo} alt="Sinarmas" className="w-32 h-auto" />
+            </a>
 
-          {/* Logo BCA */}
-          <a
-            href="https://www.bca.co.id/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="transition-transform duration-300 transform hover:scale-110 hover:rotate-3"
-          >
-            <img src={bcaLogo} alt="BCA" className="w-32 h-auto" />
-          </a>
+            {/* Logo BCA */}
+            <a
+              href="https://www.bca.co.id/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-transform duration-300 transform hover:scale-110 hover:rotate-3"
+            >
+              <img src={bcaLogo} alt="BCA" className="w-32 h-auto" />
+            </a>
+          </div>
         </div>
       </div>
 
       {/*Bagian Profil Singkat*/}
-      <div className="container mx-auto px-8 mt-16">
+      <div className="container mx-auto px-8 py-8">
         {/* Heading di luar Card */}
         <h2 className="text-3xl font-semibold text-center">
           Teknik Informatika UKSW
@@ -256,7 +262,7 @@ function Index() {
       </div>
 
       {/*Bagian Akreditasi*/}
-      <div className="container mx-auto px-4 mt-16">
+      <div className="container mx-auto px-4 py-8">
         {/* Heading Sertifikasi */}
         <div className="text-center">
           <h2 className="text-3xl font-semibold">Akreditasi Program Studi</h2>
@@ -292,7 +298,7 @@ function Index() {
       </div>
 
       {/*Bagian Layanan Kampus*/}
-      <div className="container mx-auto px-4 mt-16">
+      <div className="container mx-auto px-4 py-8">
         {/* Heading Layanan Kampus */}
         <div className="text-center">
           <h2 className="text-3xl font-semibold">Layanan Kampus</h2>
@@ -374,6 +380,77 @@ function Index() {
               />
             </a>
           </div>
+        </div>
+      </div>
+
+      {/*Bagian Footer*/}
+      <div className="bg-blue-900 text-white py-6 mt-16">
+        <div className="container mx-auto flex justify-between items-center">
+          {/* Kolom kiri: Logo dan alamat */}
+          <div className="flex items-center space-x-4">
+            <img src={Logo} alt="Logo" className="w-20 h-auto" />
+            <div>
+              <h3 className="text-xl font-bold">
+                Fakultas Teknologi Informasi
+              </h3>
+              <p className="text-sm">
+                Gedung Fakultas Teknologi Informasi, Kampus III Universitas
+                Kristen Satya Wacana
+              </p>
+              <p className="text-sm">
+                Jl. Dr. O. Notohamidjojo, Blotongan, Sidorejo, Kota Salatiga,
+                50715, Indonesia
+              </p>
+              <a href="mailto:fti@uksw.edu" className="text-sm text-blue-400">
+                fti@uksw.edu
+              </a>
+            </div>
+          </div>
+
+          {/* Kolom kanan: Link ke sumber daya universitas */}
+          <div className="space-y-2 text-right">
+            <h4 className="text-lg font-semibold">University Resources</h4>
+            <ul className="space-y-1 text-sm">
+              <li>
+                <a href="https://www.uksw.edu/" className="text-blue-400">
+                  Website Universitas Kristen Satya Wacana
+                </a>
+              </li>
+              <li>
+                <a href="https://sia.uksw.edu/" className="text-blue-400">
+                  Sistem Informasi Akademik Satya Wacana
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.uksw.edu/library"
+                  className="text-blue-400"
+                >
+                  Perpustakaan Universitas
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.uksw.edu/flexible-learning"
+                  className="text-blue-400"
+                >
+                  Flexible Learning UKSW
+                </a>
+              </li>
+              <li>
+                <a href="https://journal.uksw.edu/" className="text-blue-400">
+                  Jurnal AITI Fakultas Teknologi Informasi
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="text-center text-sm mt-6">
+          <p>
+            &copy; 2023 Fakultas Teknologi Informasi Universitas Kristen Satya
+            Wacana
+          </p>
         </div>
       </div>
     </div>
