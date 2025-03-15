@@ -2,6 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes pageLoading {
+  0% {
+    /* background-color: green; */
+    transform: translateX(-100%);
+  }
+  /* 17%{
+    background-color: orange;
+  }
+  34%{
+    background-color: yellow;
+  }
+  51%{
+    background-color: green;
+  }
+  68%{
+    background-color: blue;
+  }
+  85%{
+    background-color: indigo;
+  } */
+  100% {
+    /* background-color: violet; */
+    transform: translateX(100%);
+  }
+}
+
+.progress-bar-fill {
+  animation: pageLoading 1.5s ease-in-out 0s infinite normal;
+}
+
 /* :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;

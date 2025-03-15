@@ -2,6 +2,7 @@ import { User } from "@/features/user/types/user.type";
 import { axiosBackendInstance } from "@/services/axiosInstance";
 import { create, StateCreator } from "zustand";
 import { persist, devtools } from "zustand/middleware";
+import { useLoaderStore } from "./loader.store";
 
 // type AuthState = ExtractState<typeof useAuthStore>
 
@@ -29,8 +30,12 @@ export const useAuthStore = create<AuthStore>()(
     //actions
     isAuthenticated: async () => {
       try {
+        const setAuthLoading = useLoaderStore.getState().setAuthLoading;
+        setAuthLoading(true);
+
         if (!get().token) {
           set({ user: null });
+          setAuthLoading(false);
           return false;
         }
         const response = await axiosBackendInstance.get("/me", {});
@@ -40,9 +45,12 @@ export const useAuthStore = create<AuthStore>()(
           role: response.data.role,
         };
         set({ user: userProfile });
+        setAuthLoading(false);
         return true;
       } catch {
         set({ user: null, token: null });
+        const setAuthLoading = useLoaderStore.getState().setAuthLoading;
+        setAuthLoading(false);
         return false;
       }
     },
