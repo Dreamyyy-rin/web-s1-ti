@@ -18,8 +18,6 @@ import ctiLogo from "@/assets/ctiLogo.png";
 import puraLogo from "@/assets/puraLogo.png";
 import sinarmasLogo from "@/assets/sinarmasLogo.png";
 import bcaLogo from "@/assets/bcaLogo.png";
-import sertifikat from "@/assets/SERTIFIKAT AKREDITASI S1 TEKNIK INFORMATIKA UNGGUL  2024.pdf";
-import sertifikatImage from "@/assets/sertifikatImage.jpg";
 import siasatLink from "@/assets/siasatLink.png";
 import aitiLink from "@/assets/aitiLink.png";
 import libraryLink from "@/assets/libraryLink.png";
@@ -34,6 +32,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import Footer from "@/components/ui/custom/footer/footer";
 
 export const Route = createFileRoute("/_homeLayout/")({
   component: Index,
@@ -261,42 +260,6 @@ function Index() {
         </div>
       </div>
 
-      {/*Bagian Akreditasi*/}
-      <div className="container mx-auto px-4 py-8">
-        {/* Heading Sertifikasi */}
-        <div className="text-center">
-          <h2 className="text-3xl font-semibold">Akreditasi Program Studi</h2>
-        </div>
-
-        {/* Deskripsi Sertifikasi */}
-        <div className="flex flex-col md:flex-row mt-8 items-center justify-between">
-          <div className="md:w-2/3 p-4 text-gray-800 dark:text-white">
-            <p>
-              Berdasarkan Keputusan LAM INFOKOM No.
-              086/SK/LAM-INFOKOM/Ak/S/VIII/2024 menyatakan bahwa Program Studi
-              Teknik Informatika pada Program Sarjana Universitas Kristen Satya
-              Wacana, Kota Salatiga, memenuhi syarat peringkat AKREDITASI
-              UNGGUL.
-            </p>
-            <p className="mt-4">
-              Sertifikat Akreditasi Program Studi ini berlaku sejak tanggal 5
-              Agustus 2024 sampai dengan 5 Agustus 2029.
-            </p>
-          </div>
-
-          {/* Gambar Sertifikat yang Dapat Diklik */}
-          <div className="md:w-1/3 p-4">
-            <a href={sertifikat} target="_blank" rel="noopener noreferrer">
-              <img
-                src={sertifikatImage}
-                alt="Sertifikat Akreditasi"
-                className="w-full h-auto rounded-lg shadow-md hover:scale-105 transition-transform duration-300"
-              />
-            </a>
-          </div>
-        </div>
-      </div>
-
       {/*Bagian Layanan Kampus*/}
       <div className="container mx-auto px-4 py-8">
         {/* Heading Layanan Kampus */}
@@ -384,75 +347,7 @@ function Index() {
       </div>
 
       {/*Bagian Footer*/}
-      <div className="bg-blue-900 text-white py-6 mt-16">
-        <div className="container mx-auto flex justify-between items-center">
-          {/* Kolom kiri: Logo dan alamat */}
-          <div className="flex items-center space-x-4">
-            <img src={Logo} alt="Logo" className="w-20 h-auto" />
-            <div>
-              <h3 className="text-xl font-bold">
-                Fakultas Teknologi Informasi
-              </h3>
-              <p className="text-sm">
-                Gedung Fakultas Teknologi Informasi, Kampus III Universitas
-                Kristen Satya Wacana
-              </p>
-              <p className="text-sm">
-                Jl. Dr. O. Notohamidjojo, Blotongan, Sidorejo, Kota Salatiga,
-                50715, Indonesia
-              </p>
-              <a href="mailto:fti@uksw.edu" className="text-sm text-blue-400">
-                fti@uksw.edu
-              </a>
-            </div>
-          </div>
-
-          {/* Kolom kanan: Link ke sumber daya universitas */}
-          <div className="space-y-2 text-right">
-            <h4 className="text-lg font-semibold">University Resources</h4>
-            <ul className="space-y-1 text-sm">
-              <li>
-                <a href="https://www.uksw.edu/" className="text-blue-400">
-                  Website Universitas Kristen Satya Wacana
-                </a>
-              </li>
-              <li>
-                <a href="https://sia.uksw.edu/" className="text-blue-400">
-                  Sistem Informasi Akademik Satya Wacana
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://www.uksw.edu/library"
-                  className="text-blue-400"
-                >
-                  Perpustakaan Universitas
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://www.uksw.edu/flexible-learning"
-                  className="text-blue-400"
-                >
-                  Flexible Learning UKSW
-                </a>
-              </li>
-              <li>
-                <a href="https://journal.uksw.edu/" className="text-blue-400">
-                  Jurnal AITI Fakultas Teknologi Informasi
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="text-center text-sm mt-6">
-          <p>
-            &copy; 2023 Fakultas Teknologi Informasi Universitas Kristen Satya
-            Wacana
-          </p>
-        </div>
-      </div>
+      <Footer />
     </div>
   );
 }
