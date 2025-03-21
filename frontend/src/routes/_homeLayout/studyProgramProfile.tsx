@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import gambar from "@/assets/Carousel1.jpg";
-import { Button } from "@/components/ui/button";
 import Footer from "@/components/ui/custom/footer/footer";
 import sertifikatImage from "@/assets/sertifikatImage.jpg";
 import sertifikat from "@/assets/SERTIFIKAT AKREDITASI S1 TEKNIK INFORMATIKA UNGGUL  2024.pdf";
@@ -20,12 +19,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 
 export const Route = createFileRoute("/_homeLayout/studyProgramProfile")({
   component: RouteComponent,

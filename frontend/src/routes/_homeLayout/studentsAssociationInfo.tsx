@@ -7,18 +7,8 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import Footer from "@/components/ui/custom/footer/footer";
 import gambar from "@/assets/Carousel1.jpg";
-import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_homeLayout/studentsAssociationInfo")({
   component: RouteComponent,

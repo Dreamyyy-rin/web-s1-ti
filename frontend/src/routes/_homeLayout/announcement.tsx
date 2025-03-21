@@ -9,6 +9,16 @@ import {
 } from "@/components/ui/breadcrumb";
 
 import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+
+import {
   Card,
   CardContent,
   CardDescription,
@@ -151,23 +161,28 @@ function RouteComponent() {
             </Card>
           ))}
         </div>
-        {/* Tombol Pagination jika diperlukan */}
+
+        {/* Pagination Component from Shadcn */}
         <div className="flex justify-center mt-8">
-          <Button variant="outline" className="mx-2">
-            « Kembali
-          </Button>
-          <Button variant="outline" className="mx-2">
-            1
-          </Button>
-          <Button variant="outline" className="mx-2">
-            2
-          </Button>
-          <Button variant="outline" className="mx-2">
-            3
-          </Button>
-          <Button variant="outline" className="mx-2">
-            Lanjut »
-          </Button>
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious href="#" />
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink href="#">1</PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationEllipsis />
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink href="#">2</PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationNext href="#" />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
         </div>
       </div>
       {/*Bagian Footer*/}

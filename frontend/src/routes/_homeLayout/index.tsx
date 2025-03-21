@@ -10,8 +10,6 @@ import { Content } from "@tiptap/react";
 import carousel1 from "@/assets/Carousel1.jpg";
 import carousel2 from "@/assets/Carousel2.jpg";
 import { Button } from "@/components/ui/button";
-// import TextEditor from "@/components/ui/custom/rich-text-editor/textEditor";
-import { MinimalTiptapEditor } from "@/components/ui/custom/minimal-tiptap";
 import { useState } from "react";
 import alfaLogo from "@/assets/alfamartLogo.png";
 import ctiLogo from "@/assets/ctiLogo.png";
@@ -23,7 +21,6 @@ import aitiLink from "@/assets/aitiLink.png";
 import libraryLink from "@/assets/libraryLink.png";
 import sitaLink from "@/assets/sitaLink.png";
 import itexploreLink from "@/assets/itexploreLink.jpg";
-import Logo from "@/assets/logoFTI.png";
 import {
   Card,
   CardContent,
