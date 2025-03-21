@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Carousel,
   CarouselContent,
@@ -25,7 +25,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -41,7 +40,7 @@ function Index() {
   return (
     <div>
       {/* Carousel */}
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto py-8">
         <Carousel>
           <CarouselContent>
             <CarouselItem>
@@ -71,9 +70,19 @@ function Index() {
         </Carousel>
       </div>
 
-      <div className="flex justify-center gap-4 mt-6">
-        <Button className="w-1/3 h-12">Lowongan Asisten Dosen</Button>
-        <Button className="w-1/3 h-12">Himpunan</Button>
+      <div className="flex justify-center items-center gap-4 mt-6">
+        <Link
+          to="/vacancy"
+          className="flex justify-center items-center w-1/3 h-12"
+        >
+          <Button className="w-full">Lowongan Asisten Dosen</Button>
+        </Link>
+        <Link
+          to="/studentsAssociationInfo"
+          className="flex justify-center items-center w-1/3 h-12"
+        >
+          <Button className="w-full">Himpunan</Button>
+        </Link>
       </div>
 
       {/* Bagian Pengumuman */}
@@ -158,7 +167,9 @@ function Index() {
 
       {/* Tombol Selengkapnya */}
       <div className="flex justify-center mt-6">
-        <Button className="w-1/6">Selengkapnya</Button>
+        <Link to="/announcement"className="w-1/6">
+          <Button className="w-full" >Selengkapnya</Button>
+        </Link>
       </div>
 
       {/* Bagian Kerja Sama */}

@@ -3,6 +3,7 @@ import useMinimalTiptapEditor from "@/components/ui/custom/minimal-tiptap/hooks/
 import { ENV } from "@/env";
 import { Vacancy } from "../types/vacancy.type";
 import { Button } from "@/components/ui/button";
+import { useEffect } from "react";
 
 
 const VacancyView = ({ data }: { data: Vacancy }) => {
@@ -10,10 +11,16 @@ const VacancyView = ({ data }: { data: Vacancy }) => {
     value: data.deskripsi,
     editable: false,
   });
+  
+  useEffect(() => {
+    if (editor) {
+      editor.commands.setContent(data.deskripsi);
+    }
+  }, [data.deskripsi, editor]);
+  
   if (!editor) {
     return null;
   }
-
   console.log("data.file : ", data.file)
 
   const url = data.file?.includes("lowongan_files")

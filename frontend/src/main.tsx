@@ -14,6 +14,8 @@ const browserHistory = createBrowserHistory();
 
 const router = createRouter({
   routeTree,
+  defaultPreload: "intent",
+  defaultPreloadStaleTime: 0,
   context: { title: "Web S1 TI" },
   history: browserHistory,
 });
