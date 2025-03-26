@@ -19,7 +19,7 @@ interface LoaderStore extends LoaderState, LoaderAction {}
 
 const middleware = <T extends object>(
   f: StateCreator<T, [["zustand/persist", unknown]], [], T>,
-) => devtools(persist(f, { name: "authStore" }));
+) => devtools(persist(f, { name: "loaderStore" }));
 
 export const useLoaderStore = create<LoaderStore>()(
   middleware((set, get) => ({
