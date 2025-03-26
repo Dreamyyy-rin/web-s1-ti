@@ -55,7 +55,7 @@ function LoginComponent() {
   const onSubmit = async (data: LoginSchema) => {
     login(data, {
       onSuccess: (data) => {
-        toast("Login berhasil", {
+        toast.success("Login berhasil", {
           description: `Selamat datang ${data.user.name}!`,
         });
         if (redirect) {
@@ -66,7 +66,7 @@ function LoginComponent() {
       },
       onError: (error) => {
         const message = handleAxiosError(error)?.message;
-        toast("Login gagal", {
+        toast.error("Login gagal", {
           description: message ?? "Terjadi kesalahan yang tidak diketahui",
         });
       },

@@ -13,12 +13,10 @@ const queryClient = new QueryClient();
 export function App() {
   // checkEnv()
   const { isMobileDevice } = useMobileDevice();
-  const isGeneralLoading = useLoaderStore(
-    (state) => state.isGeneralLoading,
-  );
+  const isGeneralLoading = useLoaderStore((state) => state.isGeneralLoading);
   return (
     <>
-      <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+      <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
         <QueryClientProvider client={queryClient}>
           <TooltipProvider>
             {!isMobileDevice && (
@@ -29,9 +27,9 @@ export function App() {
               </div>
             )}
             <Outlet />
+            <Toaster />
           </TooltipProvider>
         </QueryClientProvider>
-        <Toaster />
         <TanStackRouterDevtools />
       </ThemeProvider>
     </>

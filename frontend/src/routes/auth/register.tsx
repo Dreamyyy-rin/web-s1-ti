@@ -20,13 +20,13 @@ import {
   registerSchema,
   RegisterSchema,
 } from "@/features/auth/types/register.schema";
-import { useToast } from "@/hooks/use-toast";
 import { handleAxiosError } from "@/lib/helpers";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { createFileRoute } from "@tanstack/react-router";
 import { GalleryVerticalEnd } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/auth/register")({
   component: RouteComponent,
@@ -36,7 +36,6 @@ function RouteComponent() {
   // const { redirect } = Route.useSearch();
   const navigate = useNavigate({ from: "/auth/register" });
 
-  const { toast } = useToast();
   const form = useForm<RegisterSchema>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -52,16 +51,14 @@ function RouteComponent() {
   const onSubmit = async (data: RegisterSchema) => {
     register(data, {
       onSuccess: () => {
-        toast({
-          title: "Register berhasil",
+        toast.success("Register berhasil", {
           description: `Silakan login kembali`,
         });
         navigate({ to: "/auth/login" });
       },
       onError: (error) => {
         const message = handleAxiosError(error)?.message;
-        toast({
-          title: "Register gagal",
+        toast.error("Register gagal", {
           description: message ?? "Terjadi kesalahan yang tidak diketahui",
         });
       },
