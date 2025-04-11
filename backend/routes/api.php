@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Response;
 // AUTH
 Route::post('/register', [AuthController::class, 'register']); // Register 
 Route::post('/login', [AuthController::class, 'login']); // Login 
+Route::post('/google-login', [AuthController::class, 'googleLogin']);// Google Login
+
 //MENGAKALI PAKE FILE LANGSUNG DI TEMBAK KE LARAVEL 
 Route::get('/files/{folder}/{filename}', function ($folder, $filename) {
     $path = storage_path("app/public/{$folder}/{$filename}");

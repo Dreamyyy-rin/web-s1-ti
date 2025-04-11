@@ -54,7 +54,35 @@ class AuthController extends Controller
             'user' => $user
         ], Response::HTTP_OK);
     }
+//Google Login
+    public function googleLogin(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'name' => 'required|string'
+        ]);
+    
+        $user = User::where('email', $request->email)->first();
+    
+        if (!$user) {
 
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make('Admin.312'),//default password
+                'role' => 'admin'
+            ]);
+        }
+    
+        $token = $user->createToken('auth_token')->plainTextToken;
+    
+        return response()->json([
+            'message' => 'Login with Google successful',
+            'token' => $token,
+            'user' => $user
+        ], Response::HTTP_OK);
+    }
+    
     // LOGOUT
     public function logout(Request $request)
     {
