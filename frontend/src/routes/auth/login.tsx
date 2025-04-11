@@ -28,6 +28,12 @@ import { Link } from "@tanstack/react-router";
 import { z } from "zod";
 import { handleAxiosError } from "@/lib/helpers";
 import { toast } from "sonner";
+import { useGoogleLogin } from "@react-oauth/google";
+import { useAuthStore } from "@/stores/auth.store";
+import {
+  googleTokenExchange,
+  sendGoogleAuth,
+} from "@/features/auth/hooks/useGoogleAuth";
 
 const loginSearchSchema = z.object({
   redirect: z.string().optional(),
@@ -39,6 +45,8 @@ export const Route = createFileRoute("/auth/login")({
 });
 
 function LoginComponent() {
+  const setToken = useAuthStore((state) => state.setToken);
+  const setUser = useAuthStore((state) => state.setUser);
   const { redirect } = Route.useSearch();
   const navigate = useNavigate({ from: "/auth/login" });
 
@@ -72,6 +80,49 @@ function LoginComponent() {
       },
     });
   };
+
+  const onClickGoogle = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      console.log("token:", tokenResponse);
+      console.log("LEWAT SINI");
+      const googleUserData = await googleTokenExchange(
+        tokenResponse.access_token,
+      );
+      if (!googleUserData.data.email_verified) {
+        throw new Error(
+          "email belum diverifikasi. Silakan verifikasi email Anda melalui email terlebih dahulu.",
+        );
+      }
+      const fullname = `${googleUserData.data.given_name} ${googleUserData.data.family_name}`;
+      const email = googleUserData.data.email;
+      console.log("lewat sini");
+      const response = await sendGoogleAuth({
+        name: fullname,
+        email,
+      });
+      setUser({
+        email: response.data.user.email,
+        name: response.data.user.name,
+        role: response.data.user.role,
+      });
+      setToken(response.data.token);
+      toast.success("Login berhasil", {
+        description: `Selamat datang ${response.data.user.name}!`,
+      });
+      if (redirect) {
+        navigate({ to: redirect });
+        return;
+      }
+      navigate({ to: "/admin" });
+      return response;
+    },
+    onError: (error) => {
+      toast.error("Login gagal", {
+        description:
+          error.error_description ?? "Terjadi kesalahan yang tidak diketahui",
+      });
+    },
+  });
 
   return (
     <>
@@ -145,7 +196,12 @@ function LoginComponent() {
                         Atau login dengan
                       </span>
                     </div>
-                    <Button variant="outline" className="w-full">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="w-full"
+                      onClick={() => onClickGoogle()}
+                    >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
@@ -163,6 +219,7 @@ function LoginComponent() {
                   Belum punya akun?&nbsp;
                   <Link
                     to="/auth/register"
+                    params={{ search: redirect }}
                     className="underline underline-offset-4"
                   >
                     Daftar

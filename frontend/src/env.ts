@@ -14,5 +14,10 @@ export const ENV = {
     BACKEND_URL: import.meta.env.VITE_APP_BACKEND_URL,
     FRONTEND_URL: import.meta.env.VITE_APP_FRONTEND_URL,
     BACKEND_STORAGE_URL: import.meta.env.VITE_APP_BACKEND_STORAGE_URL,
+    MODE: import.meta.env.VITE_APP_MODE,
+  },
+  GOOGLE: {
+    CLIENT_ID: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+    CLIENT_SECRET: import.meta.env.VITE_GOOGLE_CLIENT_SECRET,
   },
 };
