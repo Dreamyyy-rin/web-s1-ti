@@ -4,6 +4,7 @@ import { announcementColumns } from "./announcementColumn";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { Link } from "@tanstack/react-router";
+import { Announcement } from "../types/announcement.type";
 
 const AnnouncementTopToolbarSlot = () => {
   return (
@@ -26,7 +27,7 @@ const AnnouncementDataTable = () => {
       {isLoading ? null : (
         <Datatable
           columns={announcementColumns}
-          data={data}
+          data={data as Announcement[]}
           topToolbarSlot={<AnnouncementTopToolbarSlot />}
         />
       )}

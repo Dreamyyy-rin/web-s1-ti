@@ -1,7 +1,7 @@
 import { EditorProvider, Extensions } from "@tiptap/react";
 import { StarterKit } from "@tiptap/starter-kit";
 import React from "react";
-import Toolbar from "./Toolbar";
+import Toolbar from "./toolbar";
 
 const extensions: Extensions = [StarterKit];
 

@@ -4,6 +4,7 @@ import { Plus } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { useFetchVacancies } from "../hooks/useFetchVacancies";
 import { vacancyColumns } from "./vacancyColumn";
+import { Vacancy } from "../types/vacancy.type";
 
 const VacancyTopToolbarSlot = () => {
   return (
@@ -26,7 +27,7 @@ const VacancyDataTable = () => {
       {isLoading ? null : (
         <Datatable
           columns={vacancyColumns}
-          data={data}
+          data={data as unknown as Vacancy[]}
           topToolbarSlot={<VacancyTopToolbarSlot />}
         />
       )}

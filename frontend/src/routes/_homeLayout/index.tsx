@@ -6,11 +6,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Content } from "@tiptap/react";
 import carousel1 from "@/assets/Carousel1.jpg";
 import carousel2 from "@/assets/Carousel2.jpg";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
 import alfaLogo from "@/assets/alfamartLogo.png";
 import ctiLogo from "@/assets/ctiLogo.png";
 import puraLogo from "@/assets/puraLogo.png";
@@ -35,8 +33,6 @@ export const Route = createFileRoute("/_homeLayout/")({
 });
 
 function Index() {
-  const [content, setContent] = useState<Content>("");
-
   return (
     <div>
       {/* Carousel */}
@@ -167,8 +163,8 @@ function Index() {
 
       {/* Tombol Selengkapnya */}
       <div className="flex justify-center mt-6">
-        <Link to="/announcement"className="w-1/6">
-          <Button className="w-full" >Selengkapnya</Button>
+        <Link to="/announcement" className="w-1/6">
+          <Button className="w-full">Selengkapnya</Button>
         </Link>
       </div>
 
