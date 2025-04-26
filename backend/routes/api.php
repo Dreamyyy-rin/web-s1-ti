@@ -27,6 +27,12 @@ Route::get('/files/{folder}/{filename}', function ($folder, $filename) {
 });
 
 // PENGUMUMAN/Lowongan
+// API untuk Search ( GET /pengumuman?search=apasaja )/ (GET /lowongan?search=apasaja)
+// API untuk Pagination ( GET /pengumuman?per_page=5 )/ (GET /lowongan?per_page=5)
+/* 
+default per_page = 10
+Api untuk pagination contoh misal : pengen 10 pengumuman pertama = GET /api/pengumuman?per_page=10&page=1 tanpa ?per_page=1 juga bisa nanti ikut default
+*/
 Route::get('/pengumuman', [PengumumanController::class, 'index']); // Get all pengumuman
 Route::get('/pengumuman/{id}', [PengumumanController::class, 'show']); // Get salah satu pengumuman
 Route::get('/lowongan', [LowonganController::class, 'index']); // Get semua lowongan

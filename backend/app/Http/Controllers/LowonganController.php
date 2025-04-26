@@ -10,12 +10,33 @@ use Illuminate\Support\Facades\Storage;
 class LowonganController extends Controller
 {
     // Get semua lowongan
-    public function index()
+    public function index(Request $request)
     {
-        $lowongan = Lowongan::with('user:id,name')->latest()->get();
-
-        return response()->json($lowongan, Response::HTTP_OK);
+        $perPage = $request->query('per_page', 10);
+        $search = $request->query('search');
+    
+        $query = Lowongan::with('user:id,name')->latest();
+    
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('judul', 'like', '%' . $search . '%')
+                  ->orWhere('deskripsi', 'like', '%' . $search . '%');
+            });
+        }
+    
+        $lowongan = $query->paginate($perPage);
+    
+        return response()->json([
+            'data' => $lowongan->items(),
+            'meta' => [
+                'current_page' => $lowongan->currentPage(),
+                'per_page' => $lowongan->perPage(),
+                'last_page' => $lowongan->lastPage(),
+                'total' => $lowongan->total(),
+            ]
+        ], Response::HTTP_OK);
     }
+    
 
     // Buat lowongan
     public function store(Request $request)

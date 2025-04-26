@@ -10,10 +10,34 @@ use Illuminate\Support\Facades\Storage;
 class PengumumanController extends Controller
 {
     // Get semua pengumuman
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json(Pengumuman::with('user:id,name')->latest()->get(), Response::HTTP_OK);
+        $perPage = $request->query('per_page', 10);
+        $search = $request->query('search');
+    
+        $query = Pengumuman::with('user:id,name')->latest();
+    
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('judul', 'like', '%' . $search . '%')
+                  ->orWhere('isi', 'like', '%' . $search . '%');
+            });
+        }
+    
+        $pengumuman = $query->paginate($perPage);
+    
+        return response()->json([
+            'data' => $pengumuman->items(),
+            'meta' => [
+                'current_page' => $pengumuman->currentPage(),
+                'per_page' => $pengumuman->perPage(),
+                'last_page' => $pengumuman->lastPage(),
+                'total' => $pengumuman->total(),
+            ]
+        ], Response::HTTP_OK);
     }
+    
+    
 
     // Buat pengumuman
     public function store(Request $request)
