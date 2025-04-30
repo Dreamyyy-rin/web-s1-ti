@@ -162,20 +162,20 @@ function Index() {
       </div>
 
       {/* Tombol Selengkapnya */}
-      <div className="flex justify-center mt-6">
-        <Link to="/announcement" className="w-1/6">
+      <div className="container mx-auto flex justify-center mt-6 px-4">
+        <Link to="/announcement" className="w-full md:w-1/6">
           <Button className="w-full">Selengkapnya</Button>
         </Link>
       </div>
 
       {/* Bagian Kerja Sama */}
       <div className="container mx-auto px-4 py-8">
-        <div className="text-center mt-16">
+        <div className="text-center my-16">
           <h2 className="text-3xl font-semibold">Kerja Sama</h2>
         </div>
 
-        <div className="container mx-auto px-4 mt-6">
-          <div className="flex justify-center gap-28 items-center">
+        <div className="container flex items-center justify-center flex-col md:flex-row mx-auto gap-28 px-4 mt-6 ">
+          {/* <div className="justify-center gap-28 items-center "> */}
             {/* Logo Alfamart */}
             <a
               href="https://www.alfamart.co.id/"
@@ -225,7 +225,7 @@ function Index() {
             >
               <img src={bcaLogo} alt="BCA" className="w-32 h-auto" />
             </a>
-          </div>
+          {/* </div> */}
         </div>
       </div>
 
@@ -237,9 +237,9 @@ function Index() {
         </h2>
 
         {/* Card untuk Deskripsi dan Video */}
-        <div className="flex items-center mt-8 space-x-8">
+        <div className="flex flex-col md:flex-row  items-center mt-8 ">
           {/* Deskripsi */}
-          <div className="flex-1">
+          <div className="flex-1 order-2 md:order-1 text-center md:text-left mt-4 md:mt-0">
             <p className="text-lg text-gray-700">
               Program Studi Teknik Informatika UKSW adalah program studi yang
               berfokus pada pengembangan teknologi informasi dan komputer.
@@ -251,7 +251,7 @@ function Index() {
           </div>
 
           {/* Video */}
-          <div className="flex-1">
+          <div className="flex-1 order-1 md:order-2 w-full">
             <iframe
               className="w-full h-96 rounded-xl shadow-md"
               src="https://www.youtube.com/embed/8e2l1ULOSjo"
