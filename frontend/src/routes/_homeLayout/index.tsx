@@ -66,16 +66,16 @@ function Index() {
         </Carousel>
       </div>
 
-      <div className="flex justify-center items-center gap-4 mt-6">
+      <div className="container mx-auto flex flex-col md:flex-row justify-center items-center gap-4 mt-6 px-4">
         <Link
           to="/vacancy"
-          className="flex justify-center items-center w-1/3 h-12"
+          className="flex justify-center items-center w-full md:w-1/3 h-12"
         >
           <Button className="w-full">Lowongan Asisten Dosen</Button>
         </Link>
         <Link
           to="/studentsAssociationInfo"
-          className="flex justify-center items-center w-1/3 h-12"
+          className="flex justify-center items-center w-full md:w-1/3 h-12"
         >
           <Button className="w-full">Himpunan</Button>
         </Link>
