@@ -4,10 +4,10 @@ import Logo from "@/assets/logoFTI.png";
 const Footer: React.FC = () => {
   return (
     <div className="bg-blue-900 text-white py-6 mt-16">
-      <div className="container mx-auto flex justify-between items-center">
+      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
         {/* Kolom kiri: Logo dan alamat */}
-        <div className="flex items-center space-x-4">
-          <img src={Logo} alt="Logo" className="w-20 h-auto" />
+        <div className="flex flex-col md:flex-row items-center text-center md:text-left md:space-x-4 order-2 md:order-1">
+          <img src={Logo} alt="Logo" className="w-20 h-auto mb-7 md:mb-0" />
           <div>
             <h3 className="text-xl font-bold">Fakultas Teknologi Informasi</h3>
             <p className="text-sm">
@@ -25,7 +25,7 @@ const Footer: React.FC = () => {
         </div>
 
         {/* Kolom kanan: Link ke sumber daya universitas */}
-        <div className="space-y-2 text-right">
+        <div className="space-y-2 text-center md:text-right order-1 md:order-2 mb-7 md:mb-0">
           <h4 className="text-lg font-semibold">University Resources</h4>
           <ul className="space-y-1 text-sm">
             <li>
