@@ -19,7 +19,6 @@ import { Route as AuthLoginImport } from './routes/auth/login'
 import { Route as AdminAdminLayoutImport } from './routes/admin/_adminLayout'
 import { Route as HomeLayoutStudyProgramProfileImport } from './routes/_homeLayout/studyProgramProfile'
 import { Route as HomeLayoutStudentsAssociationInfoImport } from './routes/_homeLayout/studentsAssociationInfo'
-import { Route as HomeLayoutAboutImport } from './routes/_homeLayout/about'
 import { Route as AdminAdminLayoutIndexImport } from './routes/admin/_adminLayout/index'
 import { Route as HomeLayoutVacancyIndexImport } from './routes/_homeLayout/vacancy/index'
 import { Route as HomeLayoutAnnouncementIndexImport } from './routes/_homeLayout/announcement/index'
@@ -84,12 +83,6 @@ const HomeLayoutStudentsAssociationInfoRoute =
     path: '/studentsAssociationInfo',
     getParentRoute: () => HomeLayoutRoute,
   } as any)
-
-const HomeLayoutAboutRoute = HomeLayoutAboutImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => HomeLayoutRoute,
-} as any)
 
 const AdminAdminLayoutIndexRoute = AdminAdminLayoutIndexImport.update({
   id: '/',
@@ -204,13 +197,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin'
       preLoaderRoute: typeof AdminImport
       parentRoute: typeof rootRoute
-    }
-    '/_homeLayout/about': {
-      id: '/_homeLayout/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof HomeLayoutAboutImport
-      parentRoute: typeof HomeLayoutImport
     }
     '/_homeLayout/studentsAssociationInfo': {
       id: '/_homeLayout/studentsAssociationInfo'
@@ -358,7 +344,6 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface HomeLayoutRouteChildren {
-  HomeLayoutAboutRoute: typeof HomeLayoutAboutRoute
   HomeLayoutStudentsAssociationInfoRoute: typeof HomeLayoutStudentsAssociationInfoRoute
   HomeLayoutStudyProgramProfileRoute: typeof HomeLayoutStudyProgramProfileRoute
   HomeLayoutIndexRoute: typeof HomeLayoutIndexRoute
@@ -368,7 +353,6 @@ interface HomeLayoutRouteChildren {
 }
 
 const HomeLayoutRouteChildren: HomeLayoutRouteChildren = {
-  HomeLayoutAboutRoute: HomeLayoutAboutRoute,
   HomeLayoutStudentsAssociationInfoRoute:
     HomeLayoutStudentsAssociationInfoRoute,
   HomeLayoutStudyProgramProfileRoute: HomeLayoutStudyProgramProfileRoute,
@@ -457,7 +441,6 @@ const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 export interface FileRoutesByFullPath {
   '': typeof HomeLayoutRouteWithChildren
   '/admin': typeof AdminAdminLayoutRouteWithChildren
-  '/about': typeof HomeLayoutAboutRoute
   '/studentsAssociationInfo': typeof HomeLayoutStudentsAssociationInfoRoute
   '/studyProgramProfile': typeof HomeLayoutStudyProgramProfileRoute
   '/auth/login': typeof AuthLoginRoute
@@ -481,7 +464,6 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/admin': typeof AdminAdminLayoutIndexRoute
-  '/about': typeof HomeLayoutAboutRoute
   '/studentsAssociationInfo': typeof HomeLayoutStudentsAssociationInfoRoute
   '/studyProgramProfile': typeof HomeLayoutStudyProgramProfileRoute
   '/auth/login': typeof AuthLoginRoute
@@ -504,7 +486,6 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/_homeLayout': typeof HomeLayoutRouteWithChildren
   '/admin': typeof AdminRouteWithChildren
-  '/_homeLayout/about': typeof HomeLayoutAboutRoute
   '/_homeLayout/studentsAssociationInfo': typeof HomeLayoutStudentsAssociationInfoRoute
   '/_homeLayout/studyProgramProfile': typeof HomeLayoutStudyProgramProfileRoute
   '/admin/_adminLayout': typeof AdminAdminLayoutRouteWithChildren
@@ -532,7 +513,6 @@ export interface FileRouteTypes {
   fullPaths:
     | ''
     | '/admin'
-    | '/about'
     | '/studentsAssociationInfo'
     | '/studyProgramProfile'
     | '/auth/login'
@@ -555,7 +535,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/admin'
-    | '/about'
     | '/studentsAssociationInfo'
     | '/studyProgramProfile'
     | '/auth/login'
@@ -576,7 +555,6 @@ export interface FileRouteTypes {
     | '__root__'
     | '/_homeLayout'
     | '/admin'
-    | '/_homeLayout/about'
     | '/_homeLayout/studentsAssociationInfo'
     | '/_homeLayout/studyProgramProfile'
     | '/admin/_adminLayout'
@@ -633,7 +611,6 @@ export const routeTree = rootRoute
     "/_homeLayout": {
       "filePath": "_homeLayout.tsx",
       "children": [
-        "/_homeLayout/about",
         "/_homeLayout/studentsAssociationInfo",
         "/_homeLayout/studyProgramProfile",
         "/_homeLayout/",
@@ -647,10 +624,6 @@ export const routeTree = rootRoute
       "children": [
         "/admin/_adminLayout"
       ]
-    },
-    "/_homeLayout/about": {
-      "filePath": "_homeLayout/about.tsx",
-      "parent": "/_homeLayout"
     },
     "/_homeLayout/studentsAssociationInfo": {
       "filePath": "_homeLayout/studentsAssociationInfo.tsx",

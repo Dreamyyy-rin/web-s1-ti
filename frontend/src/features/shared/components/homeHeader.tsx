@@ -127,16 +127,6 @@ export function HomeHeader() {
                   </a>
                 </NavigationMenuLink>
               </li> */}
-                  <Link to="/about">
-                    <NavigationMenuLink
-                      className={cn(
-                        navigationMenuTriggerStyle(),
-                        "w-full justify-start",
-                      )}
-                    >
-                      Tentang Kami
-                    </NavigationMenuLink>
-                  </Link>
                   <Link to="/studyProgramProfile">
                     <NavigationMenuLink
                       className={cn(
