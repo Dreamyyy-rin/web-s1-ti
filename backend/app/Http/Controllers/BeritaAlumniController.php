@@ -7,21 +7,19 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 
-class PengumumanController extends Controller
+class BeritaAlumniController extends Controller
 {
-    // Get semua pengumuman
     public function index(Request $request)
     {
         $perPage = $request->query('per_page', 10);
         $search = $request->query('search');
-        $sortBy = $request->query('sort_by', 'latest'); // default: latest
-        $fromDate = $request->query('from_date'); 
-        $toDate = $request->query('to_date');     
+        $sortBy = $request->query('sort_by', 'latest');
+        $fromDate = $request->query('from_date');
+        $toDate = $request->query('to_date');
     
         $query = Pengumuman::with('user:id,name')
-            ->where('kategori', 'pengumuman');
+            ->where('kategori', 'berita_alumni');
     
-        // Filter pencarian (judul / kategori)
         if ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('judul', 'like', '%' . $search . '%')
@@ -29,7 +27,6 @@ class PengumumanController extends Controller
             });
         }
     
-        // Filter tanggal
         if ($fromDate && $toDate) {
             $query->whereBetween('created_at', [
                 $fromDate . ' 00:00:00',
@@ -41,30 +38,26 @@ class PengumumanController extends Controller
             $query->where('created_at', '<=', $toDate . ' 23:59:59');
         }
     
-        // Urutan data
         if ($sortBy === 'oldest') {
             $query->orderBy('created_at', 'asc');
         } else {
             $query->orderBy('created_at', 'desc');
         }
     
-        $pengumuman = $query->paginate($perPage);
+        $berita = $query->paginate($perPage);
     
         return response()->json([
-            'data' => $pengumuman->items(),
+            'data' => $berita->items(),
             'meta' => [
-                'current_page' => $pengumuman->currentPage(),
-                'per_page' => $pengumuman->perPage(),
-                'last_page' => $pengumuman->lastPage(),
-                'total' => $pengumuman->total(),
+                'current_page' => $berita->currentPage(),
+                'per_page' => $berita->perPage(),
+                'last_page' => $berita->lastPage(),
+                'total' => $berita->total(),
             ]
         ], Response::HTTP_OK);
     }
     
-    
-    
 
-    // Buat pengumuman
     public function store(Request $request)
     {
         $request->validate([
@@ -74,38 +67,36 @@ class PengumumanController extends Controller
             'file' => 'nullable|mimes:jpg,jpeg,png,pdf,mp4|max:20480',
         ]);
 
-        $filePath = $request->hasFile('file') 
-            ? $request->file('file')->store('pengumuman_files', 'public') 
+        $filePath = $request->hasFile('file')
+            ? $request->file('file')->store('berita_alumni_files', 'public')
             : null;
 
-        $pengumuman = Pengumuman::create([
+        $berita = Pengumuman::create([
             'judul' => $request->judul,
             'isi' => $request->isi,
             'file' => $filePath,
-            'kategori' => 'pengumuman',
-            'user_id' => auth()->id(),
+            'kategori' => 'berita_alumni',
+            'user_id' => auth()->id(), 
         ]);
 
         return response()->json([
-            'message' => 'Pengumuman berhasil dibuat!',
-            'pengumuman' => $pengumuman
+            'message' => 'Berita alumni berhasil dibuat!',
+            'berita' => $berita
         ], Response::HTTP_CREATED);
     }
 
-    // Get detail pengumuman
     public function show($id)
     {
-        $pengumuman = Pengumuman::with('user:id,name')
-        ->where('kategori', 'pengumuman')
-        ->findOrFail($id);
+        $berita = Pengumuman::with('user:id,name')
+            ->where('kategori', 'berita_alumni')
+            ->findOrFail($id);
 
-        return response()->json($pengumuman, Response::HTTP_OK);
+        return response()->json($berita, Response::HTTP_OK);
     }
 
-    // Update pengumuman
     public function update(Request $request, $id)
     {
-        $pengumuman = Pengumuman::findOrFail($id);
+        $berita = Pengumuman::where('kategori', 'berita_alumni')->findOrFail($id);
 
         $request->validate([
             'judul' => 'required|string|max:255',
@@ -115,37 +106,36 @@ class PengumumanController extends Controller
         ]);
 
         if ($request->hasFile('file')) {
-            if ($pengumuman->file) {
-                Storage::disk('public')->delete($pengumuman->file);
+            if ($berita->file) {
+                Storage::disk('public')->delete($berita->file);
             }
-            $pengumuman->file = $request->file('file')->store('pengumuman_files', 'public');
+            $berita->file = $request->file('file')->store('berita_alumni_files', 'public');
         }
 
-        $pengumuman->update([
+        $berita->update([
             'judul' => $request->judul,
             'isi' => $request->isi,
-            'kategori' => 'pengumuman',
+            'file' => $berita->file,
+            'kategori' => 'berita_alumni',
         ]);
 
         return response()->json([
-            'message' => 'Pengumuman berhasil diperbarui!',
-            'pengumuman' => $pengumuman
+            'message' => 'Berita alumni berhasil diperbarui!',
+            'berita' => $berita
         ], Response::HTTP_OK);
     }
 
-    // Hapus pengumuman
     public function destroy($id)
     {
-        $pengumuman = Pengumuman::findOrFail($id);
+        $berita = Pengumuman::where('kategori', 'berita_alumni')->findOrFail($id);
 
-        if ($pengumuman->file) {
-            Storage::disk('public')->delete($pengumuman->file);
+        if ($berita->file) {
+            Storage::disk('public')->delete($berita->file);
         }
 
-        $pengumuman->delete();
+        $berita->delete();
 
-        return response()->json(['message' => 'Pengumuman berhasil dihapus!'], Response::HTTP_OK);
+        return response()->json(['message' => 'Berita alumni berhasil dihapus!'], Response::HTTP_OK);
     }
-
 
 }

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('judul');
             $table->text('isi');
             $table->string('file')->nullable(); // untuk file gambar, video, pdf, dll
+            $table->string('kategori')->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); 
             $table->timestamps();
         });

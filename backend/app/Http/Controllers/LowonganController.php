@@ -14,14 +14,31 @@ class LowonganController extends Controller
     {
         $perPage = $request->query('per_page', 10);
         $search = $request->query('search');
+        $sortBy = $request->query('sort_by', 'latest');
+        $fromDate = $request->query('from_date');
+        $toDate = $request->query('to_date');
     
-        $query = Lowongan::with('user:id,name')->latest();
+        $query = Lowongan::with('user:id,name');
     
         if ($search) {
-            $query->where(function ($q) use ($search) {
-                $q->where('judul', 'like', '%' . $search . '%')
-                  ->orWhere('deskripsi', 'like', '%' . $search . '%');
-            });
+            $query->where('judul', 'like', '%' . $search . '%');
+        }
+    
+        if ($fromDate && $toDate) {
+            $query->whereBetween('created_at', [
+                $fromDate . ' 00:00:00',
+                $toDate . ' 23:59:59'
+            ]);
+        } elseif ($fromDate) {
+            $query->where('created_at', '>=', $fromDate . ' 00:00:00');
+        } elseif ($toDate) {
+            $query->where('created_at', '<=', $toDate . ' 23:59:59');
+        }
+    
+        if ($sortBy === 'oldest') {
+            $query->orderBy('created_at', 'asc');
+        } else {
+            $query->orderBy('created_at', 'desc');
         }
     
         $lowongan = $query->paginate($perPage);
@@ -36,6 +53,7 @@ class LowonganController extends Controller
             ]
         ], Response::HTTP_OK);
     }
+    
     
 
     // Buat lowongan

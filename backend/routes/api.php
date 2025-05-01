@@ -2,6 +2,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\LowonganController;
+use App\Http\Controllers\BeritaAlumniController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
@@ -12,7 +13,6 @@ Route::post('/register', [AuthController::class, 'register']); // Register
 Route::post('/login', [AuthController::class, 'login']); // Login 
 Route::post('/google-login', [AuthController::class, 'googleLogin']);// Google Login
 
-//MENGAKALI PAKE FILE LANGSUNG DI TEMBAK KE LARAVEL 
 Route::get('/files/{folder}/{filename}', function ($folder, $filename) {
     $path = storage_path("app/public/{$folder}/{$filename}");
 
@@ -26,31 +26,54 @@ Route::get('/files/{folder}/{filename}', function ($folder, $filename) {
     ]);
 });
 
-// PENGUMUMAN/Lowongan
+// PENGUMUMAN/Lowongan/berita-alumni 
 // API untuk Search ( GET /pengumuman?search=apasaja )/ (GET /lowongan?search=apasaja)
-// API untuk Pagination ( GET /pengumuman?per_page=5 )/ (GET /lowongan?per_page=5)
+// API untuk pagination (GET /pengumuman?per_page=10&page=1)
+
+// Ian/Jauza kalo mau nampilin 3 data terakhir bisa pake GET /pengumuman?per_page=3, udah tak buat fileter latest sbg default
+// Atau mau tak buatin api khusus buat nampilin 3 data terakhir biar gampang juga bisa bilang ae
+
 /* 
 default per_page = 10
 Api untuk pagination contoh misal : pengen 10 pengumuman pertama = GET /api/pengumuman?per_page=10&page=1 tanpa ?per_page=1 juga bisa nanti ikut default
 */
-Route::get('/pengumuman', [PengumumanController::class, 'index']); // Get all pengumuman
-Route::get('/pengumuman/{id}', [PengumumanController::class, 'show']); // Get salah satu pengumuman
-Route::get('/lowongan', [LowonganController::class, 'index']); // Get semua lowongan
-Route::get('/lowongan/{id}', [LowonganController::class, 'show']); // Get detail lowongan
+
+// API UNTUK FILTER TANGGAL/MENGURUTKAN DATA
+
+// Format tanggal YYYY-MM-DD kalo mau ganti bilang ae 
+
+// Contoh filter tanggal GET /api/lowongan?from_date=2024-12-01&to_date=2025-01-31
+// Contoh filter Urutan data dari oldest kalau mau latest sudah secara default GET /api/lowongan?sort_by=oldest
+
+// Contoh API LENGKAP SEMUA FILTER 
+// GET /api/berita-alumni?search=wisuda&from_date=2025-01-01&to_date=2025-03-31&per_page=5&sort_by=oldest
+
+//BUAT BERITA ALUMNI SAMA PERSIS KAYA PENGUMUMAN/LOWONGAN
+
+Route::get('/pengumuman', [PengumumanController::class, 'index']);
+Route::get('/pengumuman/{id}', [PengumumanController::class, 'show']); 
+Route::get('/lowongan', [LowonganController::class, 'index']); 
+Route::get('/lowongan/{id}', [LowonganController::class, 'show']); 
+Route::get('/berita-alumni', [BeritaAlumniController::class, 'index']);
+Route::get('/berita-alumni/{id}', [BeritaAlumniController::class, 'show']);
+
 
 // Hanya bisa diakses setelah login
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']); // Logout 
     Route::get('/me', [AuthController::class, 'me']); //untuk test data user yang sedang login
 
-    // Hanya admin yang bisa buat/edit/hapus pengumuman/lowongan
+    // Hanya admin yang bisa buat/edit/hapus pengumuman/lowongan/berita alumni
     Route::middleware('admin')->group(function () {
-        Route::post('/pengumuman', [PengumumanController::class, 'store']); // Create pengumuman
-        Route::post('/pengumuman/{id}', [PengumumanController::class, 'update']); // Update pengumuman
-        Route::delete('/pengumuman/{id}', [PengumumanController::class, 'destroy']); // Delete pengumuman
-        Route::post('/lowongan', [LowonganController::class, 'store']); // Buat lowongan
-        Route::post('/lowongan/{id}', [LowonganController::class, 'update']); // Update lowongan
-        Route::delete('/lowongan/{id}', [LowonganController::class, 'destroy']); // Hapus lowongan
+        Route::post('/pengumuman', [PengumumanController::class, 'store']);
+        Route::post('/pengumuman/{id}', [PengumumanController::class, 'update']); 
+        Route::delete('/pengumuman/{id}', [PengumumanController::class, 'destroy']); 
+        Route::post('/lowongan', [LowonganController::class, 'store']); 
+        Route::post('/lowongan/{id}', [LowonganController::class, 'update']); 
+        Route::delete('/lowongan/{id}', [LowonganController::class, 'destroy']); 
+        Route::post('/berita-alumni', [BeritaAlumniController::class, 'store']); 
+        Route::post('/berita-alumni/{id}', [BeritaAlumniController::class, 'update']); 
+        Route::delete('/berita-alumni/{id}', [BeritaAlumniController::class, 'destroy']);
     });
 });
 
