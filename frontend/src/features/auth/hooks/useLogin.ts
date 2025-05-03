@@ -4,7 +4,7 @@ import { LoginSchema } from "../types/login.schema";
 import { useMutation } from "@tanstack/react-query";
 import { handleAxiosError } from "@/lib/helpers";
 import { AxiosError } from "axios";
-import { ErrorResponse } from "@/types/responses/errorResponse.type";
+import { ErrorResponse } from "@/interfaces/responses/errorResponse.interface";
 import { useAuthStore } from "@/stores/auth.store";
 import { DEFAULT_ERROR_MESSAGE } from "@/constants/error.constant";
 

@@ -5,20 +5,19 @@ import { useState } from "react";
 import { AxiosError } from "axios";
 import { ErrorResponse } from "@/interfaces/responses/errorResponse.interface";
 import { handleAxiosError } from "@/lib/helpers";
-import { VacancySchema } from "../types/vacancy.schema";
+import { AlumniInformationSchema } from "../types/alumniInformation.schema";
 
-interface updateVacancyParams {
+interface updateAlumnniInformationParams {
   id: string;
-  data: VacancySchema;
+  data: AlumniInformationSchema;
 }
 
-function updateVacancyById(params: updateVacancyParams) {
+function updateAlumniInformationById(params: updateAlumnniInformationParams) {
   return axiosBackendInstance.post(
-    `/lowongan/${params.id}`,
+    `/berita-alumni/${params.id}`,
     {
       judul: params.data.title,
-      deskripsi: params.data.description,
-      link_pendaftaran: params.data.registration_link,
+      isi: params.data.content,
       file: params.data.file,
     },
     {
@@ -29,21 +28,21 @@ function updateVacancyById(params: updateVacancyParams) {
   );
 }
 
-export function useUpdateVacancyById() {
+export function useUpdateAlumniInformation() {
   const queryClient = useQueryClient();
   const [error, setError] = useState(DEFAULT_ERROR_MESSAGE);
 
   const mutation = useMutation({
-    mutationFn: async (params: updateVacancyParams) => {
-      const response = await updateVacancyById(params);
+    mutationFn: async (params: updateAlumnniInformationParams) => {
+      const response = await updateAlumniInformationById(params);
       return response.data;
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({
-        queryKey: ["vacancy", "fetch"],
+        queryKey: ["alumni-information", "fetch"],
       });
       queryClient.invalidateQueries({
-        queryKey: ["vacancy", variables.id],
+        queryKey: ["alumni-information", variables.id],
       });
     },
     onError: (error: AxiosError<ErrorResponse>) => {

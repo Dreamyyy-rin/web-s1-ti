@@ -1,4 +1,4 @@
-import { SidebarFooterData } from "@/types/sidebar";
+import { SidebarFooterData } from "@/interfaces/sidebar.interface";
 import React from "react";
 import {
   SidebarMenu,

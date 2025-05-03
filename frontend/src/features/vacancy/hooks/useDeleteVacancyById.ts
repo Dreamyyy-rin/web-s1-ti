@@ -1,7 +1,7 @@
 import { DEFAULT_ERROR_MESSAGE } from "@/constants/error.constant";
 import { handleAxiosError } from "@/lib/helpers";
 import { axiosBackendInstance } from "@/services/axiosInstance";
-import { ErrorResponse } from "@/types/responses/errorResponse.type";
+import { ErrorResponse } from "@/interfaces/responses/errorResponse.interface";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useState } from "react";

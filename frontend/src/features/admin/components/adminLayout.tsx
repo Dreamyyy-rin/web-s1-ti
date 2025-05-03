@@ -1,15 +1,14 @@
 import BaseLayoutWithSidebar from "@/components/ui/custom/sidebars/baseLayoutWithSidebar";
 import { ENV } from "@/env";
 import { useAuthStore } from "@/stores/auth.store";
-import { SidebarData } from "@/types/sidebar";
-import { Briefcase, Megaphone, Rss, Settings } from "lucide-react";
+import { SidebarData } from "@/interfaces/sidebar.interface";
+import { Briefcase, Megaphone, Rss, Settings, Users } from "lucide-react";
 import React from "react";
 
 export const AdminLayout = React.forwardRef<
   React.ElementRef<"div">,
   React.ComponentPropsWithoutRef<"div">
 >(({ children }, ref) => {
-
   const user = useAuthStore((state) => state.user);
 
   const data: SidebarData = {
@@ -29,6 +28,11 @@ export const AdminLayout = React.forwardRef<
             icon: Megaphone,
             title: "Pengumuman",
             url: "/admin/announcement",
+          },
+          {
+            icon: Users,
+            title: "Berita Alumni",
+            url: "/admin/alumni-info",
           },
           {
             icon: Briefcase,
@@ -59,5 +63,9 @@ export const AdminLayout = React.forwardRef<
     },
   };
 
-  return <BaseLayoutWithSidebar ref={ref} sidebarData={data}>{children}</BaseLayoutWithSidebar>;
+  return (
+    <BaseLayoutWithSidebar ref={ref} sidebarData={data}>
+      {children}
+    </BaseLayoutWithSidebar>
+  );
 });

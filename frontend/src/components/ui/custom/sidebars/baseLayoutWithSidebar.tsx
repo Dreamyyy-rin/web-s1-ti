@@ -1,7 +1,7 @@
 import React from "react";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "../../sidebar";
 import BaseSidebar from "./baseSidebar";
-import { SidebarData } from "@/types/sidebar";
+import { SidebarData } from "@/interfaces/sidebar.interface";
 import { Separator } from "../../separator";
 import BaseSidebarBreadcrumb from "./baseSidebarBreadcrumb";
 

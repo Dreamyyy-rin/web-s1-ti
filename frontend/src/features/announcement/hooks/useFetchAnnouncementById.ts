@@ -11,7 +11,6 @@ export function useFetchAnnouncementById(id: string) {
     queryKey: ["announcement", id, "fetch"],
     queryFn: async () => {
       const response = await fetchAnnouncementById(id);
-      console.log("data: ", response.data)
       return response.data as Announcement;
     },
   });

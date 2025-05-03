@@ -6,17 +6,17 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useState } from "react";
 
-function deleteAnnoundementById(id: string) {
-  return axiosBackendInstance.delete(`/pengumuman/${id}`);
+function deleteAlumniInformationById(id: string) {
+  return axiosBackendInstance.delete(`/berita-alumni/${id}`);
 }
 
-export function useDeleteAnnouncementById() {
+export function useDeleteAlumniInformationById() {
   const queryClient = useQueryClient();
   const [error, setError] = useState<string>(DEFAULT_ERROR_MESSAGE);
 
   const mutation = useMutation({
     mutationFn: async ({ id }: { id: string }) =>
-      await deleteAnnoundementById(id),
+      await deleteAlumniInformationById(id),
     onError: (error: AxiosError<ErrorResponse>) => {
       const message = handleAxiosError(error)?.message;
       if (message) {
@@ -25,10 +25,10 @@ export function useDeleteAnnouncementById() {
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({
-        queryKey: ["announcement", "fetch"],
+        queryKey: ["alumni-information", "fetch"],
       });
       queryClient.invalidateQueries({
-        queryKey: ["announcement", variables.id],
+        queryKey: ["alumni-information", variables.id],
       });
     },
   });

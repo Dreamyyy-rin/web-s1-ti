@@ -16,7 +16,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useFetchVacancies } from "@/features/vacancy/hooks/useFetchVacancies";
+import { useFetchVacanciesPaginated } from "@/features/vacancy/hooks/useFetchVacanciesPaginated";
 import { Vacancy } from "@/features/vacancy/types/vacancy.type";
 import VacancyView from "@/features/vacancy/components/vacancyView";
 
@@ -27,8 +27,7 @@ export const Route = createFileRoute("/_homeLayout/vacancy/")({
 function RouteComponent() {
   const [selectedVacancy, setSelectedVacancy] = useState<Vacancy | null>(null);
 
-
-  const {data: jobList, isLoading} = useFetchVacancies();
+  const { data: jobList, isLoading } = useFetchVacanciesPaginated();
   return (
     <div className="relative">
       {/* Header */}
@@ -77,24 +76,27 @@ function RouteComponent() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Left Side - Daftar Lowongan (Card List) */}
           <div className="space-y-4">
-            {isLoading? <>
-            Loading...</> : jobList?.map((job, index) => (
-              <Card
-                key={index}
-                onClick={() => setSelectedVacancy(job)} // Menampilkan deskripsi berdasarkan lowongan yang dipilih
-                className="cursor-pointer hover:shadow-xl transition duration-300"
-              >
-                <CardHeader>
-                  <CardTitle>{job.judul}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription>
-                    {job.deskripsi.substring(0, 100)}...
-                  </CardDescription>{" "}
-                  {/* Preview */}
-                </CardContent>
-              </Card>
-            ))}
+            {isLoading ? (
+              <>Loading...</>
+            ) : (
+              jobList?.data?.map((job, index) => (
+                <Card
+                  key={index}
+                  onClick={() => setSelectedVacancy(job)} // Menampilkan deskripsi berdasarkan lowongan yang dipilih
+                  className="cursor-pointer hover:shadow-xl transition duration-300"
+                >
+                  <CardHeader>
+                    <CardTitle>{job.judul}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription>
+                      {job.deskripsi.substring(0, 100)}...
+                    </CardDescription>{" "}
+                    {/* Preview */}
+                  </CardContent>
+                </Card>
+              ))
+            )}
           </div>
 
           {/* Right Side - Deskripsi Lowongan (Card Detail) */}

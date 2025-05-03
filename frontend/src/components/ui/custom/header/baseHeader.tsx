@@ -1,6 +1,6 @@
 import { useTheme } from "@/hooks/useTheme";
 import { Button } from "../../button";
-import { MoonIcon, SunIcon } from "lucide-react";
+import { MoonIcon, SunIcon, SunMoonIcon } from "lucide-react";
 import React from "react";
 import { cn } from "@/lib/utils";
 import Logo from "@/assets/Logo.png"; 
@@ -35,8 +35,11 @@ export const BaseHeader = React.forwardRef<
         >
           {theme === "dark" ? (
             <MoonIcon className="h-4 w-4" />
-          ) : (
+          ) :
+          theme == "light" ? (
             <SunIcon className="h-4 w-4" />
+          ) : (
+            <SunMoonIcon className="h-4 w-4" />
           )}
         </Button>
       </div>

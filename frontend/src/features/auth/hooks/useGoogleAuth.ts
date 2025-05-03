@@ -27,8 +27,6 @@ export function useGoogleAuth(redirect?: string) {
   const setUser = useAuthStore((state) => state.setUser);
   const googleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
-      console.log("token:" , tokenResponse)
-      console.log("LEWAT SINI")
       const googleUserData = await googleTokenExchange(
         tokenResponse.access_token,
       );
@@ -39,7 +37,6 @@ export function useGoogleAuth(redirect?: string) {
       }
       const fullname = `${googleUserData.data.given_name} ${googleUserData.data.family_name}`;
       const email = googleUserData.data.email;
-      console.log("lewat sini")
       const response = await sendGoogleAuth({
         name: fullname,
         email,
@@ -61,7 +58,6 @@ export function useGoogleAuth(redirect?: string) {
       return response;
     },
     onError: (error) => {
-      console.log("ERROR: ", error)
       toast.error("Login gagal", {
         description:
           error.error_description ?? "Terjadi kesalahan yang tidak diketahui",

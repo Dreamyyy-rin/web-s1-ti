@@ -83,8 +83,6 @@ function LoginComponent() {
 
   const onClickGoogle = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
-      console.log("token:", tokenResponse);
-      console.log("LEWAT SINI");
       const googleUserData = await googleTokenExchange(
         tokenResponse.access_token,
       );
@@ -95,7 +93,6 @@ function LoginComponent() {
       }
       const fullname = `${googleUserData.data.given_name} ${googleUserData.data.family_name}`;
       const email = googleUserData.data.email;
-      console.log("lewat sini");
       const response = await sendGoogleAuth({
         name: fullname,
         email,

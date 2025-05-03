@@ -1,11 +1,10 @@
 import { User } from "@/features/user/types/user.type";
 
-export interface Vacancy {
+export interface AlumniInformation{
   id: number;
   judul: string;
-  deskripsi: string;
+  isi: string;
   file: string | null;
-  link_pendaftaran: string | null;
   user_id: number;
   created_at: string;
   updated_at: string;

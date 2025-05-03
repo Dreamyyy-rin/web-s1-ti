@@ -1,7 +1,7 @@
 import { axiosBackendInstance } from "@/services/axiosInstance";
 import { RegisterSchema } from "../types/register.schema";
 import { AxiosError } from "axios";
-import { ErrorResponse } from "@/types/responses/errorResponse.type";
+import { ErrorResponse } from "@/interfaces/responses/errorResponse.interface";
 import { handleAxiosError } from "@/lib/helpers";
 import { useMutation } from "@tanstack/react-query";
 import { useAuthStore } from "@/stores/auth.store";

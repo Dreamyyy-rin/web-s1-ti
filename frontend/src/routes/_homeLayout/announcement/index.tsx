@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/card";
 import Footer from "@/components/ui/custom/footer/footer";
 import { Button } from "@/components/ui/button";
-import { useFetchAnnouncements } from "@/features/announcement/hooks/useFetchAnnouncements";
+import { useFetchAnnouncementsPaginated } from "@/features/announcement/hooks/useFetchAnnouncementsPaginated";
 import { ENV } from "@/env";
 import ReadonlyText from "@/components/ui/custom/rich-text-editor/readonlyText";
 import HomeHeading from "@/features/shared/components/homeHeading";
@@ -39,17 +39,17 @@ function RouteComponent() {
     /* Data Pengumuman */
   }
 
-  const { data: announcements, isLoading } = useFetchAnnouncements();
+  const { data: announcements, isLoading } = useFetchAnnouncementsPaginated();
 
   return (
     <div className="relative">
-      <HomeHeading title="Pengumuman"/>
+      <HomeHeading title="Pengumuman" />
       {/* Card Pengumuman */}
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {isLoading
             ? null
-            : announcements?.map((announcement, index) => (
+            : announcements?.data.map((announcement, index) => (
                 <Card key={index} className="shadow-lg rounded-md">
                   {/* Gunakan img di dalam CardHeader */}
                   <CardHeader className="p-0">

@@ -1,4 +1,4 @@
-import { SidebarData } from "@/types/sidebar";
+import { SidebarData } from "@/interfaces/sidebar.interface";
 import React from "react";
 import {
   Sidebar,
@@ -22,8 +22,8 @@ const BaseSidebar = React.forwardRef<
       <SidebarContent>
         <BaseSidebarContent data={data.content} />
       </SidebarContent>
-      <SidebarFooter >
-        <BaseSidebarFooter data={data.footer}  />
+      <SidebarFooter>
+        <BaseSidebarFooter data={data.footer} />
       </SidebarFooter>
     </Sidebar>
   );

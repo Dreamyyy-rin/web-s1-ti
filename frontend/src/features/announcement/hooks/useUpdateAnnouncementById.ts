@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { DEFAULT_ERROR_MESSAGE } from "@/constants/error.constant";
 import { useState } from "react";
 import { AxiosError } from "axios";
-import { ErrorResponse } from "@/types/responses/errorResponse.type";
+import { ErrorResponse } from "@/interfaces/responses/errorResponse.interface";
 import { handleAxiosError } from "@/lib/helpers";
 
 interface updateAnnouncementParams {

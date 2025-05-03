@@ -161,8 +161,8 @@ function Index() {
 
       {/* Tombol Selengkapnya */}
       <div className="container mx-auto flex justify-center mt-6 px-4">
-        <Link to="/announcement" className="w-full md:w-1/6">
-          <Button className="w-full">Selengkapnya</Button>
+        <Link to="/announcement" className="w-full">
+          <Button variant="outline" className="w-full">Selengkapnya</Button>
         </Link>
       </div>
 
@@ -238,11 +238,11 @@ function Index() {
         <div className="flex flex-col md:flex-row  items-center mt-8 ">
           {/* Deskripsi */}
           <div className="flex-1 order-2 md:order-1 text-center md:text-left mt-4 md:mt-0">
-            <p className="text-lg text-gray-700">
+            <p className="text-lg text-foreground">
               Program Studi Teknik Informatika UKSW adalah program studi yang
               berfokus pada pengembangan teknologi informasi dan komputer.
             </p>
-            <p className="text-lg text-gray-700 mt-4">
+            <p className="text-lg text-foreground mt-4">
               Kami menyediakan pendidikan berkualitas tinggi yang mempersiapkan
               mahasiswa untuk menjadi profesional IT yang kompeten dan inovatif.
             </p>

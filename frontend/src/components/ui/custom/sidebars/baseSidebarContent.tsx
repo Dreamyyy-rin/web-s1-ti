@@ -1,4 +1,4 @@
-import { SidebarContentData } from "@/types/sidebar";
+import { SidebarContentData } from "@/interfaces/sidebar.interface";
 import React from "react";
 import {
   SidebarGroup,
@@ -30,10 +30,7 @@ const BaseSidebarContent = React.forwardRef<
                   : ""
               }
             >
-              <Link
-                disabled={pathname.includes(item.url)}
-                to={item.url}
-              >
+              <Link disabled={pathname.includes(item.url)} to={item.url}>
                 <item.icon className="" />
                 <span>{item.title}</span>
               </Link>

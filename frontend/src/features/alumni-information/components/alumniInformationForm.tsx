@@ -6,7 +6,6 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { ImageInput, Input } from "@/components/ui/input";
@@ -16,55 +15,39 @@ import { useAuthStore } from "@/stores/auth.store";
 import { Button } from "@/components/ui/button";
 import ConfirmationAlert from "@/components/ui/custom/alert/confirmationAlert";
 import { useRouter } from "@tanstack/react-router";
-import { vacancySchema, VacancySchema } from "../types/vacancy.schema";
-import { Vacancy } from "../types/vacancy.type";
-import VacancyView from "./vacancyView";
 import { fetchFileFromUrl, getUrlFromFile } from "@/lib/helpers";
+import { alumniInformationSchema, AlumniInformationSchema } from "../types/alumniInformation.schema";
+import { AlumniInformation } from "../types/alumniInformation.type";
+import AlumniInformationView from "./alumniInformationView";
 
-const VacancyForm = React.forwardRef<
+const AlumniInformationForm = React.forwardRef<
   React.ElementRef<"div">,
   React.ComponentPropsWithoutRef<"div"> & {
-    onSave: (data: VacancySchema) => Promise<void>;
-    data?: Vacancy;
+    onSave: (data: AlumniInformationSchema) => Promise<void>;
+    data?: AlumniInformation;
   }
 >(({ onSave, data }) => {
-  const handleOnSubmit = (data: VacancySchema) => {
+  const handleOnSubmit = (data: AlumniInformationSchema) => {
     onSave(data);
   };
 
   const router = useRouter();
   const user = useAuthStore((state) => state.user);
-
   const [url, setUrl] = React.useState<string | null>(null);
 
-  const form = useForm<VacancySchema>({
-    resolver: zodResolver(vacancySchema),
-    // defaultValues: data
-    //   ? {
-    //       title: data.judul,
-    //       description: data.deskripsi,
-    //       registration_link: data.link_pendaftaran,
-    //       file: undefined,
-    //     }
-    //   : {
-    //       title: "",
-    //       description: "",
-    //       registration_link: "",
-    //       file: undefined,
-    //     },
+  const form = useForm<AlumniInformationSchema>({
+    resolver: zodResolver(alumniInformationSchema),
     defaultValues: async () => {
       if (!data) {
         return {
           title: "",
-          description: "",
-          registration_link: "",
+          content: "",
           file: undefined,
         };
       }
       if (!data.file) {
         return {
-          description: data.deskripsi,
-          registration_link: data.link_pendaftaran ?? undefined,
+          content: data.isi,
           title: data.judul,
           file: undefined,
         };
@@ -72,15 +55,14 @@ const VacancyForm = React.forwardRef<
       const file = await fetchFileFromUrl(data.file);
       getUrlFromFile(file, setUrl);
       return {
-        description: data.deskripsi,
-        registration_link: data.link_pendaftaran ?? undefined,
+        content: data.isi,
         title: data.judul,
         file: file,
       };
     },
   });
 
-  const { title, description, registration_link } = form.watch();
+  const { title, content } = form.watch();
 
   return (
     <Form {...form}>
@@ -131,7 +113,7 @@ const VacancyForm = React.forwardRef<
               />
               <FormField
                 control={form.control}
-                name="description"
+                name="content"
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
@@ -151,42 +133,14 @@ const VacancyForm = React.forwardRef<
                 )}
               />
             </div>
-            <FormField
-              control={form.control}
-              name="registration_link"
-              render={({ field }) => (
-                <FormItem className="">
-                  {/* <FormLabel>Judul</FormLabel> */}
-                  <FormControl>
-                    <div className="flex flex-row items-center w-full mt-2">
-                      <FormLabel className="text-center min-w-56 ">
-                        Link Pendaftaran
-                      </FormLabel>
-                      <Input
-                        required
-                        type="text"
-                        className="rounded-sm"
-                        placeholder="Link pendataran"
-                        {...field}
-                      />
-                    </div>
-                  </FormControl>
-                  <div className="flex flex-row w-full mt-2 items-center">
-                    <div className="min-w-56"></div>
-                    <FormMessage className="" />
-                  </div>
-                </FormItem>
-              )}
-            />
           </TabsContent>
           <TabsContent value="preview">
-            <VacancyView
+            <AlumniInformationView
               data={{
                 id: 0,
                 judul: title,
                 file: url,
-                deskripsi: description,
-                link_pendaftaran: registration_link || "",
+                isi: content,
                 user_id: 0,
                 user: {
                   id: 0,
@@ -221,4 +175,4 @@ const VacancyForm = React.forwardRef<
   );
 });
 
-export default VacancyForm;
+export default AlumniInformationForm;

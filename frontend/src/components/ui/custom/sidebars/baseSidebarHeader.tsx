@@ -1,4 +1,4 @@
-import { SidebarHeaderItemData } from "@/types/sidebar";
+import { SidebarHeaderItemData } from "@/interfaces/sidebar.interface";
 import React from "react";
 import {
   SidebarMenu,

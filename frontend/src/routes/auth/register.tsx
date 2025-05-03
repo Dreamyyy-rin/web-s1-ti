@@ -15,7 +15,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { googleTokenExchange, sendGoogleAuth } from "@/features/auth/hooks/useGoogleAuth";
+import {
+  googleTokenExchange,
+  sendGoogleAuth,
+} from "@/features/auth/hooks/useGoogleAuth";
 import { useRegister } from "@/features/auth/hooks/useRegister";
 import {
   registerSchema,
@@ -80,8 +83,6 @@ function RouteComponent() {
 
   const onClickGoogle = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
-      console.log("token:", tokenResponse);
-      console.log("LEWAT SINI");
       const googleUserData = await googleTokenExchange(
         tokenResponse.access_token,
       );
@@ -92,7 +93,6 @@ function RouteComponent() {
       }
       const fullname = `${googleUserData.data.given_name} ${googleUserData.data.family_name}`;
       const email = googleUserData.data.email;
-      console.log("lewat sini");
       const response = await sendGoogleAuth({
         name: fullname,
         email,
@@ -253,7 +253,7 @@ function RouteComponent() {
                 <div className="text-center text-sm mt-5">
                   Sudah memiliki akun?&nbsp;
                   <Link
-                    to="/auth/login" 
+                    to="/auth/login"
                     className="underline underline-offset-4"
                   >
                     Login

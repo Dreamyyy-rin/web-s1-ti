@@ -1,15 +1,15 @@
-import { useFetchAnnouncementsPaginated } from "../hooks/useFetchAnnouncementsPaginated";
-import { announcementColumns } from "./announcementColumn";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import ServerDataTable, { DatatablePaginationProps } from "@/components/ui/custom/datatable/serverDataTable";
 import { useState } from "react";
+import { useFetchAlumniInformationsPaginated } from "../hooks/useFetchAlumniInformationsPaginated";
+import { alumniInformationColumns } from "./alumniInformationColumn";
 
-const AnnouncementTopToolbarSlot = () => {
+const AlumniInformationTopToolbarSlot = () => {
   return (
     <div className="flex flex-1 items-center justify-end">
-      <Link to="/admin/announcement/add">
+      <Link to="/admin/alumni-info/add">
         <Button size="sm" className="gap-2">
           <Plus className="size-4" />
           Tambah
@@ -19,14 +19,14 @@ const AnnouncementTopToolbarSlot = () => {
   );
 };
 
-const AnnouncementDataTable = () => {
+const AlumniInformationDataTable = () => {
   const [search, setSearch] = useState("");
   const [pagination, setPagination] = useState<DatatablePaginationProps>({
     index: 0,
     itemPerPage: 10,
   });
 
-  const { data, isLoading } = useFetchAnnouncementsPaginated({
+  const { data, isLoading } = useFetchAlumniInformationsPaginated({
     page: pagination.index + 1,
     per_page: pagination.itemPerPage,
     search: search,
@@ -36,9 +36,9 @@ const AnnouncementDataTable = () => {
     <div>
       {isLoading ? null : (
         <ServerDataTable
-          columns={announcementColumns}
+          columns={alumniInformationColumns}
           data={data? data.data : []}
-          topToolbarSlot={<AnnouncementTopToolbarSlot />}
+          topToolbarSlot={<AlumniInformationTopToolbarSlot />}
           search={search}
           pagination={pagination}
           pageCount={data? Math.ceil(data.meta.total / pagination.itemPerPage) : 0}
@@ -50,4 +50,4 @@ const AnnouncementDataTable = () => {
   );
 };
 
-export default AnnouncementDataTable;
+export default AlumniInformationDataTable;

@@ -3,12 +3,11 @@ import { AnnouncementSchema } from "../types/announcement.schema";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { handleAxiosError } from "@/lib/helpers";
-import { ErrorResponse } from "@/types/responses/errorResponse.type";
+import { ErrorResponse } from "@/interfaces/responses/errorResponse.interface";
 import { AxiosError } from "axios";
 import { DEFAULT_ERROR_MESSAGE } from "@/constants/error.constant";
 
 function createAnnouncement(data: AnnouncementSchema) {
-  console.log("data to send: ", data)
   return axiosBackendInstance.post(
     "/pengumuman",
     {

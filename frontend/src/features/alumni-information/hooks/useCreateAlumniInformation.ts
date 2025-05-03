@@ -5,15 +5,14 @@ import { handleAxiosError } from "@/lib/helpers";
 import { ErrorResponse } from "@/interfaces/responses/errorResponse.interface";
 import { AxiosError } from "axios";
 import { DEFAULT_ERROR_MESSAGE } from "@/constants/error.constant";
-import { VacancySchema } from "../types/vacancy.schema";
+import { AlumniInformationSchema } from "../types/alumniInformation.schema";
 
-function createVacancy(data: VacancySchema) {
+function createAlumniInformation(data: AlumniInformationSchema) {
   return axiosBackendInstance.post(
-    "/lowongan",
+    "/berita-alumni",
     {
       judul: data.title,
-      deskripsi: data.description,
-      link_pendaftaran: data.registration_link,
+      isi: data.content,
       file: data.file,
     },
     {
@@ -24,17 +23,17 @@ function createVacancy(data: VacancySchema) {
   );
 }
 
-export function useCreateVacancy() {
+export function useCreateAlumniInformation() {
   const queryClient = useQueryClient();
   const [error, setError] = useState(DEFAULT_ERROR_MESSAGE);
 
   const mutation = useMutation({
-    mutationFn: async (data: VacancySchema) => {
-      const response = await createVacancy(data);
+    mutationFn: async (data: AlumniInformationSchema) => {
+      const response = await createAlumniInformation(data);
       return response.data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["vacancy", "fetch"] });
+      queryClient.invalidateQueries({ queryKey: ["alumni-information", "fetch"] });
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       const message = handleAxiosError(error)?.message;

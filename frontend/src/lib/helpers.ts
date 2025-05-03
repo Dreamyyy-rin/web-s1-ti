@@ -1,6 +1,6 @@
 import { ENV } from "@/env";
 import { axiosBackendInstance } from "@/services/axiosInstance";
-import { ErrorResponse } from "@/types/responses/errorResponse.type";
+import { ErrorResponse } from "@/interfaces/responses/errorResponse.interface";
 import { AxiosError } from "axios";
 
 export function handleAxiosError(
@@ -62,5 +62,18 @@ export async function fetchFileFromUrl(url: string): Promise<File> {
   const file = new File([blob], filename || `image.${fileExtension}`, {
     type: blob.type,
   });
-  return file
+  return file;
 }
+
+export function debounce<T extends (...args: unknown[]) => unknown>(
+  func: T,
+  ms: number = 300,
+) {
+  let timeoutId: NodeJS.Timeout;
+  return function (this: unknown, ...args: unknown[]) {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => func.apply(this, args), ms);
+  };
+}
+
+export async function formatPaginationParams() {}

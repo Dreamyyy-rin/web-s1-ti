@@ -34,28 +34,28 @@ const ImageInput = React.forwardRef<
   const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log("DRAG ENTER");
+    // console.log("DRAG ENTER");
     setIsDraggedInside(true);
   };
 
   const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log("DRAG LEAVE");
+    // console.log("DRAG LEAVE");
     setIsDraggedInside(false);
   };
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log("DRAG OVER");
+    // console.log("DRAG OVER");
     setIsDraggedInside(true);
   };
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log("DRAG DROP");
+    // console.log("DRAG DROP");
     setIsDraggedInside(false);
 
     const file = e.dataTransfer?.files[0];
@@ -75,7 +75,7 @@ const ImageInput = React.forwardRef<
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target;
     const file = target.files?.[0];
-    console.log("FILE CHANGE", file, "TYPE : ", typeof file);
+    // console.log("FILE CHANGE", file, "TYPE : ", typeof file);
     if (!file) {
       // setPreviewUrl(null);
       return;

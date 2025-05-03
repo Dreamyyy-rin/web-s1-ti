@@ -4,6 +4,8 @@ import {
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
+  OnChangeFn,
+  PaginationState,
   useReactTable,
   VisibilityState,
 } from "@tanstack/react-table";
@@ -22,33 +24,82 @@ import { Scrollbar } from "@radix-ui/react-scroll-area";
 import { DataTablePagination } from "./datatablePagination";
 import DatatableViewOptions from "./datatableViewOptions";
 
-interface DataTableProps<TData, TValue> {
+export interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   topToolbarSlot?: React.ReactNode;
+  pagination: DatatablePaginationProps;
+  search: string;
+  pageCount: number;
+  onSearchChange: React.Dispatch<React.SetStateAction<string>>;
+  onPaginationChange: React.Dispatch<
+    React.SetStateAction<DatatablePaginationProps>
+  >;
 }
 
-const Datatable = <TData extends object, TValue = unknown>(
+export interface DatatablePaginationProps {
+  index: number;
+  itemPerPage: number;
+}
+
+const ServerDataTableComponent = <TData extends object, TValue = unknown>(
   {
     columns,
     data,
     className,
     topToolbarSlot,
+    search,
+    onSearchChange,
+    pagination,
+    onPaginationChange,
+    pageCount,
     ...props
   }: React.ComponentPropsWithoutRef<"div"> & DataTableProps<TData, TValue>,
   ref: React.ForwardedRef<HTMLDivElement>,
 ) => {
+  const onReactTablePaginationChange: OnChangeFn<PaginationState> = (
+    updaterOrValue,
+  ) => {
+    const next =
+      typeof updaterOrValue == "function"
+        ? updaterOrValue({
+            pageIndex: pagination.index,
+            pageSize: pagination.itemPerPage,
+          })
+        : updaterOrValue;
+    onPaginationChange({
+      index: next.pageIndex,
+      itemPerPage: next.pageSize,
+    });
+  };
 
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
-  
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  // const [globalSearch, setGlobalSearch] = useState<string>(search ?? "")
+  // const [tablePagination, setTablePagination] = useState<PaginationState>({
+  //   pageIndex: pagination?.pageIndex ?? 0,
+  //   pageSize: pagination?.pageSize ?? 10,
+  // })
+  // setTablePagination({})
+
   const table = useReactTable({
-    data,
-    columns,
+    get data() {
+      return data;
+    },
+    get columns() {
+      return columns;
+    },
+    get pageCount() {
+      return pageCount;
+    },
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     globalFilterFn: "includesString",
+    onGlobalFilterChange: onSearchChange,
     onColumnVisibilityChange: setColumnVisibility,
+    onPaginationChange: onReactTablePaginationChange,
+    manualPagination: true,
+    manualFiltering: true,
     initialState: {
       pagination: {
         pageIndex: 0,
@@ -56,9 +107,25 @@ const Datatable = <TData extends object, TValue = unknown>(
       },
     },
     state: {
-      columnVisibility
-    }
+      get globalFilter() {
+        return search;
+      },
+      get columnVisibility() {
+        return columnVisibility;
+      },
+      get pagination() {
+        if (!pagination)
+          return undefined; //Maybe this is for automatic pagination later
+        else {
+          return {
+            pageIndex: pagination.index,
+            pageSize: pagination.itemPerPage,
+          };
+        }
+      },
+    },
   });
+
   return (
     <div ref={ref} {...props} className={cn("rounded-md space-y-2", className)}>
       <DatatableViewOptions table={table}>
@@ -120,10 +187,12 @@ const Datatable = <TData extends object, TValue = unknown>(
   );
 };
 
-export default React.forwardRef(Datatable) as <
+const ServerDataTable = React.forwardRef(ServerDataTableComponent) as <
   TData extends object,
   TValue = unknown,
 >(
   props: React.ComponentPropsWithoutRef<"div"> & DataTableProps<TData, TValue>,
   ref: React.ForwardedRef<HTMLDivElement>,
 ) => React.ReactElement;
+
+export default ServerDataTable;
