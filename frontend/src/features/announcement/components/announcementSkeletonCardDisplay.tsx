@@ -19,7 +19,7 @@ const AnnouncementSkeletonCardDisplay = React.forwardRef<
       {...props}
       className={cn("flex flex-wrap justify-evenly  -mx-2 ", className)}
     >
-      {[Array.from({ length: amount })].map((_, index) => (
+      {Array.from({ length: amount }).map((_, index) => (
         <div className="w-full  md:w-1/2 xl:w-1/3 px-2 pb-4" key={index}>
           <Card className=" bg-white rounded-lg shadow-lg overflow-hidden h-full flex-initial flex flex-col ">
             <Skeleton className="w-full h-48 object-cover" />
