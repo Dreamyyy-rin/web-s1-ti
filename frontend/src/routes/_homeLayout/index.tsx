@@ -41,28 +41,28 @@ function Index() {
   return (
     <div>
       {/* Carousel */}
-      <div className="container mx-auto py-8">
+      <div className="mx-auto w-full">
         <Carousel>
           <CarouselContent>
             <CarouselItem>
               <img
                 src={carousel1}
                 alt="Image 1"
-                className="w-full h-auto max-h-[500px] object-cover"
+                className="w-full h-screen max-h-[500px] object-cover"
               />
             </CarouselItem>
             <CarouselItem>
               <img
                 src={carousel2}
                 alt="Image 2"
-                className="w-full h-auto max-h-[500px] object-cover"
+                className="w-full h-screen max-h-[500px] object-cover"
               />
             </CarouselItem>
             <CarouselItem>
               <img
                 src={carousel1}
                 alt="Image 3"
-                className="w-full h-auto max-h-[500px] object-cover"
+                className="w-full h-screen max-h-[500px] object-cover"
               />
             </CarouselItem>
           </CarouselContent>
