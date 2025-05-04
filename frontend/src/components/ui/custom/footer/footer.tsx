@@ -29,17 +29,29 @@ const Footer: React.FC = () => {
           <h4 className="text-lg font-semibold">University Resources</h4>
           <ul className="space-y-1 text-sm">
             <li>
-              <a href="https://www.uksw.edu/" className="text-blue-400">
+              <a
+                href="https://www.uksw.edu/"
+                className="text-blue-400"
+                target="_blank"
+              >
                 Website Universitas Kristen Satya Wacana
               </a>
             </li>
             <li>
-              <a href="https://sia.uksw.edu/" className="text-blue-400">
+              <a
+                href="https://sia.uksw.edu/"
+                className="text-blue-400"
+                target="_blank"
+              >
                 Sistem Informasi Akademik Satya Wacana
               </a>
             </li>
             <li>
-              <a href="https://www.uksw.edu/library" className="text-blue-400">
+              <a
+                href="https://www.uksw.edu/library"
+                className="text-blue-400"
+                target="_blank"
+              >
                 Perpustakaan Universitas
               </a>
             </li>
@@ -47,12 +59,17 @@ const Footer: React.FC = () => {
               <a
                 href="https://www.uksw.edu/flexible-learning"
                 className="text-blue-400"
+                target="_blank"
               >
                 Flexible Learning UKSW
               </a>
             </li>
             <li>
-              <a href="https://journal.uksw.edu/" className="text-blue-400">
+              <a
+                href="https://journal.uksw.edu/"
+                className="text-blue-400"
+                target="_blank"
+              >
                 Jurnal AITI Fakultas Teknologi Informasi
               </a>
             </li>
