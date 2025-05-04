@@ -1,29 +1,19 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
 } from "@/components/ui/pagination";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import Footer from "@/components/ui/custom/footer/footer";
 import { Button } from "@/components/ui/button";
 import { useFetchAnnouncementsPaginated } from "@/features/announcement/hooks/useFetchAnnouncementsPaginated";
-import { ENV } from "@/env";
-import ReadonlyText from "@/components/ui/custom/rich-text-editor/readonlyText";
 import HomeHeading from "@/features/shared/components/homeHeading";
+import { useState } from "react";
+import AnnouncementCardDisplay from "@/features/announcement/components/announcementCardDisplay";
+import AnnouncementSkeletonCardDisplay from "@/features/announcement/components/announcementSkeletonCardDisplay";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export const Route = createFileRoute("/_homeLayout/announcement/")({
   component: RouteComponent,
@@ -38,73 +28,62 @@ function RouteComponent() {
   {
     /* Data Pengumuman */
   }
+  const [pageIndex, setPageIndex] = useState<number>(1);
+  const [search, setSearch] = useState<string>("");
+  console.log("pageindex:", pageIndex);
+  const perPage = 12;
 
-  const { data: announcements, isLoading } = useFetchAnnouncementsPaginated();
+  const { data: announcements, isLoading: isFetchAnnouncementLoading } =
+    useFetchAnnouncementsPaginated({
+      page: pageIndex,
+      per_page: perPage,
+      search: search,
+    });
 
   return (
     <div className="relative">
       <HomeHeading title="Pengumuman" />
       {/* Card Pengumuman */}
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {isLoading
-            ? null
-            : announcements?.data.map((announcement, index) => (
-                <Card key={index} className="shadow-lg rounded-md">
-                  {/* Gunakan img di dalam CardHeader */}
-                  <CardHeader className="p-0">
-                    <img
-                      src={`${ENV.APP.BACKEND_URL}/files/${announcement.file}`}
-                      alt={announcement.judul}
-                      className="w-full h-[200px] object-cover rounded-t-md"
-                    />
-                  </CardHeader>
-                  <CardContent className="p-4">
-                    <CardTitle className="text-xl font-semibold">
-                      {announcement.judul}
-                    </CardTitle>
-                    <CardDescription className="text-gray-600 mt-2">
-                      <ReadonlyText data={announcement.isi} />
-                    </CardDescription>
-                  </CardContent>
-                  <CardFooter className="p-4">
-                    <Link
-                      to={`/announcement/$announcementId`}
-                      params={{ announcementId: announcement.id.toString() }}
-                    >
-                      <Button variant="outline" size="sm">
-                        Baca Selengkapnya
-                      </Button>
-                    </Link>
-                  </CardFooter>
-                </Card>
-              ))}
-        </div>
-
-        {/* Pagination Component from Shadcn */}
-        <div className="flex justify-center mt-8">
-          <Pagination>
+      <div className="container mx-auto px-8 py-8 ">
+        {isFetchAnnouncementLoading ? (
+          <AnnouncementSkeletonCardDisplay amount={perPage} />
+        ) : (
+          <>
+            <AnnouncementCardDisplay
+              announcements={announcements?.data ?? []}
+            />
+          </>
+        )}
+        <div className="flex justify-center  mt-8">
+          <Pagination className="items-center">
+            <div className="me-4">
+              Halaman {pageIndex} dari {announcements?.meta.last_page}
+            </div>
             <PaginationContent>
               <PaginationItem>
-                <PaginationPrevious href="#" />
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => setPageIndex(pageIndex - 1)}
+                  disabled={pageIndex === 1}
+                >
+                  <ChevronLeft />
+                </Button>
               </PaginationItem>
               <PaginationItem>
-                <PaginationLink href="#">1</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#">2</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationNext href="#" />
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => setPageIndex(pageIndex + 1)}
+                  disabled={announcements?.meta.last_page === pageIndex}
+                >
+                  <ChevronRight />
+                </Button>
               </PaginationItem>
             </PaginationContent>
           </Pagination>
         </div>
       </div>
-      {/*Bagian Footer*/}
       <Footer />
     </div>
   );
