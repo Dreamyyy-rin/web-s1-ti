@@ -109,16 +109,6 @@ export function HomeHeader() {
                       Lowongan Asisten Dosen
                     </Link>
                   </NavigationMenuLink>
-                  <Link to="/beritaAlumni">
-                    <NavigationMenuLink
-                      className={cn(
-                        navigationMenuTriggerStyle(),
-                        "w-full justify-start"
-                      )}
-                    >
-                      Berita Alumni
-                    </NavigationMenuLink>
-                  </Link>
                   {/* <ListItem href="/docs" title="Introduction">
                     Re-usable components built using Radix UI and Tailwind CSS.
                   </ListItem>
