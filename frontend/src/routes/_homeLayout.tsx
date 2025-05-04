@@ -9,7 +9,7 @@ function RouteComponent() {
 
   return (
     <>
-      <div className="flex flex-col min-h-[calc(100vh-144px)] mt-16">
+      <div className="flex flex-col min-h-[calc(100vh-144px)] mt-12 md:mt-16">
         <HomeHeader />
         <Outlet />
       </div>

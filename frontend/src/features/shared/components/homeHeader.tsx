@@ -1,202 +1,44 @@
-import { Button } from "@/components/ui/button";
 import { BaseHeader } from "@/components/ui/custom/header/baseHeader";
-import HeaderProfileDropdown from "@/components/ui/custom/header/headerProfileDropdown";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
-import { cn } from "@/lib/utils";
-import { useAuthStore } from "@/stores/auth.store";
-import { Link } from "@tanstack/react-router";
-import { LogIn } from "lucide-react";
 
 export function HomeHeader() {
-  const user = useAuthStore((state) => state.user);
-
   return (
-    <BaseHeader>
-      <div className="w-full flex gap-1 justify-between items-center ">
-        <NavigationMenu>
-          <NavigationMenuList>
-            <NavigationMenuItem className="">
-              <NavigationMenuLink asChild>
-                <Link
-                  to="/"
-                  className={cn(navigationMenuTriggerStyle(), "bg-transparent")}
-                >
-                  Home
-                </Link>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
-        <NavigationMenu className="me-auto">
-          {/* <NavigationMenuList>
-            <NavigationMenuItem>
-              <Link to="/">
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Home
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <Link to="/">
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  About
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-          </NavigationMenuList> */}
-          <NavigationMenuList>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger className="bg-transparent">
-                Berita
-              </NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="flex flex-col gap-1 px-1 py-2 md:w-[250px] lg:w-[300px] ">
-                  {/* <li className="row-span-3">
-                <NavigationMenuLink asChild>
-                  <a
-                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                    href="/"
-                  >
-                    <Icons.logo className="h-6 w-6" />
-                    <div className="mb-2 mt-4 text-lg font-medium">
-                      shadcn/ui
-                    </div>
-                    <p className="text-sm leading-tight text-muted-foreground">
-                      Beautifully designed components built with Radix UI and
-                      Tailwind CSS.
-                    </p>
-                  </a>
-                </NavigationMenuLink>
-              </li> */}
-                  <NavigationMenuLink asChild>
-                    <Link
-                      to="/announcement"
-                      className={cn(
-                        navigationMenuTriggerStyle(),
-                        "w-full justify-start"
-                      )}
-                    >
-                      Pengumuman
-                    </Link>
-                  </NavigationMenuLink>
-                  <NavigationMenuLink asChild>
-                    <Link
-                      to="/alumni-info"
-                      className={cn(
-                        navigationMenuTriggerStyle(),
-                        "w-full justify-start"
-                      )}
-                    >
-                      Berita Alumni
-                    </Link>
-                  </NavigationMenuLink>
-                  <NavigationMenuLink asChild>
-                    <Link
-                      to="/vacancy"
-                      className={cn(
-                        navigationMenuTriggerStyle(),
-                        "w-full justify-start"
-                      )}
-                    >
-                      Lowongan Asisten Dosen
-                    </Link>
-                  </NavigationMenuLink>
-                  {/* <ListItem href="/docs" title="Introduction">
-                    Re-usable components built using Radix UI and Tailwind CSS.
-                  </ListItem>
-                  <ListItem href="/docs/installation" title="Installation">
-                    How to install dependencies and structure your app.
-                  </ListItem>
-                  <ListItem
-                    href="/docs/primitives/typography"
-                    title="Typography"
-                  >
-                    Styles for headings, paragraphs, lists...etc
-                  </ListItem> */}
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger className="bg-transparent">
-                Lainnya
-              </NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid gap-1 md:w-[250px] px-1 py-2 lg:w-[300px] ">
-                  {/* <li className="row-span-3">
-                <NavigationMenuLink asChild>
-                  <a
-                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                    href="/"
-                  >
-                    <Icons.logo className="h-6 w-6" />
-                    <div className="mb-2 mt-4 text-lg font-medium">
-                      shadcn/ui
-                    </div>
-                    <p className="text-sm leading-tight text-muted-foreground">
-                      Beautifully designed components built with Radix UI and
-                      Tailwind CSS.
-                    </p>
-                  </a>
-                </NavigationMenuLink>
-              </li> */}
-                  <NavigationMenuLink asChild>
-                    <Link
-                      to="/studyProgramProfile"
-                      className={cn(
-                        navigationMenuTriggerStyle(),
-                        "w-full justify-start"
-                      )}
-                    >
-                      Profil Program Studi
-                    </Link>
-                  </NavigationMenuLink>
-                  <NavigationMenuLink asChild>
-                    <Link
-                      to="/studentsAssociationInfo"
-                      className={cn(
-                        navigationMenuTriggerStyle(),
-                        "w-full justify-start"
-                      )}
-                    >
-                      Profil Himpunan Mahasiswa
-                    </Link>
-                  </NavigationMenuLink>
-                  {/* <ListItem href="/docs" title="Introduction">
-                    Re-usable components built using Radix UI and Tailwind CSS.
-                  </ListItem>
-                  <ListItem href="/docs/installation" title="Installation">
-                    How to install dependencies and structure your app.
-                  </ListItem>
-                  <ListItem
-                    href="/docs/primitives/typography"
-                    title="Typography"
-                  >
-                    Styles for headings, paragraphs, lists...etc
-                  </ListItem> */}
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
-        {user ? (
-          <HeaderProfileDropdown />
-        ) : (
-          <Link to="/auth/login">
-            <Button className="sm:hidden w-4">
-              <LogIn />
-            </Button>
-            <Button className="hidden sm:block">Login</Button>
-          </Link>
-        )}
-      </div>
-    </BaseHeader>
+    <BaseHeader
+      body={[
+        {
+          title: "Home",
+          content: "/",
+        },
+        {
+          title: "Berita",
+          content: [
+            {
+              title: "Pengumuman",
+              url: "/announcement",
+            },
+            {
+              title: "Berita Alumni",
+              url: "/alumni-info",
+            },
+            {
+              title: "Lowongan Asisten Dosen",
+              url: "/vacancy",
+            },
+          ],
+        },
+        {
+          title: "Lainnya",
+          content: [
+            {
+              title: "Profil Program Studi",
+              url: "/studyProgramProfile",
+            },
+            {
+              title: "Profil Himpunan Mahasiswa",
+              url: "/studentsAssociationInfo",
+            },
+          ],
+        },
+      ]}
+    />
   );
 }

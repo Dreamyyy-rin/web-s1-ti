@@ -6,6 +6,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "../../sidebar";
 import { Link, useLocation } from "@tanstack/react-router";
 
@@ -15,6 +16,7 @@ const BaseSidebarContent = React.forwardRef<
 >(({ data }, ref) => {
   const { pathname } = useLocation();
   // const [pathname, setPathname] = useState<string>();
+  const { setOpenMobile } = useSidebar();
 
   return data.map((service) => (
     <SidebarGroup key={service.title} ref={ref}>
@@ -30,7 +32,11 @@ const BaseSidebarContent = React.forwardRef<
                   : ""
               }
             >
-              <Link disabled={pathname.includes(item.url)} to={item.url}>
+              <Link
+                disabled={pathname.includes(item.url)}
+                to={item.url}
+                onClick={() => setOpenMobile(false)}
+              >
                 <item.icon className="" />
                 <span>{item.title}</span>
               </Link>
