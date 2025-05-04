@@ -95,9 +95,9 @@ function Index() {
 
       {/* Tombol Selengkapnya */}
       <div className="container mx-auto flex justify-center px-8">
-        <Link to="/announcement" className="w-full">
-          <Button variant="outline" className="w-full">
-            Selengkapnya
+        <Link to="/announcement" className="w-full text-center">
+          <Button variant="outline" className="">
+            Lihat Lebih Banyak
           </Button>
         </Link>
       </div>
