@@ -1,7 +1,7 @@
 import useMinimalTiptapEditor from "../minimal-tiptap/hooks/use-minimal-tiptap";
 
 
-const ReadonlyText = ({data}: {data: string}) => {
+const ReadonlyText = ({data, maxlength}: {data: string, maxlength?: number}) => {
   const editor = useMinimalTiptapEditor({
     value: data,
     editable: false,
@@ -9,8 +9,10 @@ const ReadonlyText = ({data}: {data: string}) => {
   if (!editor) {
     return null;
   }
+  const text = editor.getText()
+  const displayText = maxlength && text.length > maxlength ? `${text.substring(0, maxlength)}...` : text
   return (
-    <div className="div">{editor.getText()}</div>
+    <div className="div">{displayText}</div>
   )
 }
 

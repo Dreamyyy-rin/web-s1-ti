@@ -20,17 +20,24 @@ import itexploreLink from "@/assets/itexploreLink.jpg";
 import {
   Card,
   CardContent,
-  CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import Footer from "@/components/ui/custom/footer/footer";
+import { useFetchAnnouncementsPaginated } from "@/features/announcement/hooks/useFetchAnnouncementsPaginated";
+import ReadonlyText from "@/components/ui/custom/rich-text-editor/readonlyText";
+import { Skeleton } from "@/components/ui/skeleton";
+import { ENV } from "@/env";
 
 export const Route = createFileRoute("/_homeLayout/")({
   component: Index,
 });
 
 function Index() {
+  const { data: announcements, isLoading: isFetchAnnouncementLoading } =
+    useFetchAnnouncementsPaginated({ per_page: 3, sort_by: "latest", page: 1 });
+
   return (
     <div>
       {/* Carousel */}
@@ -64,7 +71,7 @@ function Index() {
         </Carousel>
       </div>
 
-      <div className="container mx-auto flex flex-col md:flex-row justify-center items-center gap-4 mt-6 px-4">
+      <div className="container mx-auto flex flex-col md:flex-row justify-center items-center gap-4 mt-6 px-8">
         <Link
           to="/vacancy"
           className="flex justify-center items-center w-full md:w-1/3 h-12"
@@ -80,149 +87,149 @@ function Index() {
       </div>
 
       {/* Bagian Pengumuman */}
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-8 py-8">
         {/* Heading Pengumuman */}
         <div className="text-center mt-20">
           <h2 className="text-3xl font-semibold">Pengumuman</h2>
         </div>
 
         {/* Card Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6">
-          {/* Card 1 */}
-          <Card className="bg-white rounded-lg shadow-lg overflow-hidden">
-            <img
-              src={carousel1}
-              alt="Pengumuman 1"
-              className="w-full h-48 object-cover"
-            />
-            <CardContent>
-              <CardHeader>
-                <CardTitle className="text-xl font-semibold text-gray-900">
-                  Diskomvision 2024
-                </CardTitle>
-                <CardDescription className="text-gray-600 mt-2">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </CardDescription>
-              </CardHeader>
-              <Button className="mt-4" variant="outline" size="sm">
-                Read More
-              </Button>
-            </CardContent>
-          </Card>
-
-          {/* Card 2 */}
-          <Card className="bg-white rounded-lg shadow-lg overflow-hidden">
-            <img
-              src={carousel1}
-              alt="Pengumuman 2"
-              className="w-full h-48 object-cover"
-            />
-            <CardContent>
-              <CardHeader>
-                <CardTitle className="text-xl font-semibold text-gray-900">
-                  Judul Pengumuman 2
-                </CardTitle>
-                <CardDescription className="text-gray-600 mt-2">
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat.
-                </CardDescription>
-              </CardHeader>
-              <Button className="mt-4" variant="outline" size="sm">
-                Read More
-              </Button>
-            </CardContent>
-          </Card>
-
-          {/* Card 3 */}
-          <Card className="bg-white rounded-lg shadow-lg overflow-hidden">
-            <img
-              src={carousel1}
-              alt="Pengumuman 3"
-              className="w-full h-48 object-cover"
-            />
-            <CardContent>
-              <CardHeader>
-                <CardTitle className="text-xl font-semibold text-gray-900">
-                  Judul Pengumuman 3
-                </CardTitle>
-                <CardDescription className="text-gray-600 mt-2">
-                  Duis aute irure dolor in reprehenderit in voluptate velit esse
-                  cillum dolore eu fugiat nulla pariatur.
-                </CardDescription>
-              </CardHeader>
-              <Button className="mt-4" variant="outline" size="sm">
-                Read More
-              </Button>
-            </CardContent>
-          </Card>
+        <div className="flex flex-wrap justify-evenly  mt-6 -mx-2 ">
+          {isFetchAnnouncementLoading
+            ? [1, 2, 3].map((announcement) => (
+                <div
+                  className="w-full  md:w-1/2 xl:w-1/3 px-2 pb-4"
+                  key={announcement}
+                >
+                  <Card className=" bg-white rounded-lg shadow-lg overflow-hidden h-full flex-initial flex flex-col ">
+                    <Skeleton className="w-full h-48 object-cover" />
+                    <CardHeader className="">
+                      <CardTitle className="text-xl font-semibold text-gray-900 flex">
+                        <Skeleton className="w-64 h-4 flex-initial" />
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex flex-col gap-2">
+                      <div className="flex flex-row gap-2">
+                        <Skeleton className="w-1/3 flex-none h-2" />
+                        <Skeleton className="flex-auto h-2" />
+                      </div>
+                      <div className="flex flex-row gap-2">
+                        <Skeleton className="w-2/3 flex-none h-2" />
+                        <Skeleton className=" flex-auto h-2" />
+                      </div>
+                      <div className="flex flex-row gap-2">
+                        <Skeleton className="w-1/2 flex-none h-2" />
+                        <Skeleton className=" flex-auto h-2" />
+                      </div>
+                    </CardContent>
+                    <CardFooter className="flex-auto items-end">
+                      <Skeleton className="h-8 w-32 rounded-sm px-3 text-xs" />
+                    </CardFooter>
+                  </Card>
+                </div>
+              ))
+            : announcements?.data.map((announcement) => (
+                <div
+                  className="w-full  md:w-1/2 xl:w-1/3 px-2 pb-4"
+                  key={announcement.id}
+                >
+                  <Card className=" bg-white rounded-lg shadow-lg overflow-hidden h-full flex flex-col ">
+                    <img
+                      src={`${ENV.APP.BACKEND_URL}/files/${announcement.file}`}
+                      alt={announcement.judul}
+                      className="w-full h-48 object-cover object-top rounded-t-md"
+                    />
+                    <CardHeader className="">
+                      <CardTitle className="text-xl font-semibold text-gray-900">
+                        {announcement.judul}
+                      </CardTitle>
+                      {/* <CardDescription className="text-gray-600 mt-2"></CardDescription> */}
+                    </CardHeader>
+                    <CardContent className="">
+                      <ReadonlyText maxlength={100} data={announcement.isi} />
+                    </CardContent>
+                    <CardFooter className="flex-auto items-end">
+                      <Link
+                        to={`/announcement/$announcementId`}
+                        params={{ announcementId: announcement.id.toString() }}
+                      >
+                        <Button className="" variant="outline" size="sm">
+                          Baca Selengkapnya
+                        </Button>
+                      </Link>
+                    </CardFooter>
+                  </Card>
+                </div>
+              ))}
         </div>
       </div>
 
       {/* Tombol Selengkapnya */}
-      <div className="container mx-auto flex justify-center mt-6 px-4">
+      <div className="container mx-auto flex justify-center px-8">
         <Link to="/announcement" className="w-full">
-          <Button variant="outline" className="w-full">Selengkapnya</Button>
+          <Button variant="outline" className="w-full">
+            Selengkapnya
+          </Button>
         </Link>
       </div>
 
       {/* Bagian Kerja Sama */}
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-8 py-8">
         <div className="text-center my-16">
           <h2 className="text-3xl font-semibold">Kerja Sama</h2>
         </div>
 
         <div className="container flex items-center justify-center flex-col md:flex-row mx-auto gap-28 px-4 mt-6 ">
           {/* <div className="justify-center gap-28 items-center "> */}
-            {/* Logo Alfamart */}
-            <a
-              href="https://www.alfamart.co.id/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="transition-transform duration-300 transform hover:scale-110 hover:rotate-3"
-            >
-              <img src={alfaLogo} alt="Alfamart" className="w-32 h-auto" />
-            </a>
+          {/* Logo Alfamart */}
+          <a
+            href="https://www.alfamart.co.id/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition-transform duration-300 transform hover:scale-110 hover:rotate-3"
+          >
+            <img src={alfaLogo} alt="Alfamart" className="w-32 h-auto" />
+          </a>
 
-            {/* Logo CTI Group */}
-            <a
-              href="https://www.ctigroup.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="transition-transform duration-300 transform hover:scale-110 hover:rotate-3"
-            >
-              <img src={ctiLogo} alt="CTI Group" className="w-32 h-auto" />
-            </a>
+          {/* Logo CTI Group */}
+          <a
+            href="https://www.ctigroup.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition-transform duration-300 transform hover:scale-110 hover:rotate-3"
+          >
+            <img src={ctiLogo} alt="CTI Group" className="w-32 h-auto" />
+          </a>
 
-            {/* Logo Pura */}
-            <a
-              href="https://www.pura.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="transition-transform duration-300 transform hover:scale-110 hover:rotate-3"
-            >
-              <img src={puraLogo} alt="Pura" className="w-32 h-auto" />
-            </a>
+          {/* Logo Pura */}
+          <a
+            href="https://www.pura.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition-transform duration-300 transform hover:scale-110 hover:rotate-3"
+          >
+            <img src={puraLogo} alt="Pura" className="w-32 h-auto" />
+          </a>
 
-            {/* Logo Sinarmas */}
-            <a
-              href="https://www.sinarmas.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="transition-transform duration-300 transform hover:scale-110 hover:rotate-3"
-            >
-              <img src={sinarmasLogo} alt="Sinarmas" className="w-32 h-auto" />
-            </a>
+          {/* Logo Sinarmas */}
+          <a
+            href="https://www.sinarmas.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition-transform duration-300 transform hover:scale-110 hover:rotate-3"
+          >
+            <img src={sinarmasLogo} alt="Sinarmas" className="w-32 h-auto" />
+          </a>
 
-            {/* Logo BCA */}
-            <a
-              href="https://www.bca.co.id/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="transition-transform duration-300 transform hover:scale-110 hover:rotate-3"
-            >
-              <img src={bcaLogo} alt="BCA" className="w-32 h-auto" />
-            </a>
+          {/* Logo BCA */}
+          <a
+            href="https://www.bca.co.id/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition-transform duration-300 transform hover:scale-110 hover:rotate-3"
+          >
+            <img src={bcaLogo} alt="BCA" className="w-32 h-auto" />
+          </a>
           {/* </div> */}
         </div>
       </div>
@@ -263,7 +270,7 @@ function Index() {
       </div>
 
       {/*Bagian Layanan Kampus*/}
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-8 py-8">
         {/* Heading Layanan Kampus */}
         <div className="text-center">
           <h2 className="text-3xl font-semibold">Layanan Kampus</h2>
@@ -272,7 +279,7 @@ function Index() {
         {/* Gambar Layanan Kampus */}
         <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-1">
           {/* Gambar 1 */}
-          <div className="w-full p-4">
+          <div className="w-full py-4">
             <a
               href="https://siasat.uksw.edu"
               target="_blank"
@@ -287,7 +294,7 @@ function Index() {
           </div>
 
           {/* Gambar 2 */}
-          <div className="w-full p-4">
+          <div className="w-full py-4">
             <a
               href="http://online.fti.uksw.edu"
               target="_blank"
@@ -302,7 +309,7 @@ function Index() {
           </div>
 
           {/* Gambar 3 */}
-          <div className="w-full p-4">
+          <div className="w-full py-4">
             <a
               href="https://ejournal.uksw.edu/itexplore"
               target="_blank"
@@ -317,7 +324,7 @@ function Index() {
           </div>
 
           {/* Gambar 4 */}
-          <div className="w-full p-4">
+          <div className="w-full py-4">
             <a
               href="https://library.uksw.edu"
               target="_blank"
@@ -332,7 +339,7 @@ function Index() {
           </div>
 
           {/* Gambar 5 */}
-          <div className="w-full p-4">
+          <div className="w-full py-4">
             <a
               href="https://ejournal.uksw.edu/aiti"
               target="_blank"

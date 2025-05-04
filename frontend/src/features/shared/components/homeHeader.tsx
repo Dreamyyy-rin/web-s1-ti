@@ -24,13 +24,14 @@ export function HomeHeader() {
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem className="">
-              <Link to="/">
-                <NavigationMenuLink
+              <NavigationMenuLink asChild>
+                <Link
+                  to="/"
                   className={cn(navigationMenuTriggerStyle(), "bg-transparent")}
                 >
                   Home
-                </NavigationMenuLink>
-              </Link>
+                </Link>
+              </NavigationMenuLink>
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
@@ -75,26 +76,39 @@ export function HomeHeader() {
                   </a>
                 </NavigationMenuLink>
               </li> */}
-                  <Link to="/announcement">
-                    <NavigationMenuLink
+                  <NavigationMenuLink asChild>
+                    <Link
+                      to="/announcement"
                       className={cn(
                         navigationMenuTriggerStyle(),
                         "w-full justify-start"
                       )}
                     >
                       Pengumuman
-                    </NavigationMenuLink>
-                  </Link>
-                  <Link to="/vacancy">
-                    <NavigationMenuLink
+                    </Link>
+                  </NavigationMenuLink>
+                  <NavigationMenuLink asChild>
+                    <Link
+                      to="/alumni-info"
+                      className={cn(
+                        navigationMenuTriggerStyle(),
+                        "w-full justify-start"
+                      )}
+                    >
+                      Berita Alumni
+                    </Link>
+                  </NavigationMenuLink>
+                  <NavigationMenuLink asChild>
+                    <Link
+                      to="/vacancy"
                       className={cn(
                         navigationMenuTriggerStyle(),
                         "w-full justify-start"
                       )}
                     >
                       Lowongan Asisten Dosen
-                    </NavigationMenuLink>
-                  </Link>
+                    </Link>
+                  </NavigationMenuLink>
                   <Link to="/beritaAlumni">
                     <NavigationMenuLink
                       className={cn(
@@ -143,26 +157,28 @@ export function HomeHeader() {
                   </a>
                 </NavigationMenuLink>
               </li> */}
-                  <Link to="/studyProgramProfile">
-                    <NavigationMenuLink
+                  <NavigationMenuLink asChild>
+                    <Link
+                      to="/studyProgramProfile"
                       className={cn(
                         navigationMenuTriggerStyle(),
                         "w-full justify-start"
                       )}
                     >
                       Profil Program Studi
-                    </NavigationMenuLink>
-                  </Link>
-                  <Link to="/studentsAssociationInfo">
-                    <NavigationMenuLink
+                    </Link>
+                  </NavigationMenuLink>
+                  <NavigationMenuLink asChild>
+                    <Link
+                      to="/studentsAssociationInfo"
                       className={cn(
                         navigationMenuTriggerStyle(),
                         "w-full justify-start"
                       )}
                     >
                       Profil Himpunan Mahasiswa
-                    </NavigationMenuLink>
-                  </Link>
+                    </Link>
+                  </NavigationMenuLink>
                   {/* <ListItem href="/docs" title="Introduction">
                     Re-usable components built using Radix UI and Tailwind CSS.
                   </ListItem>
