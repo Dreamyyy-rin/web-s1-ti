@@ -23,12 +23,15 @@ export function HomeHeader() {
       <div className="w-full flex gap-1 justify-between items-center ">
         <NavigationMenu>
           <NavigationMenuList>
-            <NavigationMenuItem className="" >
-              <Link to="/">
-                <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "bg-transparent")}>
+            <NavigationMenuItem className="">
+              <NavigationMenuLink asChild>
+                <Link
+                  to="/"
+                  className={cn(navigationMenuTriggerStyle(), "bg-transparent")}
+                >
                   Home
-                </NavigationMenuLink>
-              </Link>
+                </Link>
+              </NavigationMenuLink>
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
@@ -51,7 +54,9 @@ export function HomeHeader() {
           </NavigationMenuList> */}
           <NavigationMenuList>
             <NavigationMenuItem>
-              <NavigationMenuTrigger className="bg-transparent">Berita</NavigationMenuTrigger>
+              <NavigationMenuTrigger className="bg-transparent">
+                Berita
+              </NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="flex flex-col gap-1 px-1 py-2 md:w-[250px] lg:w-[300px] ">
                   {/* <li className="row-span-3">
@@ -71,26 +76,39 @@ export function HomeHeader() {
                   </a>
                 </NavigationMenuLink>
               </li> */}
-                  <Link to="/announcement">
-                    <NavigationMenuLink
+                  <NavigationMenuLink asChild>
+                    <Link
+                      to="/announcement"
                       className={cn(
                         navigationMenuTriggerStyle(),
                         "w-full justify-start",
                       )}
                     >
                       Pengumuman
-                    </NavigationMenuLink>
-                  </Link>
-                  <Link to="/vacancy">
-                    <NavigationMenuLink
+                    </Link>
+                  </NavigationMenuLink>
+                  <NavigationMenuLink asChild>
+                    <Link
+                      to="/alumni-info"
+                      className={cn(
+                        navigationMenuTriggerStyle(),
+                        "w-full justify-start",
+                      )}
+                    >
+                      Berita Alumni
+                    </Link>
+                  </NavigationMenuLink>
+                  <NavigationMenuLink asChild>
+                    <Link
+                      to="/vacancy"
                       className={cn(
                         navigationMenuTriggerStyle(),
                         "w-full justify-start",
                       )}
                     >
                       Lowongan Asisten Dosen
-                    </NavigationMenuLink>
-                  </Link>
+                    </Link>
+                  </NavigationMenuLink>
                   {/* <ListItem href="/docs" title="Introduction">
                     Re-usable components built using Radix UI and Tailwind CSS.
                   </ListItem>
@@ -107,7 +125,9 @@ export function HomeHeader() {
               </NavigationMenuContent>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuTrigger className="bg-transparent">Lainnya</NavigationMenuTrigger>
+              <NavigationMenuTrigger className="bg-transparent">
+                Lainnya
+              </NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid gap-1 md:w-[250px] px-1 py-2 lg:w-[300px] ">
                   {/* <li className="row-span-3">
@@ -127,26 +147,28 @@ export function HomeHeader() {
                   </a>
                 </NavigationMenuLink>
               </li> */}
-                  <Link to="/studyProgramProfile">
-                    <NavigationMenuLink
+                  <NavigationMenuLink asChild>
+                    <Link
+                      to="/studyProgramProfile"
                       className={cn(
                         navigationMenuTriggerStyle(),
                         "w-full justify-start",
                       )}
                     >
                       Profil Program Studi
-                    </NavigationMenuLink>
-                  </Link>
-                  <Link to="/studentsAssociationInfo">
-                    <NavigationMenuLink
+                    </Link>
+                  </NavigationMenuLink>
+                  <NavigationMenuLink asChild>
+                    <Link
+                      to="/studentsAssociationInfo"
                       className={cn(
                         navigationMenuTriggerStyle(),
                         "w-full justify-start",
                       )}
                     >
                       Profil Himpunan Mahasiswa
-                    </NavigationMenuLink>
-                  </Link>
+                    </Link>
+                  </NavigationMenuLink>
                   {/* <ListItem href="/docs" title="Introduction">
                     Re-usable components built using Radix UI and Tailwind CSS.
                   </ListItem>
