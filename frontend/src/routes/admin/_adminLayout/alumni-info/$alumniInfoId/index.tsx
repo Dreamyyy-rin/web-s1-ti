@@ -3,7 +3,7 @@ import { useFetchAlumniInformationById } from "@/features/alumni-information/hoo
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute(
-  "/admin/_adminLayout/alumni-info/$alumniId/",
+  "/admin/_adminLayout/alumni-info/$alumniInfoId/",
 )({
   component: RouteComponent,
   beforeLoad: () => {
@@ -15,7 +15,7 @@ export const Route = createFileRoute(
 
 function RouteComponent() {
   const params = Route.useParams();
-  const { data, isLoading } = useFetchAlumniInformationById(params.alumniId);
+  const { data, isLoading } = useFetchAlumniInformationById(params.alumniInfoId);
 
   return (
     <div>

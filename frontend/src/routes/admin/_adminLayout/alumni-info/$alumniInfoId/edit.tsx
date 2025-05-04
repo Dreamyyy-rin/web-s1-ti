@@ -7,7 +7,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 
 export const Route = createFileRoute(
-  "/admin/_adminLayout/alumni-info/$alumniId/edit",
+  "/admin/_adminLayout/alumni-info/$alumniInfoId/edit",
 )({
   component: RouteComponent,
   beforeLoad: () => {
@@ -21,11 +21,11 @@ function RouteComponent() {
   const navigate = useNavigate();
   const { mutate: updateAlumniInformationbyId } = useUpdateAlumniInformation();
   const params = Route.useParams();
-  const { data, isLoading } = useFetchAlumniInformationById(params.alumniId);
+  const { data, isLoading } = useFetchAlumniInformationById(params.alumniInfoId);
   const onUpdate = async (data: AlumniInformationSchema) => {
     updateAlumniInformationbyId(
       {
-        id: params.alumniId,
+        id: params.alumniInfoId,
         data: data,
       },
       {

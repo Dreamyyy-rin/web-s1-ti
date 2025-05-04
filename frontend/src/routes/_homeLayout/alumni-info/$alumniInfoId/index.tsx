@@ -3,7 +3,7 @@ import AlumniInformationView from "@/features/alumni-information/components/alum
 import { useFetchAlumniInformationById } from "@/features/alumni-information/hooks/useFetchAlumniInformationById";
 
 export const Route = createFileRoute(
-  "/_homeLayout/beritaAlumni/$beritaAlumniId/"
+  "/_homeLayout/alumni-info/$alumniInfoId/"
 )({
   component: RouteComponent,
 });

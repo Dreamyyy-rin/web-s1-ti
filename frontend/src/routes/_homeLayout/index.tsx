@@ -17,18 +17,10 @@ import aitiLink from "@/assets/aitiLink.png";
 import libraryLink from "@/assets/libraryLink.png";
 import sitaLink from "@/assets/sitaLink.png";
 import itexploreLink from "@/assets/itexploreLink.jpg";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import Footer from "@/components/ui/custom/footer/footer";
 import { useFetchAnnouncementsPaginated } from "@/features/announcement/hooks/useFetchAnnouncementsPaginated";
-import ReadonlyText from "@/components/ui/custom/rich-text-editor/readonlyText";
-import { Skeleton } from "@/components/ui/skeleton";
-import { ENV } from "@/env";
+import AnnouncementSkeletonCardDisplay from "@/features/announcement/components/announcementSkeletonCardDisplay";
+import AnnouncementCardDisplay from "@/features/announcement/components/announcementCardDisplay";
 
 export const Route = createFileRoute("/_homeLayout/")({
   component: Index,
@@ -87,81 +79,18 @@ function Index() {
       </div>
 
       {/* Bagian Pengumuman */}
-      <div className="container mx-auto px-8 py-8">
+      <div className="container mx-auto px-8 py-8 ">
         {/* Heading Pengumuman */}
-        <div className="text-center mt-20">
+        <div className="text-center mt-20 mb-10">
           <h2 className="text-3xl font-semibold">Pengumuman</h2>
         </div>
 
         {/* Card Grid */}
-        <div className="flex flex-wrap justify-evenly  mt-6 -mx-2 ">
-          {isFetchAnnouncementLoading
-            ? [1, 2, 3].map((announcement) => (
-                <div
-                  className="w-full  md:w-1/2 xl:w-1/3 px-2 pb-4"
-                  key={announcement}
-                >
-                  <Card className=" bg-white rounded-lg shadow-lg overflow-hidden h-full flex-initial flex flex-col ">
-                    <Skeleton className="w-full h-48 object-cover" />
-                    <CardHeader className="">
-                      <CardTitle className="text-xl font-semibold text-gray-900 flex">
-                        <Skeleton className="w-64 h-4 flex-initial" />
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="flex flex-col gap-2">
-                      <div className="flex flex-row gap-2">
-                        <Skeleton className="w-1/3 flex-none h-2" />
-                        <Skeleton className="flex-auto h-2" />
-                      </div>
-                      <div className="flex flex-row gap-2">
-                        <Skeleton className="w-2/3 flex-none h-2" />
-                        <Skeleton className=" flex-auto h-2" />
-                      </div>
-                      <div className="flex flex-row gap-2">
-                        <Skeleton className="w-1/2 flex-none h-2" />
-                        <Skeleton className=" flex-auto h-2" />
-                      </div>
-                    </CardContent>
-                    <CardFooter className="flex-auto items-end">
-                      <Skeleton className="h-8 w-32 rounded-sm px-3 text-xs" />
-                    </CardFooter>
-                  </Card>
-                </div>
-              ))
-            : announcements?.data.map((announcement) => (
-                <div
-                  className="w-full  md:w-1/2 xl:w-1/3 px-2 pb-4"
-                  key={announcement.id}
-                >
-                  <Card className=" bg-white rounded-lg shadow-lg overflow-hidden h-full flex flex-col ">
-                    <img
-                      src={`${ENV.APP.BACKEND_URL}/files/${announcement.file}`}
-                      alt={announcement.judul}
-                      className="w-full h-48 object-cover object-top rounded-t-md"
-                    />
-                    <CardHeader className="">
-                      <CardTitle className="text-xl font-semibold text-gray-900">
-                        {announcement.judul}
-                      </CardTitle>
-                      {/* <CardDescription className="text-gray-600 mt-2"></CardDescription> */}
-                    </CardHeader>
-                    <CardContent className="">
-                      <ReadonlyText maxlength={100} data={announcement.isi} />
-                    </CardContent>
-                    <CardFooter className="flex-auto items-end">
-                      <Link
-                        to={`/announcement/$announcementId`}
-                        params={{ announcementId: announcement.id.toString() }}
-                      >
-                        <Button className="" variant="outline" size="sm">
-                          Baca Selengkapnya
-                        </Button>
-                      </Link>
-                    </CardFooter>
-                  </Card>
-                </div>
-              ))}
-        </div>
+        {isFetchAnnouncementLoading ? (
+          <AnnouncementSkeletonCardDisplay amount={3} />
+        ) : (
+          <AnnouncementCardDisplay announcements={announcements?.data ?? []} />
+        )}
       </div>
 
       {/* Tombol Selengkapnya */}

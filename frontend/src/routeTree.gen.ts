@@ -21,7 +21,6 @@ import { Route as HomeLayoutStudyProgramProfileImport } from './routes/_homeLayo
 import { Route as HomeLayoutStudentsAssociationInfoImport } from './routes/_homeLayout/studentsAssociationInfo'
 import { Route as AdminAdminLayoutIndexImport } from './routes/admin/_adminLayout/index'
 import { Route as HomeLayoutVacancyIndexImport } from './routes/_homeLayout/vacancy/index'
-import { Route as HomeLayoutBeritaAlumniIndexImport } from './routes/_homeLayout/beritaAlumni/index'
 import { Route as HomeLayoutAnnouncementIndexImport } from './routes/_homeLayout/announcement/index'
 import { Route as HomeLayoutAlumniInfoIndexImport } from './routes/_homeLayout/alumni-info/index'
 import { Route as AdminAdminLayoutVacancyImport } from './routes/admin/_adminLayout/vacancy'
@@ -29,17 +28,17 @@ import { Route as AdminAdminLayoutAnnouncementImport } from './routes/admin/_adm
 import { Route as AdminAdminLayoutVacancyIndexImport } from './routes/admin/_adminLayout/vacancy/index'
 import { Route as AdminAdminLayoutAnnouncementIndexImport } from './routes/admin/_adminLayout/announcement/index'
 import { Route as AdminAdminLayoutAlumniInfoIndexImport } from './routes/admin/_adminLayout/alumni-info/index'
-import { Route as HomeLayoutBeritaAlumniBeritaAlumniIdIndexImport } from './routes/_homeLayout/beritaAlumni/$beritaAlumniId/index'
 import { Route as HomeLayoutAnnouncementAnnouncementIdIndexImport } from './routes/_homeLayout/announcement/$announcementId/index'
+import { Route as HomeLayoutAlumniInfoAlumniInfoIdIndexImport } from './routes/_homeLayout/alumni-info/$alumniInfoId/index'
 import { Route as AdminAdminLayoutVacancyAddImport } from './routes/admin/_adminLayout/vacancy/add'
 import { Route as AdminAdminLayoutAnnouncementAddImport } from './routes/admin/_adminLayout/announcement/add'
 import { Route as AdminAdminLayoutAlumniInfoAddImport } from './routes/admin/_adminLayout/alumni-info/add'
 import { Route as AdminAdminLayoutVacancyVacancyIdIndexImport } from './routes/admin/_adminLayout/vacancy/$vacancyId/index'
 import { Route as AdminAdminLayoutAnnouncementAnnouncementIdIndexImport } from './routes/admin/_adminLayout/announcement/$announcementId/index'
-import { Route as AdminAdminLayoutAlumniInfoAlumniIdIndexImport } from './routes/admin/_adminLayout/alumni-info/$alumniId/index'
+import { Route as AdminAdminLayoutAlumniInfoAlumniInfoIdIndexImport } from './routes/admin/_adminLayout/alumni-info/$alumniInfoId/index'
 import { Route as AdminAdminLayoutVacancyVacancyIdEditImport } from './routes/admin/_adminLayout/vacancy/$vacancyId/edit'
 import { Route as AdminAdminLayoutAnnouncementAnnouncementIdEditImport } from './routes/admin/_adminLayout/announcement/$announcementId/edit'
-import { Route as AdminAdminLayoutAlumniInfoAlumniIdEditImport } from './routes/admin/_adminLayout/alumni-info/$alumniId/edit'
+import { Route as AdminAdminLayoutAlumniInfoAlumniInfoIdEditImport } from './routes/admin/_adminLayout/alumni-info/$alumniInfoId/edit'
 
 // Create/Update Routes
 
@@ -103,13 +102,6 @@ const HomeLayoutVacancyIndexRoute = HomeLayoutVacancyIndexImport.update({
   getParentRoute: () => HomeLayoutRoute,
 } as any)
 
-const HomeLayoutBeritaAlumniIndexRoute =
-  HomeLayoutBeritaAlumniIndexImport.update({
-    id: '/beritaAlumni/',
-    path: '/beritaAlumni/',
-    getParentRoute: () => HomeLayoutRoute,
-  } as any)
-
 const HomeLayoutAnnouncementIndexRoute =
   HomeLayoutAnnouncementIndexImport.update({
     id: '/announcement/',
@@ -157,17 +149,17 @@ const AdminAdminLayoutAlumniInfoIndexRoute =
     getParentRoute: () => AdminAdminLayoutRoute,
   } as any)
 
-const HomeLayoutBeritaAlumniBeritaAlumniIdIndexRoute =
-  HomeLayoutBeritaAlumniBeritaAlumniIdIndexImport.update({
-    id: '/beritaAlumni/$beritaAlumniId/',
-    path: '/beritaAlumni/$beritaAlumniId/',
-    getParentRoute: () => HomeLayoutRoute,
-  } as any)
-
 const HomeLayoutAnnouncementAnnouncementIdIndexRoute =
   HomeLayoutAnnouncementAnnouncementIdIndexImport.update({
     id: '/announcement/$announcementId/',
     path: '/announcement/$announcementId/',
+    getParentRoute: () => HomeLayoutRoute,
+  } as any)
+
+const HomeLayoutAlumniInfoAlumniInfoIdIndexRoute =
+  HomeLayoutAlumniInfoAlumniInfoIdIndexImport.update({
+    id: '/alumni-info/$alumniInfoId/',
+    path: '/alumni-info/$alumniInfoId/',
     getParentRoute: () => HomeLayoutRoute,
   } as any)
 
@@ -207,10 +199,10 @@ const AdminAdminLayoutAnnouncementAnnouncementIdIndexRoute =
     getParentRoute: () => AdminAdminLayoutAnnouncementRoute,
   } as any)
 
-const AdminAdminLayoutAlumniInfoAlumniIdIndexRoute =
-  AdminAdminLayoutAlumniInfoAlumniIdIndexImport.update({
-    id: '/alumni-info/$alumniId/',
-    path: '/alumni-info/$alumniId/',
+const AdminAdminLayoutAlumniInfoAlumniInfoIdIndexRoute =
+  AdminAdminLayoutAlumniInfoAlumniInfoIdIndexImport.update({
+    id: '/alumni-info/$alumniInfoId/',
+    path: '/alumni-info/$alumniInfoId/',
     getParentRoute: () => AdminAdminLayoutRoute,
   } as any)
 
@@ -228,10 +220,10 @@ const AdminAdminLayoutAnnouncementAnnouncementIdEditRoute =
     getParentRoute: () => AdminAdminLayoutAnnouncementRoute,
   } as any)
 
-const AdminAdminLayoutAlumniInfoAlumniIdEditRoute =
-  AdminAdminLayoutAlumniInfoAlumniIdEditImport.update({
-    id: '/alumni-info/$alumniId/edit',
-    path: '/alumni-info/$alumniId/edit',
+const AdminAdminLayoutAlumniInfoAlumniInfoIdEditRoute =
+  AdminAdminLayoutAlumniInfoAlumniInfoIdEditImport.update({
+    id: '/alumni-info/$alumniInfoId/edit',
+    path: '/alumni-info/$alumniInfoId/edit',
     getParentRoute: () => AdminAdminLayoutRoute,
   } as any)
 
@@ -323,13 +315,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HomeLayoutAnnouncementIndexImport
       parentRoute: typeof HomeLayoutImport
     }
-    '/_homeLayout/beritaAlumni/': {
-      id: '/_homeLayout/beritaAlumni/'
-      path: '/beritaAlumni'
-      fullPath: '/beritaAlumni'
-      preLoaderRoute: typeof HomeLayoutBeritaAlumniIndexImport
-      parentRoute: typeof HomeLayoutImport
-    }
     '/_homeLayout/vacancy/': {
       id: '/_homeLayout/vacancy/'
       path: '/vacancy'
@@ -365,18 +350,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAdminLayoutVacancyAddImport
       parentRoute: typeof AdminAdminLayoutVacancyImport
     }
+    '/_homeLayout/alumni-info/$alumniInfoId/': {
+      id: '/_homeLayout/alumni-info/$alumniInfoId/'
+      path: '/alumni-info/$alumniInfoId'
+      fullPath: '/alumni-info/$alumniInfoId'
+      preLoaderRoute: typeof HomeLayoutAlumniInfoAlumniInfoIdIndexImport
+      parentRoute: typeof HomeLayoutImport
+    }
     '/_homeLayout/announcement/$announcementId/': {
       id: '/_homeLayout/announcement/$announcementId/'
       path: '/announcement/$announcementId'
       fullPath: '/announcement/$announcementId'
       preLoaderRoute: typeof HomeLayoutAnnouncementAnnouncementIdIndexImport
-      parentRoute: typeof HomeLayoutImport
-    }
-    '/_homeLayout/beritaAlumni/$beritaAlumniId/': {
-      id: '/_homeLayout/beritaAlumni/$beritaAlumniId/'
-      path: '/beritaAlumni/$beritaAlumniId'
-      fullPath: '/beritaAlumni/$beritaAlumniId'
-      preLoaderRoute: typeof HomeLayoutBeritaAlumniBeritaAlumniIdIndexImport
       parentRoute: typeof HomeLayoutImport
     }
     '/admin/_adminLayout/alumni-info/': {
@@ -400,11 +385,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAdminLayoutVacancyIndexImport
       parentRoute: typeof AdminAdminLayoutVacancyImport
     }
-    '/admin/_adminLayout/alumni-info/$alumniId/edit': {
-      id: '/admin/_adminLayout/alumni-info/$alumniId/edit'
-      path: '/alumni-info/$alumniId/edit'
-      fullPath: '/admin/alumni-info/$alumniId/edit'
-      preLoaderRoute: typeof AdminAdminLayoutAlumniInfoAlumniIdEditImport
+    '/admin/_adminLayout/alumni-info/$alumniInfoId/edit': {
+      id: '/admin/_adminLayout/alumni-info/$alumniInfoId/edit'
+      path: '/alumni-info/$alumniInfoId/edit'
+      fullPath: '/admin/alumni-info/$alumniInfoId/edit'
+      preLoaderRoute: typeof AdminAdminLayoutAlumniInfoAlumniInfoIdEditImport
       parentRoute: typeof AdminAdminLayoutImport
     }
     '/admin/_adminLayout/announcement/$announcementId/edit': {
@@ -421,11 +406,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAdminLayoutVacancyVacancyIdEditImport
       parentRoute: typeof AdminAdminLayoutVacancyImport
     }
-    '/admin/_adminLayout/alumni-info/$alumniId/': {
-      id: '/admin/_adminLayout/alumni-info/$alumniId/'
-      path: '/alumni-info/$alumniId'
-      fullPath: '/admin/alumni-info/$alumniId'
-      preLoaderRoute: typeof AdminAdminLayoutAlumniInfoAlumniIdIndexImport
+    '/admin/_adminLayout/alumni-info/$alumniInfoId/': {
+      id: '/admin/_adminLayout/alumni-info/$alumniInfoId/'
+      path: '/alumni-info/$alumniInfoId'
+      fullPath: '/admin/alumni-info/$alumniInfoId'
+      preLoaderRoute: typeof AdminAdminLayoutAlumniInfoAlumniInfoIdIndexImport
       parentRoute: typeof AdminAdminLayoutImport
     }
     '/admin/_adminLayout/announcement/$announcementId/': {
@@ -453,10 +438,9 @@ interface HomeLayoutRouteChildren {
   HomeLayoutIndexRoute: typeof HomeLayoutIndexRoute
   HomeLayoutAlumniInfoIndexRoute: typeof HomeLayoutAlumniInfoIndexRoute
   HomeLayoutAnnouncementIndexRoute: typeof HomeLayoutAnnouncementIndexRoute
-  HomeLayoutBeritaAlumniIndexRoute: typeof HomeLayoutBeritaAlumniIndexRoute
   HomeLayoutVacancyIndexRoute: typeof HomeLayoutVacancyIndexRoute
+  HomeLayoutAlumniInfoAlumniInfoIdIndexRoute: typeof HomeLayoutAlumniInfoAlumniInfoIdIndexRoute
   HomeLayoutAnnouncementAnnouncementIdIndexRoute: typeof HomeLayoutAnnouncementAnnouncementIdIndexRoute
-  HomeLayoutBeritaAlumniBeritaAlumniIdIndexRoute: typeof HomeLayoutBeritaAlumniBeritaAlumniIdIndexRoute
 }
 
 const HomeLayoutRouteChildren: HomeLayoutRouteChildren = {
@@ -466,12 +450,11 @@ const HomeLayoutRouteChildren: HomeLayoutRouteChildren = {
   HomeLayoutIndexRoute: HomeLayoutIndexRoute,
   HomeLayoutAlumniInfoIndexRoute: HomeLayoutAlumniInfoIndexRoute,
   HomeLayoutAnnouncementIndexRoute: HomeLayoutAnnouncementIndexRoute,
-  HomeLayoutBeritaAlumniIndexRoute: HomeLayoutBeritaAlumniIndexRoute,
   HomeLayoutVacancyIndexRoute: HomeLayoutVacancyIndexRoute,
+  HomeLayoutAlumniInfoAlumniInfoIdIndexRoute:
+    HomeLayoutAlumniInfoAlumniInfoIdIndexRoute,
   HomeLayoutAnnouncementAnnouncementIdIndexRoute:
     HomeLayoutAnnouncementAnnouncementIdIndexRoute,
-  HomeLayoutBeritaAlumniBeritaAlumniIdIndexRoute:
-    HomeLayoutBeritaAlumniBeritaAlumniIdIndexRoute,
 }
 
 const HomeLayoutRouteWithChildren = HomeLayoutRoute._addFileChildren(
@@ -529,8 +512,8 @@ interface AdminAdminLayoutRouteChildren {
   AdminAdminLayoutIndexRoute: typeof AdminAdminLayoutIndexRoute
   AdminAdminLayoutAlumniInfoAddRoute: typeof AdminAdminLayoutAlumniInfoAddRoute
   AdminAdminLayoutAlumniInfoIndexRoute: typeof AdminAdminLayoutAlumniInfoIndexRoute
-  AdminAdminLayoutAlumniInfoAlumniIdEditRoute: typeof AdminAdminLayoutAlumniInfoAlumniIdEditRoute
-  AdminAdminLayoutAlumniInfoAlumniIdIndexRoute: typeof AdminAdminLayoutAlumniInfoAlumniIdIndexRoute
+  AdminAdminLayoutAlumniInfoAlumniInfoIdEditRoute: typeof AdminAdminLayoutAlumniInfoAlumniInfoIdEditRoute
+  AdminAdminLayoutAlumniInfoAlumniInfoIdIndexRoute: typeof AdminAdminLayoutAlumniInfoAlumniInfoIdIndexRoute
 }
 
 const AdminAdminLayoutRouteChildren: AdminAdminLayoutRouteChildren = {
@@ -540,10 +523,10 @@ const AdminAdminLayoutRouteChildren: AdminAdminLayoutRouteChildren = {
   AdminAdminLayoutIndexRoute: AdminAdminLayoutIndexRoute,
   AdminAdminLayoutAlumniInfoAddRoute: AdminAdminLayoutAlumniInfoAddRoute,
   AdminAdminLayoutAlumniInfoIndexRoute: AdminAdminLayoutAlumniInfoIndexRoute,
-  AdminAdminLayoutAlumniInfoAlumniIdEditRoute:
-    AdminAdminLayoutAlumniInfoAlumniIdEditRoute,
-  AdminAdminLayoutAlumniInfoAlumniIdIndexRoute:
-    AdminAdminLayoutAlumniInfoAlumniIdIndexRoute,
+  AdminAdminLayoutAlumniInfoAlumniInfoIdEditRoute:
+    AdminAdminLayoutAlumniInfoAlumniInfoIdEditRoute,
+  AdminAdminLayoutAlumniInfoAlumniInfoIdIndexRoute:
+    AdminAdminLayoutAlumniInfoAlumniInfoIdIndexRoute,
 }
 
 const AdminAdminLayoutRouteWithChildren =
@@ -571,21 +554,20 @@ export interface FileRoutesByFullPath {
   '/admin/vacancy': typeof AdminAdminLayoutVacancyRouteWithChildren
   '/alumni-info': typeof HomeLayoutAlumniInfoIndexRoute
   '/announcement': typeof HomeLayoutAnnouncementIndexRoute
-  '/beritaAlumni': typeof HomeLayoutBeritaAlumniIndexRoute
   '/vacancy': typeof HomeLayoutVacancyIndexRoute
   '/admin/': typeof AdminAdminLayoutIndexRoute
   '/admin/alumni-info/add': typeof AdminAdminLayoutAlumniInfoAddRoute
   '/admin/announcement/add': typeof AdminAdminLayoutAnnouncementAddRoute
   '/admin/vacancy/add': typeof AdminAdminLayoutVacancyAddRoute
+  '/alumni-info/$alumniInfoId': typeof HomeLayoutAlumniInfoAlumniInfoIdIndexRoute
   '/announcement/$announcementId': typeof HomeLayoutAnnouncementAnnouncementIdIndexRoute
-  '/beritaAlumni/$beritaAlumniId': typeof HomeLayoutBeritaAlumniBeritaAlumniIdIndexRoute
   '/admin/alumni-info': typeof AdminAdminLayoutAlumniInfoIndexRoute
   '/admin/announcement/': typeof AdminAdminLayoutAnnouncementIndexRoute
   '/admin/vacancy/': typeof AdminAdminLayoutVacancyIndexRoute
-  '/admin/alumni-info/$alumniId/edit': typeof AdminAdminLayoutAlumniInfoAlumniIdEditRoute
+  '/admin/alumni-info/$alumniInfoId/edit': typeof AdminAdminLayoutAlumniInfoAlumniInfoIdEditRoute
   '/admin/announcement/$announcementId/edit': typeof AdminAdminLayoutAnnouncementAnnouncementIdEditRoute
   '/admin/vacancy/$vacancyId/edit': typeof AdminAdminLayoutVacancyVacancyIdEditRoute
-  '/admin/alumni-info/$alumniId': typeof AdminAdminLayoutAlumniInfoAlumniIdIndexRoute
+  '/admin/alumni-info/$alumniInfoId': typeof AdminAdminLayoutAlumniInfoAlumniInfoIdIndexRoute
   '/admin/announcement/$announcementId': typeof AdminAdminLayoutAnnouncementAnnouncementIdIndexRoute
   '/admin/vacancy/$vacancyId': typeof AdminAdminLayoutVacancyVacancyIdIndexRoute
 }
@@ -599,20 +581,19 @@ export interface FileRoutesByTo {
   '/': typeof HomeLayoutIndexRoute
   '/alumni-info': typeof HomeLayoutAlumniInfoIndexRoute
   '/announcement': typeof HomeLayoutAnnouncementIndexRoute
-  '/beritaAlumni': typeof HomeLayoutBeritaAlumniIndexRoute
   '/vacancy': typeof HomeLayoutVacancyIndexRoute
   '/admin/alumni-info/add': typeof AdminAdminLayoutAlumniInfoAddRoute
   '/admin/announcement/add': typeof AdminAdminLayoutAnnouncementAddRoute
   '/admin/vacancy/add': typeof AdminAdminLayoutVacancyAddRoute
+  '/alumni-info/$alumniInfoId': typeof HomeLayoutAlumniInfoAlumniInfoIdIndexRoute
   '/announcement/$announcementId': typeof HomeLayoutAnnouncementAnnouncementIdIndexRoute
-  '/beritaAlumni/$beritaAlumniId': typeof HomeLayoutBeritaAlumniBeritaAlumniIdIndexRoute
   '/admin/alumni-info': typeof AdminAdminLayoutAlumniInfoIndexRoute
   '/admin/announcement': typeof AdminAdminLayoutAnnouncementIndexRoute
   '/admin/vacancy': typeof AdminAdminLayoutVacancyIndexRoute
-  '/admin/alumni-info/$alumniId/edit': typeof AdminAdminLayoutAlumniInfoAlumniIdEditRoute
+  '/admin/alumni-info/$alumniInfoId/edit': typeof AdminAdminLayoutAlumniInfoAlumniInfoIdEditRoute
   '/admin/announcement/$announcementId/edit': typeof AdminAdminLayoutAnnouncementAnnouncementIdEditRoute
   '/admin/vacancy/$vacancyId/edit': typeof AdminAdminLayoutVacancyVacancyIdEditRoute
-  '/admin/alumni-info/$alumniId': typeof AdminAdminLayoutAlumniInfoAlumniIdIndexRoute
+  '/admin/alumni-info/$alumniInfoId': typeof AdminAdminLayoutAlumniInfoAlumniInfoIdIndexRoute
   '/admin/announcement/$announcementId': typeof AdminAdminLayoutAnnouncementAnnouncementIdIndexRoute
   '/admin/vacancy/$vacancyId': typeof AdminAdminLayoutVacancyVacancyIdIndexRoute
 }
@@ -631,21 +612,20 @@ export interface FileRoutesById {
   '/admin/_adminLayout/vacancy': typeof AdminAdminLayoutVacancyRouteWithChildren
   '/_homeLayout/alumni-info/': typeof HomeLayoutAlumniInfoIndexRoute
   '/_homeLayout/announcement/': typeof HomeLayoutAnnouncementIndexRoute
-  '/_homeLayout/beritaAlumni/': typeof HomeLayoutBeritaAlumniIndexRoute
   '/_homeLayout/vacancy/': typeof HomeLayoutVacancyIndexRoute
   '/admin/_adminLayout/': typeof AdminAdminLayoutIndexRoute
   '/admin/_adminLayout/alumni-info/add': typeof AdminAdminLayoutAlumniInfoAddRoute
   '/admin/_adminLayout/announcement/add': typeof AdminAdminLayoutAnnouncementAddRoute
   '/admin/_adminLayout/vacancy/add': typeof AdminAdminLayoutVacancyAddRoute
+  '/_homeLayout/alumni-info/$alumniInfoId/': typeof HomeLayoutAlumniInfoAlumniInfoIdIndexRoute
   '/_homeLayout/announcement/$announcementId/': typeof HomeLayoutAnnouncementAnnouncementIdIndexRoute
-  '/_homeLayout/beritaAlumni/$beritaAlumniId/': typeof HomeLayoutBeritaAlumniBeritaAlumniIdIndexRoute
   '/admin/_adminLayout/alumni-info/': typeof AdminAdminLayoutAlumniInfoIndexRoute
   '/admin/_adminLayout/announcement/': typeof AdminAdminLayoutAnnouncementIndexRoute
   '/admin/_adminLayout/vacancy/': typeof AdminAdminLayoutVacancyIndexRoute
-  '/admin/_adminLayout/alumni-info/$alumniId/edit': typeof AdminAdminLayoutAlumniInfoAlumniIdEditRoute
+  '/admin/_adminLayout/alumni-info/$alumniInfoId/edit': typeof AdminAdminLayoutAlumniInfoAlumniInfoIdEditRoute
   '/admin/_adminLayout/announcement/$announcementId/edit': typeof AdminAdminLayoutAnnouncementAnnouncementIdEditRoute
   '/admin/_adminLayout/vacancy/$vacancyId/edit': typeof AdminAdminLayoutVacancyVacancyIdEditRoute
-  '/admin/_adminLayout/alumni-info/$alumniId/': typeof AdminAdminLayoutAlumniInfoAlumniIdIndexRoute
+  '/admin/_adminLayout/alumni-info/$alumniInfoId/': typeof AdminAdminLayoutAlumniInfoAlumniInfoIdIndexRoute
   '/admin/_adminLayout/announcement/$announcementId/': typeof AdminAdminLayoutAnnouncementAnnouncementIdIndexRoute
   '/admin/_adminLayout/vacancy/$vacancyId/': typeof AdminAdminLayoutVacancyVacancyIdIndexRoute
 }
@@ -664,21 +644,20 @@ export interface FileRouteTypes {
     | '/admin/vacancy'
     | '/alumni-info'
     | '/announcement'
-    | '/beritaAlumni'
     | '/vacancy'
     | '/admin/'
     | '/admin/alumni-info/add'
     | '/admin/announcement/add'
     | '/admin/vacancy/add'
+    | '/alumni-info/$alumniInfoId'
     | '/announcement/$announcementId'
-    | '/beritaAlumni/$beritaAlumniId'
     | '/admin/alumni-info'
     | '/admin/announcement/'
     | '/admin/vacancy/'
-    | '/admin/alumni-info/$alumniId/edit'
+    | '/admin/alumni-info/$alumniInfoId/edit'
     | '/admin/announcement/$announcementId/edit'
     | '/admin/vacancy/$vacancyId/edit'
-    | '/admin/alumni-info/$alumniId'
+    | '/admin/alumni-info/$alumniInfoId'
     | '/admin/announcement/$announcementId'
     | '/admin/vacancy/$vacancyId'
   fileRoutesByTo: FileRoutesByTo
@@ -691,20 +670,19 @@ export interface FileRouteTypes {
     | '/'
     | '/alumni-info'
     | '/announcement'
-    | '/beritaAlumni'
     | '/vacancy'
     | '/admin/alumni-info/add'
     | '/admin/announcement/add'
     | '/admin/vacancy/add'
+    | '/alumni-info/$alumniInfoId'
     | '/announcement/$announcementId'
-    | '/beritaAlumni/$beritaAlumniId'
     | '/admin/alumni-info'
     | '/admin/announcement'
     | '/admin/vacancy'
-    | '/admin/alumni-info/$alumniId/edit'
+    | '/admin/alumni-info/$alumniInfoId/edit'
     | '/admin/announcement/$announcementId/edit'
     | '/admin/vacancy/$vacancyId/edit'
-    | '/admin/alumni-info/$alumniId'
+    | '/admin/alumni-info/$alumniInfoId'
     | '/admin/announcement/$announcementId'
     | '/admin/vacancy/$vacancyId'
   id:
@@ -721,21 +699,20 @@ export interface FileRouteTypes {
     | '/admin/_adminLayout/vacancy'
     | '/_homeLayout/alumni-info/'
     | '/_homeLayout/announcement/'
-    | '/_homeLayout/beritaAlumni/'
     | '/_homeLayout/vacancy/'
     | '/admin/_adminLayout/'
     | '/admin/_adminLayout/alumni-info/add'
     | '/admin/_adminLayout/announcement/add'
     | '/admin/_adminLayout/vacancy/add'
+    | '/_homeLayout/alumni-info/$alumniInfoId/'
     | '/_homeLayout/announcement/$announcementId/'
-    | '/_homeLayout/beritaAlumni/$beritaAlumniId/'
     | '/admin/_adminLayout/alumni-info/'
     | '/admin/_adminLayout/announcement/'
     | '/admin/_adminLayout/vacancy/'
-    | '/admin/_adminLayout/alumni-info/$alumniId/edit'
+    | '/admin/_adminLayout/alumni-info/$alumniInfoId/edit'
     | '/admin/_adminLayout/announcement/$announcementId/edit'
     | '/admin/_adminLayout/vacancy/$vacancyId/edit'
-    | '/admin/_adminLayout/alumni-info/$alumniId/'
+    | '/admin/_adminLayout/alumni-info/$alumniInfoId/'
     | '/admin/_adminLayout/announcement/$announcementId/'
     | '/admin/_adminLayout/vacancy/$vacancyId/'
   fileRoutesById: FileRoutesById
@@ -779,10 +756,9 @@ export const routeTree = rootRoute
         "/_homeLayout/",
         "/_homeLayout/alumni-info/",
         "/_homeLayout/announcement/",
-        "/_homeLayout/beritaAlumni/",
         "/_homeLayout/vacancy/",
-        "/_homeLayout/announcement/$announcementId/",
-        "/_homeLayout/beritaAlumni/$beritaAlumniId/"
+        "/_homeLayout/alumni-info/$alumniInfoId/",
+        "/_homeLayout/announcement/$announcementId/"
       ]
     },
     "/admin": {
@@ -808,8 +784,8 @@ export const routeTree = rootRoute
         "/admin/_adminLayout/",
         "/admin/_adminLayout/alumni-info/add",
         "/admin/_adminLayout/alumni-info/",
-        "/admin/_adminLayout/alumni-info/$alumniId/edit",
-        "/admin/_adminLayout/alumni-info/$alumniId/"
+        "/admin/_adminLayout/alumni-info/$alumniInfoId/edit",
+        "/admin/_adminLayout/alumni-info/$alumniInfoId/"
       ]
     },
     "/auth/login": {
@@ -850,10 +826,6 @@ export const routeTree = rootRoute
       "filePath": "_homeLayout/announcement/index.tsx",
       "parent": "/_homeLayout"
     },
-    "/_homeLayout/beritaAlumni/": {
-      "filePath": "_homeLayout/beritaAlumni/index.tsx",
-      "parent": "/_homeLayout"
-    },
     "/_homeLayout/vacancy/": {
       "filePath": "_homeLayout/vacancy/index.tsx",
       "parent": "/_homeLayout"
@@ -874,12 +846,12 @@ export const routeTree = rootRoute
       "filePath": "admin/_adminLayout/vacancy/add.tsx",
       "parent": "/admin/_adminLayout/vacancy"
     },
-    "/_homeLayout/announcement/$announcementId/": {
-      "filePath": "_homeLayout/announcement/$announcementId/index.tsx",
+    "/_homeLayout/alumni-info/$alumniInfoId/": {
+      "filePath": "_homeLayout/alumni-info/$alumniInfoId/index.tsx",
       "parent": "/_homeLayout"
     },
-    "/_homeLayout/beritaAlumni/$beritaAlumniId/": {
-      "filePath": "_homeLayout/beritaAlumni/$beritaAlumniId/index.tsx",
+    "/_homeLayout/announcement/$announcementId/": {
+      "filePath": "_homeLayout/announcement/$announcementId/index.tsx",
       "parent": "/_homeLayout"
     },
     "/admin/_adminLayout/alumni-info/": {
@@ -894,8 +866,8 @@ export const routeTree = rootRoute
       "filePath": "admin/_adminLayout/vacancy/index.tsx",
       "parent": "/admin/_adminLayout/vacancy"
     },
-    "/admin/_adminLayout/alumni-info/$alumniId/edit": {
-      "filePath": "admin/_adminLayout/alumni-info/$alumniId/edit.tsx",
+    "/admin/_adminLayout/alumni-info/$alumniInfoId/edit": {
+      "filePath": "admin/_adminLayout/alumni-info/$alumniInfoId/edit.tsx",
       "parent": "/admin/_adminLayout"
     },
     "/admin/_adminLayout/announcement/$announcementId/edit": {
@@ -906,8 +878,8 @@ export const routeTree = rootRoute
       "filePath": "admin/_adminLayout/vacancy/$vacancyId/edit.tsx",
       "parent": "/admin/_adminLayout/vacancy"
     },
-    "/admin/_adminLayout/alumni-info/$alumniId/": {
-      "filePath": "admin/_adminLayout/alumni-info/$alumniId/index.tsx",
+    "/admin/_adminLayout/alumni-info/$alumniInfoId/": {
+      "filePath": "admin/_adminLayout/alumni-info/$alumniInfoId/index.tsx",
       "parent": "/admin/_adminLayout"
     },
     "/admin/_adminLayout/announcement/$announcementId/": {
