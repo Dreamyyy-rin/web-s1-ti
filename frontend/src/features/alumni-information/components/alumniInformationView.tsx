@@ -3,7 +3,6 @@ import useMinimalTiptapEditor from "@/components/ui/custom/minimal-tiptap/hooks/
 import { ENV } from "@/env";
 import { AlumniInformation } from "../types/alumniInformation.type";
 
-
 const AlumniInformationView = ({ data }: { data: AlumniInformation }) => {
   const editor = useMinimalTiptapEditor({
     value: data.isi,
@@ -21,13 +20,7 @@ const AlumniInformationView = ({ data }: { data: AlumniInformation }) => {
     <div className="flex flex-col w-full gap-4">
       <div className="flex flex-col items-center justify-center w-full cursor-pointer">
         <div className=" ">
-          {url && (
-            <img
-              src={url}
-              alt="announcement"
-              className=""
-            />
-          )}
+          {url && <img src={url} alt="announcement" className="" />}
         </div>
       </div>
       <div className="text-4xl font-bold">{data.judul}</div>
