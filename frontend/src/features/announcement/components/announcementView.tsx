@@ -77,10 +77,10 @@ const AnnouncementView = ({ data }: { data: Announcement }) => {
       <div className="text-4xl font-bold mb-4 w-full max-w-5xl">
         {data.judul}
       </div>
-      <div className="text-sm text-gray-500 mb-4 w-full max-w-5xl">
+      <div className="text-sm text-muted-foreground mb-4 w-full max-w-5xl">
         {formattedDate}
       </div>
-      <div className="text-sm text-gray-500 mb-4 w-full max-w-5xl">{`oleh: ${data.user.name}`}</div>
+      <div className="text-sm text-muted-foreground mb-4 w-full max-w-5xl">{`oleh: ${data.user.name}`}</div>
       <div className="w-full max-w-5xl px-4">
         <EditorContent
           editor={editor}

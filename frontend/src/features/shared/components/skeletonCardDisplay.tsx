@@ -24,7 +24,7 @@ const SkeletonCardDisplay = React.forwardRef<
           <Card className=" bg-white rounded-lg shadow-lg overflow-hidden h-full flex-initial flex flex-col ">
             <Skeleton className="w-full h-48 object-cover"/>
             <CardHeader className="">
-              <CardTitle className="text-xl font-semibold text-gray-900 flex">
+              <CardTitle className="text-xl font-semibold text-muted-foreground flex">
                 <Skeleton className="w-64 h-4 flex-initial" />
               </CardTitle>
             </CardHeader>
