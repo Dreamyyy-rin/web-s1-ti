@@ -1,12 +1,8 @@
-import { useTheme } from "@/hooks/useTheme";
 import { Button } from "../../button";
 import {
   ChevronDown,
   LogIn,
   Menu,
-  MoonIcon,
-  SunIcon,
-  SunMoonIcon,
 } from "lucide-react";
 import React from "react";
 import { cn } from "@/lib/utils";
@@ -33,6 +29,7 @@ import {
 } from "../../sheet";
 import { Collapsible, CollapsibleTrigger } from "../../collapsible";
 import { CollapsibleContent } from "@radix-ui/react-collapsible";
+import ThemeToggleButton from "@/features/shared/components/themeToggleButton";
 
 export interface HeaderSubContent {
   title: string;
@@ -50,7 +47,6 @@ export const BaseHeader = React.forwardRef<
   React.ElementRef<"header">,
   React.ComponentPropsWithoutRef<"header"> & CustomHeaderProps
 >(({ className, body, ...props }, ref) => {
-  const { theme, setTheme } = useTheme();
   const isMobile = useIsMobile();
   const user = useAuthStore((state) => state.user);
   const { pathname } = useLocation();
@@ -187,27 +183,14 @@ export const BaseHeader = React.forwardRef<
         {user ? (
           <HeaderProfileDropdown className="ms-auto" />
         ) : (
-          <Link to="/auth/login">
-            <Button className="sm:hidden w-4">
+          <Link to="/auth/login" className="ms-auto">
+            <Button className="sm:hidden w-4 ">
               <LogIn />
             </Button>
             <Button className="hidden sm:block">Login</Button>
           </Link>
         )}
-        <Button
-          variant="outline"
-          size="icon"
-          className="px-2"
-          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-        >
-          {theme === "dark" ? (
-            <MoonIcon className="h-4 w-4" />
-          ) : theme == "light" ? (
-            <SunIcon className="h-4 w-4" />
-          ) : (
-            <SunMoonIcon className="h-4 w-4" />
-          )}
-        </Button>
+        <ThemeToggleButton />
       </div>
     </header>
   );

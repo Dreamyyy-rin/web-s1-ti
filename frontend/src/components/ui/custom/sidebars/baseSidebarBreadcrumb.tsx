@@ -8,9 +8,11 @@ import {
   BreadcrumbSeparator,
 } from "../../breadcrumb";
 import { Link, useLocation, useRouterState } from "@tanstack/react-router";
+import { useSidebar } from "../../sidebar";
 
 const BaseSidebarBreadcrumb = () => {
   const matches = useRouterState({ select: (s) => s.matches });
+  const { isMobile } = useSidebar();
   const { pathname } = useLocation();
 
   const normalizedPathname =
@@ -37,20 +39,23 @@ const BaseSidebarBreadcrumb = () => {
   return (
     <Breadcrumb>
       <BreadcrumbList>
-        {breadcrumbs.map((breadcrumb, index) => (
-          <React.Fragment key={index}>
-            <BreadcrumbItem>
-              {breadcrumb.path === normalizedPathname ? (
-                <BreadcrumbPage>{breadcrumb.title}</BreadcrumbPage>
-              ) : (
-                <BreadcrumbLink asChild>
-                  <Link to={breadcrumb.path}>{breadcrumb.title}</Link>
-                </BreadcrumbLink>
-              )}
-            </BreadcrumbItem>
-            {index !== breadcrumbs.length - 1 && <BreadcrumbSeparator />}
-          </React.Fragment>
-        ))}
+        {breadcrumbs.map((breadcrumb, index) =>
+          !isMobile ||
+          (isMobile && (index >= breadcrumbs.length - 2)) ? (
+            <React.Fragment key={index}>
+              <BreadcrumbItem>
+                {breadcrumb.path === normalizedPathname ? (
+                  <BreadcrumbPage>{breadcrumb.title}</BreadcrumbPage>
+                ) : (
+                  <BreadcrumbLink asChild>
+                    <Link to={breadcrumb.path}>{breadcrumb.title}</Link>
+                  </BreadcrumbLink>
+                )}
+              </BreadcrumbItem>
+              {index !== breadcrumbs.length - 1 && <BreadcrumbSeparator />}
+            </React.Fragment>
+          ) : null,
+        )}
       </BreadcrumbList>
     </Breadcrumb>
   );
