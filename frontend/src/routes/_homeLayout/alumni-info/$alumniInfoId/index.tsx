@@ -11,7 +11,7 @@ export const Route = createFileRoute(
 function RouteComponent() {
   const params = Route.useParams();
   const { data, isLoading } = useFetchAlumniInformationById(
-    params.beritaAlumniId
+    params.alumniInfoId
   );
 
   return (
