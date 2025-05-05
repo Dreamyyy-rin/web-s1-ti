@@ -30,7 +30,7 @@ function RouteComponent() {
     setSearch(value);
     debouncedChange(value);
   };
-  
+
   const { data: alumniInformations, isLoading } =
     useFetchAlumniInformationsPaginated({
       page: pageIndex,
@@ -40,9 +40,9 @@ function RouteComponent() {
 
   return (
     <div className="relative">
-      <HomeHeading title="Pengumuman" />
+      <HomeHeading title="Berita Alumni" />
       <div className="container mx-auto px-8 py-8 ">
-      <div className="relative flex items-center gap-2 w-full mb-7">
+        <div className="relative flex items-center gap-2 w-full mb-7">
           <Search className="absolute mx-2 size-4 text-muted-foreground" />
           <Input
             value={search}

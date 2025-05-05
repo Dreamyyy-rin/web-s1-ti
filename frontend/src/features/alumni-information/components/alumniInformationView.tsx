@@ -17,18 +17,26 @@ const AlumniInformationView = ({ data }: { data: AlumniInformation }) => {
     : data.file;
 
   return (
-    <div className="flex flex-col w-full gap-4">
-      <div className="flex flex-col items-center justify-center w-full cursor-pointer">
-        <div className=" ">
-          {url && <img src={url} alt="announcement" className="" />}
-        </div>
+    <div className="flex flex-col items-center justify-center w-full px-4 py-6 max-w-5xl mx-auto">
+      <div className="flex flex-col items-center justify-center w-full mb-6">
+        {url && (
+          <img
+            src={url}
+            alt="announcement"
+            className="w-full h-96 object-cover rounded-lg shadow-lg"
+          />
+        )}
       </div>
-      <div className="text-4xl font-bold">{data.judul}</div>
-      <div className="text-sm">oleh: {data.user.name}</div>
-      <div className="">
+      <div className="text-4xl font-bold mb-4 w-full max-w-5xl">
+        {data.judul}
+      </div>
+
+      <div className="text-sm text-gray-500 mb-4 w-full max-w-5xl">{`oleh: ${data.user.name}`}</div>
+
+      <div className="w-full max-w-5xl px-4">
         <EditorContent
           editor={editor}
-          className="minimal-tiptap-editor space-y-2"
+          className="minimal-tiptap-editor space-y-2 text-justify"
         />
       </div>
     </div>
