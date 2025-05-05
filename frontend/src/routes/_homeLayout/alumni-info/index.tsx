@@ -7,6 +7,9 @@ import SkeletonCardDisplay from "@/features/shared/components/skeletonCardDispla
 import AlumniInformationCardDisplay from "@/features/alumni-information/components/alumniInformationCardDisplay";
 import PaginationNavigation from "@/features/shared/components/paginationNavigation";
 import PaginationNavigationSkeleton from "@/features/shared/components/PaginationNavigationSkeleton";
+import { debounce } from "@/lib/helpers";
+import { Input } from "@/components/ui/input";
+import { Search } from "lucide-react";
 
 export const Route = createFileRoute("/_homeLayout/alumni-info/")({
   component: RouteComponent,
@@ -14,19 +17,40 @@ export const Route = createFileRoute("/_homeLayout/alumni-info/")({
 
 function RouteComponent() {
   const [pageIndex, setPageIndex] = useState<number>(1);
+  const perPage = 12;
+
   const [search, setSearch] = useState<string>("");
-  const perPage = 3;
+  const [delayedSearch, setDelayedSearch] = useState<string>("");
+
+  const debouncedChange = debounce((value: string) => {
+    setDelayedSearch(value);
+  }, 1000);
+
+  const onInputChange = (value: string) => {
+    setSearch(value);
+    debouncedChange(value);
+  };
+  
   const { data: alumniInformations, isLoading } =
     useFetchAlumniInformationsPaginated({
       page: pageIndex,
       per_page: perPage,
-      search: search,
+      search: delayedSearch,
     });
 
   return (
     <div className="relative">
       <HomeHeading title="Pengumuman" />
       <div className="container mx-auto px-8 py-8 ">
+      <div className="relative flex items-center gap-2 w-full mb-7">
+          <Search className="absolute mx-2 size-4 text-muted-foreground" />
+          <Input
+            value={search}
+            onChange={(e) => onInputChange(String(e.target.value))}
+            placeholder={"Cari berdasarkan judul..."}
+            className="h-8 pl-8"
+          />
+        </div>
         {isLoading ? (
           <SkeletonCardDisplay amount={perPage} />
         ) : (
