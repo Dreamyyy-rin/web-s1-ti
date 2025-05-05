@@ -19,6 +19,7 @@ import {
 import { useFetchVacanciesPaginated } from "@/features/vacancy/hooks/useFetchVacanciesPaginated";
 import { Vacancy } from "@/features/vacancy/types/vacancy.type";
 import VacancyView from "@/features/vacancy/components/vacancyView";
+import ReadonlyText from "@/components/ui/custom/rich-text-editor/readonlyText";
 
 export const Route = createFileRoute("/_homeLayout/vacancy/")({
   component: RouteComponent,
@@ -90,7 +91,7 @@ function RouteComponent() {
                   </CardHeader>
                   <CardContent>
                     <CardDescription>
-                      {job.deskripsi.substring(0, 100)}...
+                      <ReadonlyText data={job.deskripsi} maxlength={100} />
                     </CardDescription>{" "}
                     {/* Preview */}
                   </CardContent>
