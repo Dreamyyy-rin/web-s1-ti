@@ -38,19 +38,18 @@ const AnnouncementView = ({ data }: { data: Announcement }) => {
   });
 
   return (
-    <div className="flex flex-col items-center justify-center w-full px-4 py-6 max-w-5xl mx-auto">
+    <div className="flex flex-col items-center justify-center w-full max-w-5xl mx-auto">
       {" "}
       <div className="flex flex-col items-center justify-center w-full mb-6">
         {url && (
           <img
             src={url}
             alt="announcement"
-            className="w-full h-96 object-cover object-top rounded-lg shadow-lg"
+            className="w-full h-96 object-cover object-top rounded-b-lg lg:rounded-lg shadow-lg"
             onClick={() => openModal(url)}
           />
         )}
       </div>
-      {/* Modal untuk menampilkan gambar ukuran penuh */}
       {isModalOpen && modalImage && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
@@ -74,18 +73,20 @@ const AnnouncementView = ({ data }: { data: Announcement }) => {
           </div>
         </div>
       )}
-      <div className="text-4xl font-bold mb-4 w-full max-w-5xl">
-        {data.judul}
-      </div>
-      <div className="text-sm text-muted-foreground mb-4 w-full max-w-5xl">
-        {formattedDate}
-      </div>
-      <div className="text-sm text-muted-foreground mb-4 w-full max-w-5xl">{`oleh: ${data.user.name}`}</div>
-      <div className="w-full max-w-5xl px-4">
-        <EditorContent
-          editor={editor}
-          className="minimal-tiptap-editor space-y-2 text-justify"
-        />
+      <div className="flex flex-col justify-center items-center w-full px-2 md:px-4">
+        <div className="text-4xl font-bold mb-4 w-full max-w-5xl">
+          {data.judul}
+        </div>
+        <div className="text-sm text-muted-foreground mb-4 w-full max-w-5xl">
+          {formattedDate}
+        </div>
+        <div className="text-sm text-muted-foreground mb-4 w-full max-w-5xl">{`oleh: ${data.user.name}`}</div>
+        <div className="w-full max-w-5xl px-4">
+          <EditorContent
+            editor={editor}
+            className="minimal-tiptap-editor space-y-2 text-justify"
+          />
+        </div>
       </div>
     </div>
   );

@@ -17,7 +17,7 @@ function RouteComponent() {
   return (
     <div className="relative">
       {/* <HomeHeading title="Detail Pengumuman" /> */}
-      <div className="p-4">
+      <div className="pt-0 lg:pt-4 pb-4">
         {isLoading ? null : !data ? null : (
           <AlumniInformationView data={data} />
         )}
