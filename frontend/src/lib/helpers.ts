@@ -65,7 +65,8 @@ export async function fetchFileFromUrl(url: string): Promise<File> {
   return file;
 }
 
-export function debounce<T extends (...args: unknown[]) => unknown>(
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function debounce<T extends (...args: any[]) => any>(
   func: T,
   ms: number = 300,
 ) {

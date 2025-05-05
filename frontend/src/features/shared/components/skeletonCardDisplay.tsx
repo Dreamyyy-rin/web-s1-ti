@@ -9,7 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import React from "react";
 
-const AnnouncementSkeletonCardDisplay = React.forwardRef<
+const SkeletonCardDisplay = React.forwardRef<
   React.ElementRef<"div">,
   React.ComponentPropsWithoutRef<"div"> & { amount: number }
 >(({ className, amount, ...props }, ref) => {
@@ -20,9 +20,9 @@ const AnnouncementSkeletonCardDisplay = React.forwardRef<
       className={cn("flex flex-wrap justify-evenly  -mx-2 ", className)}
     >
       {Array.from({ length: amount }).map((_, index) => (
-        <div className="w-full  md:w-1/2 xl:w-1/3 px-2 pb-4" key={index}>
+        <div className="w-full md:w-1/2 xl:w-1/3 px-2 pb-4" key={index}>
           <Card className=" bg-white rounded-lg shadow-lg overflow-hidden h-full flex-initial flex flex-col ">
-            <Skeleton className="w-full h-48 object-cover" />
+            <Skeleton className="w-full h-48 object-cover"/>
             <CardHeader className="">
               <CardTitle className="text-xl font-semibold text-gray-900 flex">
                 <Skeleton className="w-64 h-4 flex-initial" />
@@ -52,4 +52,4 @@ const AnnouncementSkeletonCardDisplay = React.forwardRef<
   );
 });
 
-export default AnnouncementSkeletonCardDisplay;
+export default SkeletonCardDisplay;

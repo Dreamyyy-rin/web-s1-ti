@@ -3,10 +3,7 @@ import { Plus } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { useFetchVacanciesPaginated } from "../hooks/useFetchVacanciesPaginated";
 import { vacancyColumns } from "./vacancyColumn";
-import { useState } from "react";
-import ServerDataTable, {
-  DatatablePaginationProps,
-} from "@/components/ui/custom/datatable/serverDataTable";
+import ServerDataTable from "@/components/ui/custom/datatable/serverDataTable";
 
 const VacancyTopToolbarSlot = () => {
   return (
@@ -20,38 +17,16 @@ const VacancyTopToolbarSlot = () => {
     </div>
   );
 };
-// TODO: ADD LOADING TO ALL DATA TABLE
+
 const VacancyDataTable = () => {
-  const [search, setSearch] = useState("");
-  const [pagination, setPagination] = useState<DatatablePaginationProps>({
-    index: 0,
-    itemPerPage: 10,
-  });
-
-  const { data, isLoading } = useFetchVacanciesPaginated({
-    page: pagination.index + 1,
-    per_page: pagination.itemPerPage,
-    search: search,
-  });
-
   return (
     <div>
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : (
-        <ServerDataTable
-          columns={vacancyColumns}
-          data={data? data.data : []}
-          topToolbarSlot={<VacancyTopToolbarSlot />}
-          pagination={pagination}
-          search={search}
-          pageCount={data ? Math.ceil(data.meta.total / data.meta.per_page) : 0}
-          onSearchChange={setSearch}
-          onPaginationChange={(value) => {
-            setPagination(value);
-          }}
-        />
-      )}
+      <ServerDataTable
+        columns={vacancyColumns}
+        topToolbarSlot={<VacancyTopToolbarSlot />}
+        fetchFunction={useFetchVacanciesPaginated}
+        searchPlaceholder="Cari judul..."
+      />
     </div>
   );
 };

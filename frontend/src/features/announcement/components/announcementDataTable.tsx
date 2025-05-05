@@ -3,8 +3,7 @@ import { announcementColumns } from "./announcementColumn";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { Link } from "@tanstack/react-router";
-import ServerDataTable, { DatatablePaginationProps } from "@/components/ui/custom/datatable/serverDataTable";
-import { useState } from "react";
+import ServerDataTable from "@/components/ui/custom/datatable/serverDataTable";
 
 const AnnouncementTopToolbarSlot = () => {
   return (
@@ -20,32 +19,14 @@ const AnnouncementTopToolbarSlot = () => {
 };
 
 const AnnouncementDataTable = () => {
-  const [search, setSearch] = useState("");
-  const [pagination, setPagination] = useState<DatatablePaginationProps>({
-    index: 0,
-    itemPerPage: 10,
-  });
-
-  const { data, isLoading } = useFetchAnnouncementsPaginated({
-    page: pagination.index + 1,
-    per_page: pagination.itemPerPage,
-    search: search,
-  });
-
   return (
     <div>
-      {isLoading ? null : (
-        <ServerDataTable
-          columns={announcementColumns}
-          data={data? data.data : []}
-          topToolbarSlot={<AnnouncementTopToolbarSlot />}
-          search={search}
-          pagination={pagination}
-          pageCount={data? Math.ceil(data.meta.total / pagination.itemPerPage) : 0}
-          onSearchChange={setSearch}
-          onPaginationChange={setPagination}
-        />
-      )}
+      <ServerDataTable
+        columns={announcementColumns}
+        topToolbarSlot={<AnnouncementTopToolbarSlot />}
+        fetchFunction={useFetchAnnouncementsPaginated}
+        searchPlaceholder="Cari judul..."
+      />
     </div>
   );
 };

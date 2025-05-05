@@ -4,7 +4,6 @@ import {
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
-  OnChangeFn,
   PaginationState,
   useReactTable,
   VisibilityState,
@@ -23,18 +22,22 @@ import { ScrollArea } from "../../scroll-area";
 import { Scrollbar } from "@radix-ui/react-scroll-area";
 import { DataTablePagination } from "./datatablePagination";
 import DatatableViewOptions from "./datatableViewOptions";
+import { debounce } from "@/lib/helpers";
+import { UseQueryResult } from "@tanstack/react-query";
+import { PaginationResponse } from "@/interfaces/responses/paginationRespose.interface";
+import { PaginationQueryParams } from "@/interfaces/pagination.interface";
+import { Skeleton } from "../../skeleton";
 
 export interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
-  data: TData[];
   topToolbarSlot?: React.ReactNode;
-  pagination: DatatablePaginationProps;
-  search: string;
-  pageCount: number;
-  onSearchChange: React.Dispatch<React.SetStateAction<string>>;
-  onPaginationChange: React.Dispatch<
-    React.SetStateAction<DatatablePaginationProps>
-  >;
+  defaultPagination?: DatatablePaginationProps;
+  defaultSearch?: string;
+  skeletonRows?: number;
+  searchPlaceholder?: string;
+  fetchFunction: (
+    queryParams: PaginationQueryParams,
+  ) => UseQueryResult<PaginationResponse<TData>, Error>;
 }
 
 export interface DatatablePaginationProps {
@@ -45,90 +48,83 @@ export interface DatatablePaginationProps {
 const ServerDataTableComponent = <TData extends object, TValue = unknown>(
   {
     columns,
-    data,
     className,
     topToolbarSlot,
-    search,
-    onSearchChange,
-    pagination,
-    onPaginationChange,
-    pageCount,
+    defaultPagination,
+    defaultSearch,
+    skeletonRows,
+    fetchFunction,
+    searchPlaceholder,
     ...props
   }: React.ComponentPropsWithoutRef<"div"> & DataTableProps<TData, TValue>,
   ref: React.ForwardedRef<HTMLDivElement>,
 ) => {
-  const onReactTablePaginationChange: OnChangeFn<PaginationState> = (
-    updaterOrValue,
-  ) => {
-    const next =
-      typeof updaterOrValue == "function"
-        ? updaterOrValue({
-            pageIndex: pagination.index,
-            pageSize: pagination.itemPerPage,
-          })
-        : updaterOrValue;
-    onPaginationChange({
-      index: next.pageIndex,
-      itemPerPage: next.pageSize,
-    });
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [globalSearch, setGlobalSearch] = useState<string>(defaultSearch ?? "");
+  const [delayedSearch, setDelayedSearch] = useState<string>(
+    defaultSearch ?? "",
+  );
+  const [tablePagination, setTablePagination] = useState<PaginationState>({
+    pageIndex: defaultPagination?.index ?? 0,
+    pageSize: defaultPagination?.itemPerPage ?? 10,
+  });
+
+  const debouncedChange = debounce((value: string) => {
+    setDelayedSearch(value);
+  }, 1000);
+
+  const onGlobalFilterChange = (value: string) => {
+    setGlobalSearch(value);
+    debouncedChange(value);
   };
 
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-  // const [globalSearch, setGlobalSearch] = useState<string>(search ?? "")
-  // const [tablePagination, setTablePagination] = useState<PaginationState>({
-  //   pageIndex: pagination?.pageIndex ?? 0,
-  //   pageSize: pagination?.pageSize ?? 10,
-  // })
-  // setTablePagination({})
+  const { data, isLoading } = fetchFunction({
+    page: tablePagination.pageIndex + 1,
+    per_page: tablePagination.pageSize,
+    search: delayedSearch,
+  });
 
   const table = useReactTable({
     get data() {
-      return data;
+      return data?.data ?? [];
     },
     get columns() {
       return columns;
     },
     get pageCount() {
-      return pageCount;
+      return data ? Math.ceil(data.meta.total / tablePagination.pageSize) : 0;
     },
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     globalFilterFn: "includesString",
-    onGlobalFilterChange: onSearchChange,
+    onGlobalFilterChange: onGlobalFilterChange,
     onColumnVisibilityChange: setColumnVisibility,
-    onPaginationChange: onReactTablePaginationChange,
+    onPaginationChange: setTablePagination,
     manualPagination: true,
     manualFiltering: true,
     initialState: {
       pagination: {
-        pageIndex: 0,
-        pageSize: 10,
+        pageIndex: defaultPagination?.index ?? tablePagination.pageIndex,
+        pageSize: defaultPagination?.itemPerPage ?? tablePagination.pageSize,
       },
     },
     state: {
       get globalFilter() {
-        return search;
+        return globalSearch;
       },
       get columnVisibility() {
         return columnVisibility;
       },
       get pagination() {
-        if (!pagination)
-          return undefined; //Maybe this is for automatic pagination later
-        else {
-          return {
-            pageIndex: pagination.index,
-            pageSize: pagination.itemPerPage,
-          };
-        }
+        return tablePagination;
       },
     },
   });
 
   return (
     <div ref={ref} {...props} className={cn("rounded-md space-y-2", className)}>
-      <DatatableViewOptions table={table}>
+      <DatatableViewOptions table={table} searchPlaceholder={searchPlaceholder}>
         {topToolbarSlot}
       </DatatableViewOptions>
       <ScrollArea className="relative h-full w-full rounded-sm border pe-1">
@@ -152,7 +148,21 @@ const ServerDataTableComponent = <TData extends object, TValue = unknown>(
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {isLoading ? (
+              Array.from({ length: skeletonRows ?? 10 }).map((_, index) =>
+                table.getHeaderGroups().map((headerGroup) => (
+                  <TableRow key={`${headerGroup.id}-${index}`}>
+                    {headerGroup.headers.map((header) => {
+                      return (
+                        <TableCell key={header.id}>
+                          <Skeleton className="h-2 my-2 w-full" />
+                        </TableCell>
+                      );
+                    })}
+                  </TableRow>
+                )),
+              )
+            ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}

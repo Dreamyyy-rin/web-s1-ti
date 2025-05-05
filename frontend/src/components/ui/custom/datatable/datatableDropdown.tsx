@@ -1,4 +1,3 @@
-import React from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,14 +10,11 @@ import { Button } from "../../button";
 import { Ellipsis, FileSearch, Pencil, Trash } from "lucide-react";
 import ConfirmationAlert from "../alert/confirmationAlert";
 
-const DatatableDropdown = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentPropsWithoutRef<"div"> & {
-    detailFn?: () => void;
-    editFn?: () => void;
-    deleteFn?: () => void;
-  }
->(({ editFn, detailFn, deleteFn }) => {
+const DatatableDropdown = ({ editFn, detailFn, deleteFn } : {
+  detailFn?: () => void;
+  editFn?: () => void;
+  deleteFn?: () => void;
+}) => {
   return (
     <DropdownMenu >
       <DropdownMenuTrigger asChild>
@@ -69,6 +65,6 @@ const DatatableDropdown = React.forwardRef<
       </DropdownMenuContent>
     </DropdownMenu>
   );
-});
+};
 
 export default DatatableDropdown;

@@ -17,9 +17,15 @@ const DataTableViewOptions = <TData extends object>(
     table,
     className,
     children,
-  }: React.ComponentPropsWithoutRef<"div"> & { table: Table<TData> },
+    searchPlaceholder,
+    ...props
+  }: React.ComponentPropsWithoutRef<"div"> & {
+    table: Table<TData>;
+    searchPlaceholder?: string;
+  },
   ref: React.ForwardedRef<HTMLDivElement>,
 ) => {
+
   const handleOnChange = (value: string) => {
     table.setGlobalFilter(value);
   };
@@ -27,13 +33,14 @@ const DataTableViewOptions = <TData extends object>(
     <div
       className={cn("flex items-center justify-between gap-2", className)}
       ref={ref}
+      {...props}
     >
       <div className="relative flex items-center gap-2 max-w-96">
         <Search className="absolute mx-2 size-4 text-muted-foreground" />
         <Input
           value={table.getState().globalFilter}
           onChange={(e) => handleOnChange(String(e.target.value))}
-          placeholder="Cari..."
+          placeholder={searchPlaceholder ?? "Cari..."}
           className="h-8 pl-8"
         />
       </div>
@@ -69,6 +76,6 @@ const DataTableViewOptions = <TData extends object>(
 };
 
 export default React.forwardRef(DataTableViewOptions) as <TData extends object>(
-  props: React.ComponentPropsWithoutRef<"div"> & { table: Table<TData> },
+  props: React.ComponentPropsWithoutRef<"div"> & { table: Table<TData>, searchPlaceholder?: string },
   ref: React.ForwardedRef<HTMLDivElement>,
 ) => React.ReactElement;

@@ -1,5 +1,4 @@
 import React from "react";
-import { Announcement } from "../types/announcement.type";
 import {
   Card,
   CardContent,
@@ -12,36 +11,37 @@ import ReadonlyText from "@/components/ui/custom/rich-text-editor/readonlyText";
 import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
+import { AlumniInformation } from "../types/alumniInformation.type";
 
-const AnnouncementCardDisplay = React.forwardRef<
+const AlumniInformationCardDisplay = React.forwardRef<
   React.ElementRef<"div">,
-  React.ComponentPropsWithoutRef<"div"> & { announcements: Announcement[] }
->(({ className, announcements, ...props }, ref) => {
+  React.ComponentPropsWithoutRef<"div"> & { alumniInformations: AlumniInformation[] }
+>(({ className, alumniInformations, ...props }, ref) => {
   return (
     <div className={cn("flex flex-wrap justify-evenly -mx-2", className)} ref={ref} {...props}>
-      {announcements.map((announcement) => (
+      {alumniInformations.map((alumniInformation) => (
         <div
           className="w-full  md:w-1/2 xl:w-1/3 px-2 pb-4"
-          key={announcement.id}
+          key={alumniInformation.id}
         >
           <Card className=" bg-background rounded-lg shadow-lg overflow-hidden h-full flex flex-col">
             <img
-              src={`${ENV.APP.BACKEND_URL}/files/${announcement.file}`}
-              alt={announcement.judul}
+              src={`${ENV.APP.BACKEND_URL}/files/${alumniInformation.file}`}
+              alt={alumniInformation.judul}
               className="w-full h-48 object-cover object-top rounded-t-md"
             />
             <CardHeader className="">
               <CardTitle className="text-xl font-semibold">
-                {announcement.judul}
+                {alumniInformation.judul}
               </CardTitle>
             </CardHeader>
             <CardContent className="">
-              <ReadonlyText maxlength={100} data={announcement.isi} />
+              <ReadonlyText maxlength={100} data={alumniInformation.isi} />
             </CardContent>
             <CardFooter className="flex-auto items-end">
               <Link
-                to={`/announcement/$announcementId`}
-                params={{ announcementId: announcement.id.toString() }}
+                to={`/alumni-info/$alumniInfoId`}
+                params={{ alumniInfoId: alumniInformation.id.toString() }}
               >
                 <Button className="" variant="outline" size="sm">
                   Baca Selengkapnya
@@ -55,4 +55,4 @@ const AnnouncementCardDisplay = React.forwardRef<
   );
 });
 
-export default AnnouncementCardDisplay;
+export default AlumniInformationCardDisplay;

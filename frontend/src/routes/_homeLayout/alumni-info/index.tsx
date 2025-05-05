@@ -1,92 +1,51 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { createFileRoute } from "@tanstack/react-router";
 import Footer from "@/components/ui/custom/footer/footer";
-import { Button } from "@/components/ui/button";
 import { useFetchAlumniInformationsPaginated } from "@/features/alumni-information/hooks/useFetchAlumniInformationsPaginated";
-import { ENV } from "@/env";
-import ReadonlyText from "@/components/ui/custom/rich-text-editor/readonlyText";
 import HomeHeading from "@/features/shared/components/homeHeading";
+import { useState } from "react";
+import SkeletonCardDisplay from "@/features/shared/components/skeletonCardDisplay";
+import AlumniInformationCardDisplay from "@/features/alumni-information/components/alumniInformationCardDisplay";
+import PaginationNavigation from "@/features/shared/components/paginationNavigation";
+import PaginationNavigationSkeleton from "@/features/shared/components/PaginationNavigationSkeleton";
 
 export const Route = createFileRoute("/_homeLayout/alumni-info/")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { data: alumni, isLoading } = useFetchAlumniInformationsPaginated();
+  const [pageIndex, setPageIndex] = useState<number>(1);
+  const [search, setSearch] = useState<string>("");
+  const perPage = 3;
+  const { data: alumniInformations, isLoading } =
+    useFetchAlumniInformationsPaginated({
+      page: pageIndex,
+      per_page: perPage,
+      search: search,
+    });
+
   return (
     <div className="relative">
-      <HomeHeading title="Berita Alumni" />
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {isLoading
-            ? null
-            : alumni?.data.map((alumni, index) => (
-                <Card key={index} className="shadow-lg rounded-md">
-                  <CardHeader className="p-0">
-                    <img
-                      src={`${ENV.APP.BACKEND_URL}/files/${alumni.file}`}
-                      alt={alumni.judul}
-                      className="w-full h-[200px] object-cover rounded-t-md"
-                    />
-                  </CardHeader>
-                  <CardContent>
-                    <CardTitle>{alumni.judul}</CardTitle>
-                    <CardDescription>
-                      <ReadonlyText data={alumni.isi} />
-                    </CardDescription>
-                  </CardContent>
-                  <CardFooter className="p-4">
-                    <Link
-                      to={`/alumni-info/$alumniInfoId`}
-                      params={{ alumniInfoId: alumni.id.toString() }}
-                    >
-                      <Button variant="outline" size="sm">
-                        Baca Selengkapnya
-                      </Button>
-                    </Link>
-                  </CardFooter>
-                </Card>
-              ))}
-        </div>
-
-        <div className="flex justify-center mt-8">
-          <Pagination>
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious href="#" />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#">1</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#">2</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationNext href="#" />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
+      <HomeHeading title="Pengumuman" />
+      <div className="container mx-auto px-8 py-8 ">
+        {isLoading ? (
+          <SkeletonCardDisplay amount={perPage} />
+        ) : (
+          <>
+            <AlumniInformationCardDisplay
+              alumniInformations={alumniInformations?.data ?? []}
+            />
+          </>
+        )}
+        <div className="flex justify-center  mt-8">
+          {alumniInformations?.meta ? (
+            <PaginationNavigation
+              pageIndex={pageIndex}
+              meta={alumniInformations.meta}
+              onPageIndexChange={setPageIndex}
+            />
+          ) : (
+            <PaginationNavigationSkeleton pageIndex={pageIndex} />
+          )}
         </div>
       </div>
       <Footer />

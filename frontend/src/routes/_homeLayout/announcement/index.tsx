@@ -1,19 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-} from "@/components/ui/pagination";
-
 import Footer from "@/components/ui/custom/footer/footer";
-import { Button } from "@/components/ui/button";
 import { useFetchAnnouncementsPaginated } from "@/features/announcement/hooks/useFetchAnnouncementsPaginated";
 import HomeHeading from "@/features/shared/components/homeHeading";
 import { useState } from "react";
 import AnnouncementCardDisplay from "@/features/announcement/components/announcementCardDisplay";
-import AnnouncementSkeletonCardDisplay from "@/features/announcement/components/announcementSkeletonCardDisplay";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import SkeletonCardDisplay from "@/features/shared/components/skeletonCardDisplay";
+import PaginationNavigation from "@/features/shared/components/paginationNavigation";
+import PaginationNavigationSkeleton from "@/features/shared/components/PaginationNavigationSkeleton";
 
 export const Route = createFileRoute("/_homeLayout/announcement/")({
   component: RouteComponent,
@@ -30,8 +24,7 @@ function RouteComponent() {
   }
   const [pageIndex, setPageIndex] = useState<number>(1);
   const [search, setSearch] = useState<string>("");
-  console.log("pageindex:", pageIndex);
-  const perPage = 12;
+  const perPage = 3;
 
   const { data: announcements, isLoading: isFetchAnnouncementLoading } =
     useFetchAnnouncementsPaginated({
@@ -43,10 +36,9 @@ function RouteComponent() {
   return (
     <div className="relative">
       <HomeHeading title="Pengumuman" />
-      {/* Card Pengumuman */}
       <div className="container mx-auto px-8 py-8 ">
         {isFetchAnnouncementLoading ? (
-          <AnnouncementSkeletonCardDisplay amount={perPage} />
+          <SkeletonCardDisplay amount={perPage} />
         ) : (
           <>
             <AnnouncementCardDisplay
@@ -55,33 +47,15 @@ function RouteComponent() {
           </>
         )}
         <div className="flex justify-center  mt-8">
-          <Pagination className="items-center">
-            <div className="me-4">
-              Halaman {pageIndex} dari {announcements?.meta.last_page}
-            </div>
-            <PaginationContent>
-              <PaginationItem>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => setPageIndex(pageIndex - 1)}
-                  disabled={pageIndex === 1}
-                >
-                  <ChevronLeft />
-                </Button>
-              </PaginationItem>
-              <PaginationItem>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => setPageIndex(pageIndex + 1)}
-                  disabled={announcements?.meta.last_page === pageIndex}
-                >
-                  <ChevronRight />
-                </Button>
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
+          {announcements?.meta ? (
+            <PaginationNavigation
+              pageIndex={pageIndex}
+              meta={announcements.meta}
+              onPageIndexChange={setPageIndex}
+            />
+          ) : (
+            <PaginationNavigationSkeleton pageIndex={pageIndex} />
+          )}
         </div>
       </div>
       <Footer />

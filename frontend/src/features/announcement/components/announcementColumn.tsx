@@ -10,7 +10,7 @@ import { toast } from "sonner";
 const AnnouncementActionCell = React.forwardRef<
   HTMLDivElement,
   React.ComponentPropsWithoutRef<"div"> & { data: Announcement }
->(({ data }) => {
+>(({ data, ...props }, ref) => {
   const navigate = useNavigate();
   const { mutate } = useDeleteAnnouncementById();
   const handleOnClickDetail = () => {
@@ -44,7 +44,7 @@ const AnnouncementActionCell = React.forwardRef<
     );
   };
   return (
-    <div className="text-right">
+    <div className="text-right" ref={ref} {...props}>
       <DatatableDropdown
         detailFn={handleOnClickDetail}
         editFn={handleOnClickEdit}

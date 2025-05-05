@@ -11,15 +11,13 @@ import {
   AlertDialogTrigger,
 } from "../../alert-dialog";
 
-const ConfirmationAlert = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentPropsWithoutRef<"div"> & {
-    onConfirmation: () => void;
-    description?: string;
-    title?: string;
-    confirmSlot?: React.ReactNode
-  }
->(({ onConfirmation, title, description, confirmSlot, children = true }) => {
+const ConfirmationAlert = ({ onConfirmation, title, description, confirmSlot, children = true } : {
+  onConfirmation: () => void;
+  description?: string;
+  title?: string;
+  confirmSlot?: React.ReactNode;
+  children?: React.ReactNode;
+}) => {
   const [open, setOpen] = useState(false);
 
   const handleOnClickConfirm = () => {
@@ -49,6 +47,6 @@ const ConfirmationAlert = React.forwardRef<
       </AlertDialogContent>
     </AlertDialog>
   );
-});
+};
 
 export default ConfirmationAlert;

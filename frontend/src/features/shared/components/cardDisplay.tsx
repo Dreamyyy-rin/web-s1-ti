@@ -1,5 +1,3 @@
-import React from "react";
-import { Announcement } from "../types/announcement.type";
 import {
   Card,
   CardContent,
@@ -8,23 +6,16 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ENV } from "@/env";
-import ReadonlyText from "@/components/ui/custom/rich-text-editor/readonlyText";
-import { Button } from "@/components/ui/button";
-import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
+import { Link } from "@tanstack/react-router";
+import React from "react";
 
-const AnnouncementCardDisplay = React.forwardRef<
+const SkeletonCardDisplay = React.forwardRef<
   React.ElementRef<"div">,
-  React.ComponentPropsWithoutRef<"div"> & { announcements: Announcement[] }
->(({ className, announcements, ...props }, ref) => {
+  React.ComponentPropsWithoutRef<"div">
+>(({ className, ...props }, ref) => {
   return (
-    <div className={cn("flex flex-wrap justify-evenly -mx-2", className)} ref={ref} {...props}>
-      {announcements.map((announcement) => (
-        <div
-          className="w-full  md:w-1/2 xl:w-1/3 px-2 pb-4"
-          key={announcement.id}
-        >
-          <Card className=" bg-background rounded-lg shadow-lg overflow-hidden h-full flex flex-col">
+    <Card className={cn("bg-background rounded-lg shadow-lg overflow-hidden h-full flex flex-col", className)} ref={ref} {...props}>
             <img
               src={`${ENV.APP.BACKEND_URL}/files/${announcement.file}`}
               alt={announcement.judul}
@@ -49,10 +40,7 @@ const AnnouncementCardDisplay = React.forwardRef<
               </Link>
             </CardFooter>
           </Card>
-        </div>
-      ))}
-    </div>
   );
 });
 
-export default AnnouncementCardDisplay;
+export default SkeletonCardDisplay;

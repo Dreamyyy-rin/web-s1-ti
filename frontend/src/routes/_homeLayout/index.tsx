@@ -19,7 +19,7 @@ import sitaLink from "@/assets/sitaLink.png";
 import itexploreLink from "@/assets/itexploreLink.jpg";
 import Footer from "@/components/ui/custom/footer/footer";
 import { useFetchAnnouncementsPaginated } from "@/features/announcement/hooks/useFetchAnnouncementsPaginated";
-import AnnouncementSkeletonCardDisplay from "@/features/announcement/components/announcementSkeletonCardDisplay";
+import SkeletonCardDisplay from "@/features/shared/components/skeletonCardDisplay";
 import AnnouncementCardDisplay from "@/features/announcement/components/announcementCardDisplay";
 
 export const Route = createFileRoute("/_homeLayout/")({
@@ -87,7 +87,7 @@ function Index() {
 
         {/* Card Grid */}
         {isFetchAnnouncementLoading ? (
-          <AnnouncementSkeletonCardDisplay amount={3} />
+          <SkeletonCardDisplay amount={3} />
         ) : (
           <AnnouncementCardDisplay announcements={announcements?.data ?? []} />
         )}
