@@ -16,14 +16,14 @@ const AlumniInformationActionCell = React.forwardRef<
   const handleOnClickDetail = () => {
     navigate({
       // TODO: RENAME ALUMNI ROUTER
-      to: "/admin/alumni-info/$alumniId",
-      params: { alumniId: String(data.id) },
+      to: "/admin/alumni-info/$alumniInfoId",
+      params: { alumniInfoId: String(data.id) },
     });
   };
   const handleOnClickEdit = () => {
     navigate({
-      to: "/admin/alumni-info/$alumniId/edit",
-      params: { alumniId: String(data.id) },
+      to: "/admin/alumni-info/$alumniInfoId/edit",
+      params: { alumniInfoId: String(data.id) },
     });
   };
   const handleOnClickDelete = () => {

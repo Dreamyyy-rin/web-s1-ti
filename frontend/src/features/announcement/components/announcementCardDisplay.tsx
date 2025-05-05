@@ -19,10 +19,15 @@ const AnnouncementCardDisplay = React.forwardRef<
 >(({ className, announcements, ...props }, ref) => {
   return (
     <div className={cn("flex flex-wrap justify-evenly -mx-2", className)} ref={ref} {...props}>
-      {announcements.map((announcement) => (
-        <div
-          className="w-full  md:w-1/2 xl:w-1/3 px-2 pb-4"
-          key={announcement.id}
+      {announcements.length <= 0 ? (
+        <div className="w-full flex items-center justify-center">
+          <p className="text-muted-foreground">Belum ada pengumuman nih, tunggu info lebih lanjut ya!</p>
+        </div>
+      ) : (
+        announcements.map((announcement) => (
+          <div
+            className="w-full  md:w-1/2 xl:w-1/3 px-2 pb-4"
+            key={announcement.id}
         >
           <Card className=" bg-background rounded-lg shadow-lg overflow-hidden h-full flex flex-col">
             <img
@@ -50,7 +55,7 @@ const AnnouncementCardDisplay = React.forwardRef<
             </CardFooter>
           </Card>
         </div>
-      ))}
+      )))}
     </div>
   );
 });

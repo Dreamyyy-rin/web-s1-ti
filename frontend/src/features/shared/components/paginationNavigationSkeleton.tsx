@@ -7,7 +7,7 @@ import {
 import { cn } from "@/lib/utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import React, { ElementRef } from "react";
-import Loader from "./Loader";
+import Loader from "./loader";
 
 const PaginationNavigationSkeleton = React.forwardRef<
   ElementRef<"nav">,

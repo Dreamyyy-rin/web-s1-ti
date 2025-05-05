@@ -7,7 +7,7 @@ import { useState } from "react";
 import AnnouncementCardDisplay from "@/features/announcement/components/announcementCardDisplay";
 import SkeletonCardDisplay from "@/features/shared/components/skeletonCardDisplay";
 import PaginationNavigation from "@/features/shared/components/paginationNavigation";
-import PaginationNavigationSkeleton from "@/features/shared/components/PaginationNavigationSkeleton";
+import PaginationNavigationSkeleton from "@/features/shared/components/paginationNavigationSkeleton";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { debounce } from "@/lib/helpers";
