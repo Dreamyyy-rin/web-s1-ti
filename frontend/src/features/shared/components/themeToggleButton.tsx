@@ -16,7 +16,7 @@ const ThemeToggleButton = React.forwardRef<
       className={cn("px-2", className)}
       ref={ref}
       {...props}
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+      onClick={() => setTheme(theme === "light" ? "dark" : theme === "dark" ? "system" : "light")}
     >
       {theme === "dark" ? (
         <MoonIcon className="h-4 w-4" />
