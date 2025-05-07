@@ -1,12 +1,11 @@
+import { StoreUser } from "@/stores/auth.store";
 import { LucideIcon } from "lucide-react";
 
-export interface SidebarUserData{
-  name: string| null;
-  email: string | null;
+export interface SidebarUserData extends StoreUser{
   avatar: string | null;
 }
 
-export interface SidebarHeaderItemData extends SidebarClickableItemData{
+export interface SidebarHeaderItemData extends SidebarClickableItemData {
   isExternal: boolean;
 }
 
@@ -16,19 +15,23 @@ export interface SidebarClickableItemData {
   icon: LucideIcon;
 }
 
-export interface SidebarContentData{
+export interface RestrictedSidebarClickableItemData
+  extends SidebarClickableItemData {
+  role: string;
+}
+
+export interface SidebarContentData {
   title: string;
-  items: Array<SidebarClickableItemData>
-  
+  items: Array<RestrictedSidebarClickableItemData>;
 }
 
 export interface SidebarFooterData {
-  user: SidebarUserData;
-  items: Array<SidebarClickableItemData>
+  items: Array<SidebarClickableItemData>;
 }
 
 export interface SidebarData {
   header: Array<SidebarHeaderItemData>;
   content: Array<SidebarContentData>;
-  footer: SidebarFooterData  
+  footer: SidebarFooterData;
+  user?: StoreUser | null
 }

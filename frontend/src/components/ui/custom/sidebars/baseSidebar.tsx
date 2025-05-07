@@ -20,10 +20,10 @@ const BaseSidebar = React.forwardRef<
         <BaseSidebarHeader data={data.header} />
       </SidebarHeader>
       <SidebarContent>
-        <BaseSidebarContent data={data.content} />
+        <BaseSidebarContent data={data.content} user={data.user} />
       </SidebarContent>
       <SidebarFooter>
-        <BaseSidebarFooter data={data.footer} />
+        <BaseSidebarFooter data={data.footer} user={data.user} />
       </SidebarFooter>
     </Sidebar>
   );

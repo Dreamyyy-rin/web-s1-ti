@@ -6,13 +6,14 @@ import { useLoaderStore } from "./loader.store";
 
 // type AuthState = ExtractState<typeof useAuthStore>
 
+export type StoreUser = Omit<User, "id" | "created_at" | "updated_at">;
 interface AuthState {
-  user: Omit<User, "id"> | null;
+  user: StoreUser | null;
   token: string | null;
 }
 
 export interface AuthAction {
-  setUser: (user: Omit<User, "id"> | null) => void;
+  setUser: (user: StoreUser | null) => void;
   setToken: (token: string | null) => void;
   isAuthenticated: () => Promise<boolean>;
 }
@@ -39,7 +40,8 @@ export const useAuthStore = create<AuthStore>()(
           return false;
         }
         const response = await axiosBackendInstance.get("/me", {});
-        const userProfile: Omit<User, "id"> = {
+        const userProfile: StoreUser = {
+
           email: response.data.email,
           name: response.data.name,
           role: response.data.role,
@@ -54,7 +56,7 @@ export const useAuthStore = create<AuthStore>()(
         return false;
       }
     },
-    setUser: (user: Omit<User, "id"> | null) => set({ user: user }),
+    setUser: (user: StoreUser | null) => set({ user: user }),
     setToken: (token: string | null) => set({ token: token }),
   })),
 );

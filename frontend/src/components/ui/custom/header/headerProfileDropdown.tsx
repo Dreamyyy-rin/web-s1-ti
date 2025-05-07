@@ -54,7 +54,7 @@ const HeaderProfileDropdown = React.forwardRef<
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <Link to={user?.role === "admin" ? "/admin" : "/auth/login"}>
+        <Link to={user?.role === "admin" || user?.role === "superadmin" ? "/admin" : "/auth/login"}>
           <DropdownMenuItem className="cursor-pointer">
             <Button variant="ghost" className=" h-6 p-0 m-0 font-normal ">
               <div className="flex size-6 items-center justify-center rounded-sm">

@@ -36,7 +36,7 @@ const VacancyActionCell = React.forwardRef<
         },
         onError: (error) => {
           const message = handleAxiosError(error)?.message;
-          toast.success("Gagal", {
+          toast.error("Gagal", {
             description: message,
           });
         },

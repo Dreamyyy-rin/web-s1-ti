@@ -1,8 +1,7 @@
 import BaseLayoutWithSidebar from "@/components/ui/custom/sidebars/baseLayoutWithSidebar";
-import { ENV } from "@/env";
 import { useAuthStore } from "@/stores/auth.store";
 import { SidebarData } from "@/interfaces/sidebar.interface";
-import { Briefcase, Megaphone, Rss, Settings, Users } from "lucide-react";
+import { Briefcase, Megaphone, Rss, Settings, UserCog, Users } from "lucide-react";
 import React from "react";
 
 export const AdminLayout = React.forwardRef<
@@ -17,7 +16,7 @@ export const AdminLayout = React.forwardRef<
         isExternal: false,
         icon: Rss,
         title: "Web S1-TI",
-        url: ENV.APP.FRONTEND_URL,
+        url: "/",
       },
     ],
     content: [
@@ -28,26 +27,35 @@ export const AdminLayout = React.forwardRef<
             icon: Megaphone,
             title: "Pengumuman",
             url: "/admin/announcement",
+            role: "admin,superadmin"
           },
           {
             icon: Users,
             title: "Berita Alumni",
             url: "/admin/alumni-info",
+            role: "admin,superadmin"
           },
           {
             icon: Briefcase,
             title: "Lowongan",
             url: "/admin/vacancy",
+            role: "admin,superadmin"
+          },
+        ],
+      },
+      {
+        title: "Manajemen",
+        items: [
+          {
+            icon: UserCog,
+            title: "Akun Admin",
+            url: "/admin/admin-account",
+            role: "superadmin"
           },
         ],
       },
     ],
     footer: {
-      user: {
-        name: user?.name ?? "",
-        email: user?.email ?? "",
-        avatar: null,
-      },
       items: [
         {
           title: "Tentang Kami",
@@ -61,6 +69,7 @@ export const AdminLayout = React.forwardRef<
         // },
       ],
     },
+    user: user
   };
 
   return (

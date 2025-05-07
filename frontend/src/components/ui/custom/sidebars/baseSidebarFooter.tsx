@@ -20,11 +20,12 @@ import { Avatar, AvatarFallback } from "../../avatar";
 import { Link } from "@tanstack/react-router";
 import { Button } from "../../button";
 import { useLogout } from "@/features/auth/hooks/useLogout";
+import { StoreUser } from "@/stores/auth.store";
 
 const BaseSidebarFooter = React.forwardRef<
   HTMLUListElement,
-  React.ComponentPropsWithoutRef<"ul"> & { data: SidebarFooterData }
->(({ data }, ref) => {
+  React.ComponentPropsWithoutRef<"ul"> & { data: SidebarFooterData, user?: StoreUser | null }
+>(({ data , user }, ref) => {
   const { isMobile } = useSidebar();
 
   const { mutate: logout } = useLogout();
@@ -44,12 +45,12 @@ const BaseSidebarFooter = React.forwardRef<
               <Avatar className="h-8 w-8 rounded-lg">
                 {/* <AvatarImage src={data.user.avatar} alt={data.user.name} /> */}
                 <AvatarFallback className="rounded-lg">
-                  {data.user.name?.slice(0, 2)}
+                  {user?.name?.slice(0, 2)}
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">{data.user.name}</span>
-                <span className="truncate text-xs">{data.user.email}</span>
+                <span className="truncate font-semibold">{user?.name}</span>
+                <span className="truncate text-xs">{user?.email}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -65,14 +66,14 @@ const BaseSidebarFooter = React.forwardRef<
                 <Avatar className="h-8 w-8 rounded-lg">
                   {/* <AvatarImage src={data.user.avatar} alt={data.user.name} /> */}
                   <AvatarFallback className="rounded-lg">
-                    {data.user.name?.slice(0, 2)}
+                    {user?.name.slice(0, 2)}
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">
-                    {data.user.name}
+                    {user?.name}
                   </span>
-                  <span className="truncate text-xs">{data.user.email}</span>
+                  <span className="truncate text-xs">{user?.email}</span>
                 </div>
               </div>
             </DropdownMenuLabel>

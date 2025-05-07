@@ -14,6 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "../../dropdown-menu";
 import { ChevronsUpDown } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 
 const BaseSidebarHeader = React.forwardRef<
   HTMLUListElement,
@@ -61,12 +62,26 @@ const BaseSidebarHeader = React.forwardRef<
               <DropdownMenuItem
                 key={index}
                 onClick={() => setActiveTeam(item)}
-                className="gap-2 p-2"
+                className=""
+                asChild
               >
-                <div className="flex size-6 items-center justify-center rounded-sm">
-                  <item.icon className="size-4 shrink-0" />
-                </div>
-                {item.title}
+                {item.isExternal ? (
+                  <a
+                    href={item.url}
+                    className="flex flex-row items-center justify-start rounded-sm"
+                  >
+                    <item.icon className="size-4 shrink-0" />
+                    <div className="">{item.title}</div>
+                  </a>
+                ) : (
+                  <Link
+                    to={item.url}
+                    className="flex gap-2 p-2 flex-row items-center justify-start rounded-sm"
+                  >
+                    <item.icon className="size-4 shrink-0" />
+                    <div className="">{item.title}</div>
+                  </Link>
+                )}
               </DropdownMenuItem>
             ))}
           </DropdownMenuContent>
