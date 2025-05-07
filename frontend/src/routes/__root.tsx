@@ -4,7 +4,7 @@ import { createRootRouteWithContext } from "@tanstack/react-router";
 
 interface RouteContext{
   title: string;
-  isChecked: boolean; // for prevent multipe api call
+  isChecked?: boolean; // for prevent multipe api call
 }
 
 export const Route = createRootRouteWithContext<RouteContext>()({
