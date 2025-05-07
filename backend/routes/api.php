@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\LowonganController;
@@ -9,9 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
 // AUTH
-Route::post('/register', [AuthController::class, 'register']); // Register 
 Route::post('/login', [AuthController::class, 'login']); // Login 
-Route::post('/google-login', [AuthController::class, 'googleLogin']);// Google Login
+Route::post('/google-login', [AuthController::class, 'googleLogin']); // Google Login
 
 Route::get('/files/{folder}/{filename}', function ($folder, $filename) {
     $path = storage_path("app/public/{$folder}/{$filename}");
@@ -51,9 +51,9 @@ Api untuk pagination contoh misal : pengen 10 pengumuman pertama = GET /api/peng
 //BUAT BERITA ALUMNI SAMA PERSIS KAYA PENGUMUMAN/LOWONGAN
 
 Route::get('/pengumuman', [PengumumanController::class, 'index']);
-Route::get('/pengumuman/{id}', [PengumumanController::class, 'show']); 
-Route::get('/lowongan', [LowonganController::class, 'index']); 
-Route::get('/lowongan/{id}', [LowonganController::class, 'show']); 
+Route::get('/pengumuman/{id}', [PengumumanController::class, 'show']);
+Route::get('/lowongan', [LowonganController::class, 'index']);
+Route::get('/lowongan/{id}', [LowonganController::class, 'show']);
 Route::get('/berita-alumni', [BeritaAlumniController::class, 'index']);
 Route::get('/berita-alumni/{id}', [BeritaAlumniController::class, 'show']);
 
@@ -64,16 +64,21 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/me', [AuthController::class, 'me']); //untuk test data user yang sedang login
 
     // Hanya admin yang bisa buat/edit/hapus pengumuman/lowongan/berita alumni
+    Route::middleware('superadmin')->group(function () {
+        Route::get('/admin', [AuthController::class, 'indexAdmin']); // Register 
+        Route::post('/admin', [AuthController::class, 'register']); // Register 
+        Route::delete('/admin/{id}', [AuthController::class, 'destroyAdmin']); // Register 
+    });
+
     Route::middleware('admin')->group(function () {
         Route::post('/pengumuman', [PengumumanController::class, 'store']);
-        Route::post('/pengumuman/{id}', [PengumumanController::class, 'update']); 
-        Route::delete('/pengumuman/{id}', [PengumumanController::class, 'destroy']); 
-        Route::post('/lowongan', [LowonganController::class, 'store']); 
-        Route::post('/lowongan/{id}', [LowonganController::class, 'update']); 
-        Route::delete('/lowongan/{id}', [LowonganController::class, 'destroy']); 
-        Route::post('/berita-alumni', [BeritaAlumniController::class, 'store']); 
-        Route::post('/berita-alumni/{id}', [BeritaAlumniController::class, 'update']); 
+        Route::post('/pengumuman/{id}', [PengumumanController::class, 'update']);
+        Route::delete('/pengumuman/{id}', [PengumumanController::class, 'destroy']);
+        Route::post('/lowongan', [LowonganController::class, 'store']);
+        Route::post('/lowongan/{id}', [LowonganController::class, 'update']);
+        Route::delete('/lowongan/{id}', [LowonganController::class, 'destroy']);
+        Route::post('/berita-alumni', [BeritaAlumniController::class, 'store']);
+        Route::post('/berita-alumni/{id}', [BeritaAlumniController::class, 'update']);
         Route::delete('/berita-alumni/{id}', [BeritaAlumniController::class, 'destroy']);
     });
 });
-
