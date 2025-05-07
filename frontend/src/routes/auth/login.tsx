@@ -34,6 +34,7 @@ import {
   googleTokenExchange,
   sendGoogleAuth,
 } from "@/features/auth/hooks/useGoogleAuth";
+import { AxiosError } from "axios";
 
 const loginSearchSchema = z.object({
   redirect: z.string().optional(),
@@ -83,35 +84,46 @@ function LoginComponent() {
 
   const onClickGoogle = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
-      const googleUserData = await googleTokenExchange(
-        tokenResponse.access_token,
-      );
-      if (!googleUserData.data.email_verified) {
-        throw new Error(
-          "email belum diverifikasi. Silakan verifikasi email Anda melalui email terlebih dahulu.",
+      try {
+        const googleUserData = await googleTokenExchange(
+          tokenResponse.access_token,
         );
+        if (!googleUserData.data.email_verified) {
+          throw new Error(
+            "email belum diverifikasi. Silakan verifikasi email Anda melalui email terlebih dahulu.",
+          );
+        }
+        const fullname = `${googleUserData.data.given_name} ${googleUserData.data.family_name}`;
+        const email = googleUserData.data.email;
+        const response = await sendGoogleAuth({
+          name: fullname,
+          email,
+        });
+        setUser({
+          email: response.data.user.email,
+          name: response.data.user.name,
+          role: response.data.user.role,
+        });
+        setToken(response.data.token);
+        toast.success("Login berhasil", {
+          description: `Selamat datang ${response.data.user.name}!`,
+        });
+        if (redirect) {
+          navigate({ to: redirect });
+          return;
+        }
+        navigate({ to: "/admin" });
+        return response;
+      } catch (error) {
+        toast.error("Login gagal", {
+          description:
+            error instanceof AxiosError
+              ? handleAxiosError(error)?.message
+              : error instanceof Error
+                ? error.message
+                : "Terjadi kesalahan yang tidak diketahui",
+        });
       }
-      const fullname = `${googleUserData.data.given_name} ${googleUserData.data.family_name}`;
-      const email = googleUserData.data.email;
-      const response = await sendGoogleAuth({
-        name: fullname,
-        email,
-      });
-      setUser({
-        email: response.data.user.email,
-        name: response.data.user.name,
-        role: response.data.user.role,
-      });
-      setToken(response.data.token);
-      toast.success("Login berhasil", {
-        description: `Selamat datang ${response.data.user.name}!`,
-      });
-      if (redirect) {
-        navigate({ to: redirect });
-        return;
-      }
-      navigate({ to: "/admin" });
-      return response;
     },
     onError: (error) => {
       toast.error("Login gagal", {

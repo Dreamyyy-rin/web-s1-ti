@@ -112,13 +112,7 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (!$user) {
-
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make('Admin.312'), //default password
-                'role' => 'admin'
-            ]);
+            return response()->json(['message' => 'User belum  terdaftar'], Response::HTTP_UNAUTHORIZED);
         }
 
         $token = $user->createToken('auth_token')->plainTextToken;
