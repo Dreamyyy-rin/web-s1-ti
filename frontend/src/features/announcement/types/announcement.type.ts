@@ -1,6 +1,6 @@
 import { User } from "@/features/user/types/user.type";
 
-export interface Announcement{
+export interface Announcement {
   id: number;
   judul: string;
   isi: string;
@@ -8,5 +8,5 @@ export interface Announcement{
   user_id: number;
   created_at: string;
   updated_at: string;
-  user: Omit<User, "email" | "role">;
+  user: Omit<User, "email" | "role" | "created_at" | "updated_at">;
 }

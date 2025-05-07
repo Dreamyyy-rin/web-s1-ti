@@ -9,5 +9,5 @@ export interface Vacancy {
   user_id: number;
   created_at: string;
   updated_at: string;
-  user: Omit<User, "email" | "role">;
+  user: Omit<User, "email" | "role" | "created_at" | "updated_at">;
 }
