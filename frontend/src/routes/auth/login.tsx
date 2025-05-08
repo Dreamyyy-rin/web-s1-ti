@@ -51,7 +51,6 @@ function LoginComponent() {
   const setUser = useAuthStore((state) => state.setUser);
   const { redirect } = Route.useSearch();
   const navigate = useNavigate({ from: "/auth/login" });
-  console.log("env. register: ", ENV.APP.IS_REGISTER_ENABLED);
 
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
