@@ -21,7 +21,7 @@ const SkeletonCardDisplay = React.forwardRef<
     >
       {Array.from({ length: amount }).map((_, index) => (
         <div className="w-full md:w-1/2 xl:w-1/3 px-2 pb-4" key={index}>
-          <Card className=" bg-white rounded-lg shadow-lg overflow-hidden h-full flex-initial flex flex-col ">
+          <Card className=" bg-background rounded-lg shadow-lg overflow-hidden h-full flex-initial flex flex-col ">
             <Skeleton className="w-full h-48 object-cover"/>
             <CardHeader className="">
               <CardTitle className="text-xl font-semibold text-muted-foreground flex">
