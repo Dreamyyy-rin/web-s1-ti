@@ -43,6 +43,7 @@ import { Route as AdminAdminLayoutAlumniInfoAlumniInfoIdIndexImport } from './ro
 import { Route as AdminAdminLayoutVacancyVacancyIdEditImport } from './routes/admin/_adminLayout/vacancy/$vacancyId/edit'
 import { Route as AdminAdminLayoutAnnouncementAnnouncementIdEditImport } from './routes/admin/_adminLayout/announcement/$announcementId/edit'
 import { Route as AdminAdminLayoutAlumniInfoAlumniInfoIdEditImport } from './routes/admin/_adminLayout/alumni-info/$alumniInfoId/edit'
+import { Route as AdminAdminLayoutAdminAccountAdminIdEditImport } from './routes/admin/_adminLayout/admin-account/$adminId/edit'
 
 // Create/Update Routes
 
@@ -260,6 +261,13 @@ const AdminAdminLayoutAlumniInfoAlumniInfoIdEditRoute =
     getParentRoute: () => AdminAdminLayoutAlumniInfoRoute,
   } as any)
 
+const AdminAdminLayoutAdminAccountAdminIdEditRoute =
+  AdminAdminLayoutAdminAccountAdminIdEditImport.update({
+    id: '/$adminId/edit',
+    path: '/$adminId/edit',
+    getParentRoute: () => AdminAdminLayoutAdminAccountRoute,
+  } as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -446,6 +454,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAdminLayoutVacancyIndexImport
       parentRoute: typeof AdminAdminLayoutVacancyImport
     }
+    '/admin/_adminLayout/admin-account/$adminId/edit': {
+      id: '/admin/_adminLayout/admin-account/$adminId/edit'
+      path: '/$adminId/edit'
+      fullPath: '/admin/admin-account/$adminId/edit'
+      preLoaderRoute: typeof AdminAdminLayoutAdminAccountAdminIdEditImport
+      parentRoute: typeof AdminAdminLayoutAdminAccountImport
+    }
     '/admin/_adminLayout/alumni-info/$alumniInfoId/edit': {
       id: '/admin/_adminLayout/alumni-info/$alumniInfoId/edit'
       path: '/$alumniInfoId/edit'
@@ -525,6 +540,7 @@ const HomeLayoutRouteWithChildren = HomeLayoutRoute._addFileChildren(
 interface AdminAdminLayoutAdminAccountRouteChildren {
   AdminAdminLayoutAdminAccountAddRoute: typeof AdminAdminLayoutAdminAccountAddRoute
   AdminAdminLayoutAdminAccountIndexRoute: typeof AdminAdminLayoutAdminAccountIndexRoute
+  AdminAdminLayoutAdminAccountAdminIdEditRoute: typeof AdminAdminLayoutAdminAccountAdminIdEditRoute
 }
 
 const AdminAdminLayoutAdminAccountRouteChildren: AdminAdminLayoutAdminAccountRouteChildren =
@@ -532,6 +548,8 @@ const AdminAdminLayoutAdminAccountRouteChildren: AdminAdminLayoutAdminAccountRou
     AdminAdminLayoutAdminAccountAddRoute: AdminAdminLayoutAdminAccountAddRoute,
     AdminAdminLayoutAdminAccountIndexRoute:
       AdminAdminLayoutAdminAccountIndexRoute,
+    AdminAdminLayoutAdminAccountAdminIdEditRoute:
+      AdminAdminLayoutAdminAccountAdminIdEditRoute,
   }
 
 const AdminAdminLayoutAdminAccountRouteWithChildren =
@@ -663,6 +681,7 @@ export interface FileRoutesByFullPath {
   '/admin/alumni-info/': typeof AdminAdminLayoutAlumniInfoIndexRoute
   '/admin/announcement/': typeof AdminAdminLayoutAnnouncementIndexRoute
   '/admin/vacancy/': typeof AdminAdminLayoutVacancyIndexRoute
+  '/admin/admin-account/$adminId/edit': typeof AdminAdminLayoutAdminAccountAdminIdEditRoute
   '/admin/alumni-info/$alumniInfoId/edit': typeof AdminAdminLayoutAlumniInfoAlumniInfoIdEditRoute
   '/admin/announcement/$announcementId/edit': typeof AdminAdminLayoutAnnouncementAnnouncementIdEditRoute
   '/admin/vacancy/$vacancyId/edit': typeof AdminAdminLayoutVacancyVacancyIdEditRoute
@@ -691,6 +710,7 @@ export interface FileRoutesByTo {
   '/admin/alumni-info': typeof AdminAdminLayoutAlumniInfoIndexRoute
   '/admin/announcement': typeof AdminAdminLayoutAnnouncementIndexRoute
   '/admin/vacancy': typeof AdminAdminLayoutVacancyIndexRoute
+  '/admin/admin-account/$adminId/edit': typeof AdminAdminLayoutAdminAccountAdminIdEditRoute
   '/admin/alumni-info/$alumniInfoId/edit': typeof AdminAdminLayoutAlumniInfoAlumniInfoIdEditRoute
   '/admin/announcement/$announcementId/edit': typeof AdminAdminLayoutAnnouncementAnnouncementIdEditRoute
   '/admin/vacancy/$vacancyId/edit': typeof AdminAdminLayoutVacancyVacancyIdEditRoute
@@ -727,6 +747,7 @@ export interface FileRoutesById {
   '/admin/_adminLayout/alumni-info/': typeof AdminAdminLayoutAlumniInfoIndexRoute
   '/admin/_adminLayout/announcement/': typeof AdminAdminLayoutAnnouncementIndexRoute
   '/admin/_adminLayout/vacancy/': typeof AdminAdminLayoutVacancyIndexRoute
+  '/admin/_adminLayout/admin-account/$adminId/edit': typeof AdminAdminLayoutAdminAccountAdminIdEditRoute
   '/admin/_adminLayout/alumni-info/$alumniInfoId/edit': typeof AdminAdminLayoutAlumniInfoAlumniInfoIdEditRoute
   '/admin/_adminLayout/announcement/$announcementId/edit': typeof AdminAdminLayoutAnnouncementAnnouncementIdEditRoute
   '/admin/_adminLayout/vacancy/$vacancyId/edit': typeof AdminAdminLayoutVacancyVacancyIdEditRoute
@@ -763,6 +784,7 @@ export interface FileRouteTypes {
     | '/admin/alumni-info/'
     | '/admin/announcement/'
     | '/admin/vacancy/'
+    | '/admin/admin-account/$adminId/edit'
     | '/admin/alumni-info/$alumniInfoId/edit'
     | '/admin/announcement/$announcementId/edit'
     | '/admin/vacancy/$vacancyId/edit'
@@ -790,6 +812,7 @@ export interface FileRouteTypes {
     | '/admin/alumni-info'
     | '/admin/announcement'
     | '/admin/vacancy'
+    | '/admin/admin-account/$adminId/edit'
     | '/admin/alumni-info/$alumniInfoId/edit'
     | '/admin/announcement/$announcementId/edit'
     | '/admin/vacancy/$vacancyId/edit'
@@ -824,6 +847,7 @@ export interface FileRouteTypes {
     | '/admin/_adminLayout/alumni-info/'
     | '/admin/_adminLayout/announcement/'
     | '/admin/_adminLayout/vacancy/'
+    | '/admin/_adminLayout/admin-account/$adminId/edit'
     | '/admin/_adminLayout/alumni-info/$alumniInfoId/edit'
     | '/admin/_adminLayout/announcement/$announcementId/edit'
     | '/admin/_adminLayout/vacancy/$vacancyId/edit'
@@ -916,7 +940,8 @@ export const routeTree = rootRoute
       "parent": "/admin/_adminLayout",
       "children": [
         "/admin/_adminLayout/admin-account/add",
-        "/admin/_adminLayout/admin-account/"
+        "/admin/_adminLayout/admin-account/",
+        "/admin/_adminLayout/admin-account/$adminId/edit"
       ]
     },
     "/admin/_adminLayout/alumni-info": {
@@ -1004,6 +1029,10 @@ export const routeTree = rootRoute
     "/admin/_adminLayout/vacancy/": {
       "filePath": "admin/_adminLayout/vacancy/index.tsx",
       "parent": "/admin/_adminLayout/vacancy"
+    },
+    "/admin/_adminLayout/admin-account/$adminId/edit": {
+      "filePath": "admin/_adminLayout/admin-account/$adminId/edit.tsx",
+      "parent": "/admin/_adminLayout/admin-account"
     },
     "/admin/_adminLayout/alumni-info/$alumniInfoId/edit": {
       "filePath": "admin/_adminLayout/alumni-info/$alumniInfoId/edit.tsx",

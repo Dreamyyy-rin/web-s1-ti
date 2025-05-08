@@ -145,6 +145,35 @@ class AuthController extends Controller
         ], Response::HTTP_OK);
     }
 
+    public function showAdmin($id)
+    {
+        $admin = User::findOrFail($id);
+        return response()->json($admin, Response::HTTP_OK);
+    }
+
+    public function updateAdmin(Request $request, $id)
+    {
+        $admin = User::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+
+
+        $admin->update([
+            'name' => $request->judul,
+            'email' => $request->isi,
+            'password' => $request->file,
+        ]);
+
+        return response()->json([
+            'message' => 'Admin berhasil diperbarui!',
+            'admin' => $admin
+        ], Response::HTTP_OK);
+    }
+
     // LOGOUT
     public function logout(Request $request)
     {

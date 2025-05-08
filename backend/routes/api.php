@@ -68,7 +68,9 @@ Route::middleware('auth:sanctum')->group(function () {
     // Hanya admin yang bisa buat/edit/hapus pengumuman/lowongan/berita alumni
     Route::middleware('superadmin')->group(function () {
         Route::get('/admin', [AuthController::class, 'indexAdmin']); // Register 
+        Route::get('/admin/{id}', [AuthController::class, 'showAdmin']); // Register 
         Route::post('/admin', [AuthController::class, 'registerAdmin']); // Register 
+        Route::post('/admin/{id}', [AuthController::class, 'updateAdmin']); // Register 
         Route::delete('/admin/{id}', [AuthController::class, 'destroyAdmin']); // Register 
     });
 

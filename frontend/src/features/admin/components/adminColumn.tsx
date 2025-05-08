@@ -5,12 +5,21 @@ import { toast } from "sonner";
 import { handleAxiosError } from "@/lib/helpers";
 import { User } from "@/features/user/types/user.type";
 import { ColumnDef } from "@tanstack/react-table";
+import { useNavigate } from "@tanstack/react-router";
 
 const AdminActionCell = React.forwardRef<
   HTMLDivElement,
   React.ComponentPropsWithoutRef<"div"> & { data: User }
 >(({ data }) => {
   const { mutate } = useDeleteAdminById();
+  const navigate = useNavigate();
+
+  const handleOnClickEdit = () => {
+    navigate({
+      to: "/admin/admin-account/$adminId/edit",
+      params: { adminId: String(data.id) },
+    });
+  };
 
   const handleOnClickDelete = () => {
     mutate(
@@ -32,7 +41,10 @@ const AdminActionCell = React.forwardRef<
   };
   return (
     <div>
-      <DatatableDropdown deleteFn={handleOnClickDelete} />
+      <DatatableDropdown
+        deleteFn={handleOnClickDelete}
+        editFn={handleOnClickEdit}
+      />
     </div>
   );
 });
