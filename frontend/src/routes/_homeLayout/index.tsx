@@ -94,13 +94,15 @@ function Index() {
       </div>
 
       {/* Tombol Selengkapnya */}
-      <div className="container mx-auto flex justify-center px-8">
-        <Link to="/announcement" className="w-full text-center">
-          <Button variant="outline" className="">
-            Lihat Lebih Banyak
-          </Button>
-        </Link>
-      </div>
+      {announcements && announcements.data.length > 0 && (
+        <div className="container mx-auto flex justify-center px-8">
+          <Link to="/announcement" className="w-full text-center">
+            <Button variant="outline" className="">
+              Lihat Lebih Banyak
+            </Button>
+          </Link>
+        </div>
+      )}
 
       {/* Bagian Kerja Sama */}
       <div className="container mx-auto px-8 py-8">
