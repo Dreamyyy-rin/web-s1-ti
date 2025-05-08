@@ -163,9 +163,9 @@ class AuthController extends Controller
 
 
         $admin->update([
-            'name' => $request->judul,
-            'email' => $request->isi,
-            'password' => $request->file,
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
         ]);
 
         return response()->json([
