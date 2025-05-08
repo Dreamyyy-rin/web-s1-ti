@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Response;
 // AUTH
 Route::post('/login', [AuthController::class, 'login']); // Login 
 Route::post('/google-login', [AuthController::class, 'googleLogin']); // Google Login
+// Route::post('/register', [AuthController::class, 'register']); // Register is disabled
+
 
 Route::get('/files/{folder}/{filename}', function ($folder, $filename) {
     $path = storage_path("app/public/{$folder}/{$filename}");
@@ -66,7 +68,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Hanya admin yang bisa buat/edit/hapus pengumuman/lowongan/berita alumni
     Route::middleware('superadmin')->group(function () {
         Route::get('/admin', [AuthController::class, 'indexAdmin']); // Register 
-        Route::post('/admin', [AuthController::class, 'register']); // Register 
+        Route::post('/admin', [AuthController::class, 'registerAdmin']); // Register 
         Route::delete('/admin/{id}', [AuthController::class, 'destroyAdmin']); // Register 
     });
 

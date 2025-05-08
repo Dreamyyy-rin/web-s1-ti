@@ -35,6 +35,7 @@ import {
   sendGoogleAuth,
 } from "@/features/auth/hooks/useGoogleAuth";
 import { AxiosError } from "axios";
+import { ENV } from "@/env";
 
 const loginSearchSchema = z.object({
   redirect: z.string().optional(),
@@ -50,6 +51,7 @@ function LoginComponent() {
   const setUser = useAuthStore((state) => state.setUser);
   const { redirect } = Route.useSearch();
   const navigate = useNavigate({ from: "/auth/login" });
+  console.log("env. register: ", ENV.APP.IS_REGISTER_ENABLED);
 
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
@@ -224,16 +226,18 @@ function LoginComponent() {
                     </Button>
                   </form>
                 </Form>
-                <div className="text-center text-sm mt-5">
-                  Belum punya akun?&nbsp;
-                  <Link
-                    to="/auth/register"
-                    params={{ search: redirect }}
-                    className="underline underline-offset-4"
-                  >
-                    Daftar
-                  </Link>
-                </div>
+                {ENV.APP.IS_REGISTER_ENABLED && (
+                  <div className="text-center text-sm mt-5">
+                    Belum punya akun?&nbsp;
+                    <Link
+                      to="/auth/register"
+                      params={{ search: redirect }}
+                      className="underline underline-offset-4"
+                    >
+                      Daftar
+                    </Link>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </div>

@@ -15,6 +15,7 @@ export const ENV = {
     FRONTEND_URL: import.meta.env.VITE_APP_FRONTEND_URL,
     BACKEND_STORAGE_URL: import.meta.env.VITE_APP_BACKEND_STORAGE_URL,
     MODE: import.meta.env.VITE_APP_MODE,
+    IS_REGISTER_ENABLED: String(import.meta.env.VITE_APP_IS_REGISTER_ENABLED).toLowerCase() === "true",
   },
   GOOGLE: {
     CLIENT_ID: import.meta.env.VITE_GOOGLE_CLIENT_ID,
