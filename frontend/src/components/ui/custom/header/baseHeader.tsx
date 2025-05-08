@@ -1,9 +1,5 @@
 import { Button } from "../../button";
-import {
-  ChevronDown,
-  LogIn,
-  Menu,
-} from "lucide-react";
+import { ChevronDown, LogIn, Menu } from "lucide-react";
 import React from "react";
 import { cn } from "@/lib/utils";
 import Logo from "@/assets/Logo.png";
@@ -82,10 +78,7 @@ export const BaseHeader = React.forwardRef<
               {body.map((item) =>
                 typeof item.content === "string" ? (
                   <SheetClose asChild>
-                    <Link
-                      to={item.content}
-                      disabled={pathname.includes(item.content)}
-                    >
+                    <Link to={item.content}>
                       <Button
                         variant="ghost"
                         size="default"

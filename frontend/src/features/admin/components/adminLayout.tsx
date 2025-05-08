@@ -1,7 +1,7 @@
 import BaseLayoutWithSidebar from "@/components/ui/custom/sidebars/baseLayoutWithSidebar";
 import { useAuthStore } from "@/stores/auth.store";
 import { SidebarData } from "@/interfaces/sidebar.interface";
-import { Briefcase, Megaphone, Rss, Settings, UserCog, Users } from "lucide-react";
+import { Briefcase, Megaphone, Rss, UserCog, Users } from "lucide-react";
 import React from "react";
 
 export const AdminLayout = React.forwardRef<
@@ -57,11 +57,11 @@ export const AdminLayout = React.forwardRef<
     ],
     footer: {
       items: [
-        {
-          title: "Tentang Kami",
-          icon: Settings,
-          url: "/about",
-        },
+        // {
+        //   title: "Tentang Kami",
+        //   icon: Settings,
+        //   url: "/about",
+        // },
         // {
         //   title: "Logout",
         //   icon: LogOut,
