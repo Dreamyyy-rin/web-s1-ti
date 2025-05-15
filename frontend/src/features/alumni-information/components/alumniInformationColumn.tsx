@@ -1,59 +1,9 @@
 import { ColumnDef } from "@tanstack/react-table";
-import DatatableDropdown from "@/components/ui/custom/datatable/datatableDropdown";
-import React from "react";
-import { useNavigate } from "@tanstack/react-router";
-import { convertToIndonesianDate, handleAxiosError } from "@/lib/helpers";
-import { toast } from "sonner";
-import { useDeleteAlumniInformationById } from "../hooks/useDeleteAlumniInformationById";
+import { convertToIndonesianDate} from "@/lib/helpers";
 import { AlumniInformation } from "../types/alumniInformation.type";
+import { AlumniInformationActionCell } from "./alumniInformationActionCell";
 
-const AlumniInformationActionCell = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentPropsWithoutRef<"div"> & { data: AlumniInformation }
->(({ data }) => {
-  const navigate = useNavigate();
-  const { mutate } = useDeleteAlumniInformationById();
-  const handleOnClickDetail = () => {
-    navigate({
-      // TODO: RENAME ALUMNI ROUTER
-      to: "/admin/alumni-info/$alumniInfoId",
-      params: { alumniInfoId: String(data.id) },
-    });
-  };
-  const handleOnClickEdit = () => {
-    navigate({
-      to: "/admin/alumni-info/$alumniInfoId/edit",
-      params: { alumniInfoId: String(data.id) },
-    });
-  };
-  const handleOnClickDelete = () => {
-    mutate(
-      { id: String(data.id) },
-      {
-        onSuccess: () => {
-          toast.success("Berhasil", {
-            description: "Pengumuman berhasil dihapus",
-          });
-        },
-        onError: (error) => {
-          const message = handleAxiosError(error)?.message;
-          toast.error("Gagal", {
-            description: message,
-          });
-        },
-      },
-    );
-  };
-  return (
-    <div className="text-right">
-      <DatatableDropdown
-        detailFn={handleOnClickDetail}
-        editFn={handleOnClickEdit}
-        deleteFn={handleOnClickDelete}
-      />
-    </div>
-  );
-});
+
 
 export const alumniInformationColumns: ColumnDef<AlumniInformation>[] = [
   {

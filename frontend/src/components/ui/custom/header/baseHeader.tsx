@@ -20,7 +20,9 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
+  SheetDescription,
   SheetHeader,
+  SheetTitle,
   SheetTrigger,
 } from "../../sheet";
 import { Collapsible, CollapsibleTrigger } from "../../collapsible";
@@ -69,55 +71,67 @@ export const BaseHeader = React.forwardRef<
               </Button>
             </SheetTrigger>
             <SheetContent side="left">
-              <SheetHeader className="mb-5">
-                <Link to="/" className="cursor-pointer">
-                  <img src={Logo} alt="Logo" className="h-12 min-w-36 mr-4" />
-                </Link>
-                {/* <SheetTitle>Informasi S1 TI</SheetTitle> */}
-              </SheetHeader>
-              {body.map((item) =>
-                typeof item.content === "string" ? (
-                  <SheetClose asChild>
-                    <Link to={item.content}>
-                      <Button
-                        variant="ghost"
-                        size="default"
-                        className="w-full justify-start"
-                      >
-                        {item.title}
-                      </Button>
+              <div className="flex flex-col h-full">
+                <SheetHeader className="mb-5">
+                  <SheetTitle asChild>
+                    <Link to="/" className="cursor-pointer">
+                      <img
+                        src={Logo}
+                        alt="Logo"
+                        className="h-12 min-w-36 mr-4"
+                      />
                     </Link>
-                  </SheetClose>
-                ) : (
-                  <Collapsible>
-                    <CollapsibleTrigger asChild>
-                      <Button variant="ghost" className="w-full justify-start">
-                        {" "}
-                        {item.title} <ChevronDown className="ml-auto" />
-                      </Button>
-                    </CollapsibleTrigger>
-                    <CollapsibleContent className="">
-                      {item.content.map((subItem) => (
-                        <SheetClose asChild>
-                          <Link
-                            disabled={pathname.includes(subItem.url)}
-                            to={subItem.url}
-                            className="ps-5"
-                          >
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              className="w-full justify-start"
+                  </SheetTitle>
+                  {/* <SheetTitle>Informasi S1 TI</SheetTitle> */}
+                </SheetHeader>
+                {body.map((item, index) =>
+                  typeof item.content === "string" ? (
+                    <SheetClose asChild key={item.title}>
+                      <Link to={item.content}>
+                        <Button
+                          variant="ghost"
+                          size="default"
+                          className="w-full justify-start"
+                        >
+                          {item.title}
+                        </Button>
+                      </Link>
+                    </SheetClose>
+                  ) : (
+                    <Collapsible key={index}>
+                      <CollapsibleTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          className="w-full justify-start"
+                        >
+                          {" "}
+                          {item.title} <ChevronDown className="ml-auto" />
+                        </Button>
+                      </CollapsibleTrigger>
+                      <CollapsibleContent className="">
+                        {item.content.map((subItem) => (
+                          <SheetClose asChild key={subItem.title}>
+                            <Link
+                              disabled={pathname.includes(subItem.url)}
+                              to={subItem.url}
+                              className="ps-5"
                             >
-                              {subItem.title}
-                            </Button>
-                          </Link>
-                        </SheetClose>
-                      ))}
-                    </CollapsibleContent>
-                  </Collapsible>
-                ),
-              )}
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="w-full justify-start"
+                              >
+                                {subItem.title}
+                              </Button>
+                            </Link>
+                          </SheetClose>
+                        ))}
+                      </CollapsibleContent>
+                    </Collapsible>
+                  ),
+                )}
+                <SheetDescription className="mt-auto text-lg text-foreground">Informasi S1TI</SheetDescription>
+              </div>
             </SheetContent>
           </Sheet>
         ) : (
@@ -129,7 +143,7 @@ export const BaseHeader = React.forwardRef<
               <NavigationMenu>
                 <NavigationMenuList>
                   {body.map((item) => (
-                    <NavigationMenuItem>
+                    <NavigationMenuItem key={item.title}>
                       {typeof item.content === "string" ? (
                         <NavigationMenuLink asChild>
                           <Link
@@ -150,7 +164,7 @@ export const BaseHeader = React.forwardRef<
                           <NavigationMenuContent>
                             <ul className="flex flex-col gap-1 px-1 py-2 md:w-[250px] lg:w-[300px] ">
                               {item.content.map((subItem) => (
-                                <NavigationMenuLink asChild>
+                                <NavigationMenuLink asChild key={subItem.title}>
                                   <Link
                                     to={subItem.url}
                                     className={cn(

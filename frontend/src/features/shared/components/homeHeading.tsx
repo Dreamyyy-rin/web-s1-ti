@@ -28,9 +28,9 @@ const HomeHeading = ({ title }: { title: string }) => {
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
-                <Link to="/">
-                  <BreadcrumbLink className="text-white">Home</BreadcrumbLink>
-                </Link>
+                <BreadcrumbLink asChild className="text-white">
+                  <Link to="/">Home</Link>
+                </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator className="text-white " />
               <BreadcrumbItem>

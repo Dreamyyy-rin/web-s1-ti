@@ -22,12 +22,12 @@ import VacancyView from "./vacancyView";
 import { fetchFileFromUrl, getUrlFromFile } from "@/lib/helpers";
 
 const VacancyForm = React.forwardRef<
-  React.ElementRef<"div">,
-  React.ComponentPropsWithoutRef<"div"> & {
+  React.ElementRef<"form">,
+  React.ComponentPropsWithoutRef<"form"> & {
     onSave: (data: VacancySchema) => Promise<void>;
     data?: Vacancy;
   }
->(({ onSave, data }) => {
+>(({ onSave, data, ...props }, ref) => {
   const handleOnSubmit = (data: VacancySchema) => {
     onSave(data);
   };
@@ -84,7 +84,12 @@ const VacancyForm = React.forwardRef<
 
   return (
     <Form {...form}>
-      <form onSubmit={(e) => e.preventDefault()} className="space-y-2">
+      <form
+        onSubmit={(e) => e.preventDefault()}
+        className="space-y-2"
+        {...props}
+        ref={ref}
+      >
         <Tabs defaultValue="edit" className="flex flex-col ">
           <TabsList className="ms-auto">
             <TabsTrigger value="edit">Edit</TabsTrigger>
@@ -99,7 +104,7 @@ const VacancyForm = React.forwardRef<
                   <FormItem className="mb-6">
                     <FormControl>
                       <ImageInput
-                        value={field.value}
+                        file={field.value}
                         accept="image/jpeg,image/png,image/jpg"
                         onUpload={(file: File) => {
                           getUrlFromFile(file, setUrl);
@@ -123,6 +128,7 @@ const VacancyForm = React.forwardRef<
                         className="outline-none mb-4 border-none shadow-none ring-0 focus-visible:ring-0 file:text-3xl text-3xl md:text-3xl placeholder:font-bold font-bold "
                         placeholder="Masukkan judul di sini..."
                         {...field}
+                        value={field.value ?? ""}
                       />
                     </FormControl>
                     <FormMessage className="px-3" />
@@ -134,17 +140,21 @@ const VacancyForm = React.forwardRef<
                 name="description"
                 render={({ field }) => (
                   <FormItem>
-                    <FormControl>
-                      <MinimalTiptapEditor
-                        className="rounded-sm shadow-none ring-0 focus-visible:ring-0 focus-within:border-input border-t border-l-0 border-r-0 border-b-0"
-                        value={field.value}
-                        onChange={field.onChange}
-                        output="html"
-                        placeholder="Masukkan konten Anda di sini..."
-                        autofocus={true}
-                        editable={true}
-                        editorContentClassName="p-3 "
-                      ></MinimalTiptapEditor>
+                    <FormControl className="w-full ">
+                      {!field.value ? (
+                        <div className="flex justify-center">Memuat deskripsi...</div>
+                      ) : (
+                        <MinimalTiptapEditor
+                          className="rounded-sm shadow-none ring-0 focus-visible:ring-0 focus-within:border-input border-t border-l-0 border-r-0 border-b-0"
+                          value={field.value}
+                          onChange={field.onChange}
+                          output="html"
+                          placeholder="Masukkan konten Anda di sini..."
+                          autofocus={true}
+                          editable={true}
+                          editorContentClassName="p-3 "
+                        ></MinimalTiptapEditor>
+                      )}
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -168,6 +178,7 @@ const VacancyForm = React.forwardRef<
                         className="rounded-sm"
                         placeholder="Link pendataran"
                         {...field}
+                        value={field.value ?? ""}
                       />
                     </div>
                   </FormControl>

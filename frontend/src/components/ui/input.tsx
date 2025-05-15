@@ -24,10 +24,10 @@ const ImageInput = React.forwardRef<
   HTMLDivElement,
   Omit<React.ComponentProps<"div">, "value"> & {
     accept?: string;
-    value?: File | null;
+    file?: File | null;
     onUpload: (file: File) => void;
   }
->(({ className, accept, value, onUpload,  }, ) => {
+>(({ className, accept, file, onUpload }, ref) => {
   const [isDraggedInside, setIsDraggedInside] = React.useState<boolean>(false);
   const [previewUrl, setPreviewUrl] = React.useState<string | null>(null);
 
@@ -69,7 +69,7 @@ const ImageInput = React.forwardRef<
         return;
       }
     }
-    onUpload(file)
+    onUpload(file);
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,11 +80,11 @@ const ImageInput = React.forwardRef<
       // setPreviewUrl(null);
       return;
     }
-    onUpload(file)
+    onUpload(file);
   };
 
   React.useEffect(() => {
-    if (!value) {
+    if (!file) {
       setPreviewUrl(null);
       return;
     }
@@ -92,9 +92,8 @@ const ImageInput = React.forwardRef<
     reader.onload = (e: ProgressEvent<FileReader>) => {
       setPreviewUrl(e.target?.result as string);
     };
-    reader.readAsDataURL(value);
-  }, [value])
-
+    reader.readAsDataURL(file);
+  }, [file]);
 
   return (
     <div
@@ -104,6 +103,7 @@ const ImageInput = React.forwardRef<
         isDraggedInside ? "border-dashed border-primary" : "",
         previewUrl ? "h-auto" : "h-32",
       )}
+      ref={ref}
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
       onDragOver={handleDragOver}
@@ -134,6 +134,7 @@ const ImageInput = React.forwardRef<
           type="file"
           className="hidden w-full h-full"
           accept={accept}
+          // value={file?.name ?? ""}
           // ref={ref}
           // {...props}
           onChange={handleFileChange}
