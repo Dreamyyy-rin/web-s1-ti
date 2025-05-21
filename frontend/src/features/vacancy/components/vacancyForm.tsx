@@ -141,7 +141,7 @@ const VacancyForm = React.forwardRef<
                 render={({ field }) => (
                   <FormItem>
                     <FormControl className="w-full ">
-                      {!field.value ? (
+                      {data && !field.value ? (
                         <div className="flex justify-center">Memuat deskripsi...</div>
                       ) : (
                         <MinimalTiptapEditor
