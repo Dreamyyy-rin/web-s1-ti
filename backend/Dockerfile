@@ -1,3 +1,9 @@
+FROM composer:2 as vendor
+
+WORKDIR /app
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --optimize-autoloader
+
 FROM dunglas/frankenphp:php8.3
 
 # ENV SERVER_NAME=your-domain-name.example.com
@@ -16,3 +22,6 @@ RUN install-php-extensions \
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 COPY . /app
+
+COPY --from=vendor /app/vendor /app/vendor
+COPY --from=vendor /app/composer.* /app/
