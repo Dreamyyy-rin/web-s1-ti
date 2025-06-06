@@ -1,8 +1,9 @@
-FROM composer:2 as vendor
+FROM composer:2 AS vendor
 
 WORKDIR /app
-COPY composer.json composer.lock ./
-RUN composer install --no-dev --optimize-autoloader
+COPY . . 
+RUN composer install  --no-scripts  --no-interaction --prefer-dist
+
 
 FROM dunglas/frankenphp:php8.3
 
@@ -21,7 +22,11 @@ RUN install-php-extensions \
 # Enable PHP production settings
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
-COPY . /app
+WORKDIR /app
+
+COPY . .
 
 COPY --from=vendor /app/vendor /app/vendor
 COPY --from=vendor /app/composer.* /app/
+
+RUN php artisan package:discover --ansi
