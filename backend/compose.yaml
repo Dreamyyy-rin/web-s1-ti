@@ -1,12 +1,16 @@
 services:
-  backend:
+  web-s1-ti:
     build: .
     env_file:
       - .env
     ports:
       - ${APP_PORT}:80
+    restart: unless-stopped
+    container_name: web-s1-ti-backend
+    networks:
+      - web-s1-ti-net
 
-  db: 
+  db:
     image: ${DB_IMAGE}
     environment:
       POSTGRES_USER: ${DB_USERNAME}
@@ -15,7 +19,14 @@ services:
     ports:
       - ${DB_PORT}:5432
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - web_s1_ti_db_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    container_name: web-s1-ti-db
+    networks:
+      - web-s1-ti-net
 
 volumes:
-  db_data:
+  web_s1_ti_db_data:
+
+networks:
+  web-s1-ti-net:
