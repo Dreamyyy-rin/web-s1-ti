@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import Footer from "@/components/ui/custom/footer/footer";
-import gambar from "@/assets/Carousel1.jpg";
+import gambar from "@/assets/Carousel1.png";
 import { useState } from "react";
 import {
   Breadcrumb,

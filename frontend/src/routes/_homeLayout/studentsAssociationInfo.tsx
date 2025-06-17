@@ -7,7 +7,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import Footer from "@/components/ui/custom/footer/footer";
-import gambar from "@/assets/Carousel1.jpg";
+import gambar from "@/assets/Carousel1.png";
 
 export const Route = createFileRoute("/_homeLayout/studentsAssociationInfo")({
   component: RouteComponent,

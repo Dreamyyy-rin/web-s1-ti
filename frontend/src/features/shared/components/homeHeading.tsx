@@ -5,7 +5,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
-import gambar from "@/assets/Carousel1.jpg";
+import gambar from "@/assets/Carousel1.png";
 import { Link } from "@tanstack/react-router";
 
 const HomeHeading = ({ title }: { title: string }) => {

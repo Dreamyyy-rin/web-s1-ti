@@ -4,8 +4,8 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import carousel1 from "@/assets/Carousel1.jpg";
-import carousel2 from "@/assets/Carousel2.jpg";
+import carousel1 from "@/assets/Carousel1.png";
+import carousel2 from "@/assets/Carousel2.png";
 import { Button } from "@/components/ui/button";
 import alfaLogo from "@/assets/alfamartLogo.png";
 import ctiLogo from "@/assets/ctiLogo.png";
