@@ -197,7 +197,8 @@ export const BaseHeader = React.forwardRef<
             <Button className="hidden sm:block">Login</Button>
           </Link>
         )}
-        <ThemeToggleButton />
+        {/* i remove this because buggy */}
+        {/* <ThemeToggleButton /> */}
       </div>
     </header>
   );

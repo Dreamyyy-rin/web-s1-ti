@@ -19,7 +19,7 @@ export function App() {
   return (
     <>
       <GoogleOAuthProvider clientId={ENV.GOOGLE.CLIENT_ID}>
-        <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+        <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
           <QueryClientProvider client={queryClient}>
             <TooltipProvider>
               {!isMobileDevice && (

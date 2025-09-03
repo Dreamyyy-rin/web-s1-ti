@@ -26,6 +26,10 @@ export function HomeHeader() {
           ],
         },
         {
+          title: "Dosen",
+          content: "/lecturer",
+        },
+        {
           title: "Lainnya",
           content: [
             {
