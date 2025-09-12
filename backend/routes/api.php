@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use App\Http\Controllers\DosenController;
 
 // AUTH
 Route::post('/login', [AuthController::class, 'login']); // Login 
@@ -58,7 +59,8 @@ Route::get('/lowongan', [LowonganController::class, 'index']);
 Route::get('/lowongan/{id}', [LowonganController::class, 'show']);
 Route::get('/berita-alumni', [BeritaAlumniController::class, 'index']);
 Route::get('/berita-alumni/{id}', [BeritaAlumniController::class, 'show']);
-
+Route::get('/dosen', [DosenController::class, 'index']);
+Route::get('/dosen/{id}', [DosenController::class, 'show']);
 
 // Hanya bisa diakses setelah login
 Route::middleware('auth:sanctum')->group(function () {
@@ -84,5 +86,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/berita-alumni', [BeritaAlumniController::class, 'store']);
         Route::post('/berita-alumni/{id}', [BeritaAlumniController::class, 'update']);
         Route::delete('/berita-alumni/{id}', [BeritaAlumniController::class, 'destroy']);
+        Route::post('/dosen', [DosenController::class, 'store']);
+        Route::post('/dosen/{id}', [DosenController::class, 'update']);
+        Route::delete('/dosen/{id}', [DosenController::class, 'destroy']);
     });
 });
