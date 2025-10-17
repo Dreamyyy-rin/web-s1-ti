@@ -5,7 +5,10 @@ import { PaginationQueryParams } from "@/interfaces/pagination.interface";
 import { PaginationResponse } from "@/interfaces/responses/paginationRespose.interface";
 
 function fetchAnnouncementsPaginated(queryParams: PaginationQueryParams) {
-  return axiosBackendInstance.get<PaginationResponse<Announcement>>("/pengumuman", { params: queryParams });
+  return axiosBackendInstance.get<PaginationResponse<Announcement>>(
+    "/api/pengumuman",
+    { params: queryParams }
+  );
 }
 
 export function useFetchAnnouncementsPaginated(
@@ -15,6 +18,7 @@ export function useFetchAnnouncementsPaginated(
     queryKey: ["announcement", "fetch", "pagination", queryParams],
     queryFn: async () => {
       const response = await fetchAnnouncementsPaginated(queryParams);
+      console.log("RESPONSE DATA ANNOUCE : ", response.data);
       return response.data;
     },
   });
