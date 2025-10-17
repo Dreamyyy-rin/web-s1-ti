@@ -1,0 +1,23 @@
+Chatbot service
+
+How to use chatbot.py
+
+1. make .env , can copy from .env.example
+2. install requirements.txt
+3. run chatbot.py
+4. first run [POST] http://127.0.0.1:5000/start_chat, to get session_id. 
+        output return json
+        {
+            "session_id": ""
+        }
+5. how to use chatbot, [POST]http://127.0.0.1:5000/chat, with raw - json:
+        {
+            "session_id": "",
+            "message": ""
+        }
+
+        output return json:
+        {
+            "reply": ""
+        }
+
