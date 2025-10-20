@@ -21,7 +21,6 @@ class PengumumanController extends Controller
         $query = Pengumuman::with('user:id,name')
             ->where('kategori', 'pengumuman');
     
-        // Filter pencarian (judul / kategori)
         if ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('judul', 'like', '%' . $search . '%')
@@ -49,6 +48,8 @@ class PengumumanController extends Controller
         }
     
         $pengumuman = $query->paginate($perPage);
+
+
     
         return response()->json([
             'data' => $pengumuman->items(),

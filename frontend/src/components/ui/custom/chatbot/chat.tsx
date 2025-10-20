@@ -1,5 +1,4 @@
 export interface Message {
-  id: string;
-  role: "user" | "ai";
+  role: "user" | "bot";
   text: string;
 }
