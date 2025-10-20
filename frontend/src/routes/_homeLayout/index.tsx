@@ -21,6 +21,7 @@ import Footer from "@/components/ui/custom/footer/footer";
 import { useFetchAnnouncementsPaginated } from "@/features/announcement/hooks/useFetchAnnouncementsPaginated";
 import SkeletonCardDisplay from "@/features/shared/components/skeletonCardDisplay";
 import AnnouncementCardDisplay from "@/features/announcement/components/announcementCardDisplay";
+import { Chatbot } from "@/components/ui/custom/chatbot";
 
 export const Route = createFileRoute("/_homeLayout/")({
   component: Index,
@@ -288,6 +289,9 @@ function Index() {
 
       {/*Bagian Footer*/}
       <Footer />
+
+      {/* Floating Chatbot */}
+      <Chatbot />
     </div>
   );
 }

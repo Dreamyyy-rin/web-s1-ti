@@ -20,6 +20,7 @@ import { useFetchVacanciesPaginated } from "@/features/vacancy/hooks/useFetchVac
 import { Vacancy } from "@/features/vacancy/types/vacancy.type";
 import VacancyView from "@/features/vacancy/components/vacancyView";
 import ReadonlyText from "@/components/ui/custom/rich-text-editor/readonlyText";
+import { Chatbot } from "@/components/ui/custom/chatbot";
 
 export const Route = createFileRoute("/_homeLayout/vacancy/")({
   component: RouteComponent,
@@ -113,6 +114,9 @@ function RouteComponent() {
 
       {/*Bagian Footer*/}
       <Footer />
+      
+      {/* Floating Chatbot */}
+      <Chatbot />
     </div>
   );
 }
