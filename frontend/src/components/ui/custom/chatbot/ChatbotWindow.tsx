@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { X, Send, MessageCircle, RotateCcw, Minimize2 } from "lucide-react";
+import { X, Send, RotateCcw, Minimize2 } from "lucide-react";
 import { Message } from "./chat";
 import MessageBubble from "./messageBubble";
 import { sendMessage, resetChat, startChat } from "./chatService";
@@ -27,21 +27,18 @@ const ChatbotWindow: React.FC<ChatbotWindowProps> = ({ isOpen, onClose }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Auto-scroll to bottom when messages change
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages]);
 
-  // Focus input when window opens
   useEffect(() => {
     if (isOpen && inputRef.current) {
       inputRef.current.focus();
     }
   }, [isOpen]);
 
-  // Initialize chat session on mount
   useEffect(() => {
     const initChat = async () => {
       const sessionId = localStorage.getItem("chat_session_id");
@@ -69,14 +66,14 @@ const ChatbotWindow: React.FC<ChatbotWindowProps> = ({ isOpen, onClose }) => {
       const reply = await sendMessage(userMessage.text);
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
-        role: "ai",
+        role: "bot",
         text: reply,
       };
       setMessages((prev) => [...prev, aiMessage]);
     } catch (error) {
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
-        role: "ai",
+        role: "bot",
         text: "Sorry, I encountered an error. Please try again.",
       };
       setMessages((prev) => [...prev, errorMessage]);
@@ -118,7 +115,11 @@ const ChatbotWindow: React.FC<ChatbotWindowProps> = ({ isOpen, onClose }) => {
           {/* center column: icon + title */}
           <div className="w-full h-full flex items-center justify-center gap-2">
             <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0">
-              <img src="/src/assets/chatbot-icon.png" alt="Chatbot Icon" className="w-full h-full object-cover" />
+              <img
+                src="/src/assets/chatbot-icon.png"
+                alt="Chatbot Icon"
+                className="w-full h-full object-cover"
+              />
             </div>
             <h3 className="font-medium text-xl font-poppins">TIMate</h3>
           </div>
@@ -130,8 +131,7 @@ const ChatbotWindow: React.FC<ChatbotWindowProps> = ({ isOpen, onClose }) => {
               size="icon"
               onClick={handleReset}
               className="h-8 w-8 text-white hover:bg-blue-600"
-              title="Reset chat"
-            >
+              title="Reset chat">
               <RotateCcw className="w-4 h-4" />
             </Button>
             <Button
@@ -139,16 +139,14 @@ const ChatbotWindow: React.FC<ChatbotWindowProps> = ({ isOpen, onClose }) => {
               size="icon"
               onClick={() => setIsMinimized(!isMinimized)}
               className="h-8 w-8 text-white hover:bg-blue-600 md:hidden"
-              title="Minimize"
-            >
+              title="Minimize">
               <Minimize2 className="w-4 h-4" />
             </Button>
             <Button
               variant="ghost"
               size="icon"
               onClick={onClose}
-              className="h-8 w-8 text-white hover:bg-blue-600"
-            >
+              className="h-8 w-8 text-white hover:bg-blue-600">
               <X className="w-4 h-4" />
             </Button>
           </div>
@@ -164,9 +162,15 @@ const ChatbotWindow: React.FC<ChatbotWindowProps> = ({ isOpen, onClose }) => {
               <div className="flex justify-start">
                 <div className="max-w-xs px-4 py-3 rounded-2xl bg-gray-200 text-black rounded-bl-none">
                   <div className="flex gap-1">
-                    <span className="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></span>
-                    <span className="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></span>
-                    <span className="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></span>
+                    <span
+                      className="w-2 h-2 bg-gray-500 rounded-full animate-bounce"
+                      style={{ animationDelay: "0ms" }}></span>
+                    <span
+                      className="w-2 h-2 bg-gray-500 rounded-full animate-bounce"
+                      style={{ animationDelay: "150ms" }}></span>
+                    <span
+                      className="w-2 h-2 bg-gray-500 rounded-full animate-bounce"
+                      style={{ animationDelay: "300ms" }}></span>
                   </div>
                 </div>
               </div>
@@ -191,8 +195,7 @@ const ChatbotWindow: React.FC<ChatbotWindowProps> = ({ isOpen, onClose }) => {
               onClick={handleSendMessage}
               disabled={!inputValue.trim() || isLoading}
               size="icon"
-              className="bg-blue-500 hover:bg-blue-600"
-            >
+              className="bg-blue-500 hover:bg-blue-600">
               <Send className="w-4 h-4" />
             </Button>
           </div>

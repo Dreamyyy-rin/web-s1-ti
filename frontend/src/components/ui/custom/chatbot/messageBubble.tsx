@@ -9,7 +9,6 @@ const MessageBubble: React.FC<Props> = ({ message }) => {
   const isUser = message.role === "user";
   return (
     <div className={`flex mb-2 ${isUser ? "justify-end" : "justify-start"}`}>
-      {/* Avatar for bot messages */}
       {!isUser && (
         <div className="flex items-end mr-2">
           <div className="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs font-semibold">

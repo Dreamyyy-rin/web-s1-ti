@@ -38,8 +38,8 @@ export async function sendMessage(message: string): Promise<string> {
 
   const reply = res.data.reply;
   const chat = getChat();
-  chat.push({ text: message, role: "user" });
-  chat.push({ text: reply, role: "bot" });
+  chat.push({ id: Date.now().toString(), text: message, role: "user" });
+  chat.push({ id: (Date.now() + 1).toString(), text: reply, role: "bot" });
   saveChat(chat);
 
   return reply;
