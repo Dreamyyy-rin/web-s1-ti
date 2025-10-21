@@ -27,6 +27,7 @@ import {
 } from "../../sheet";
 import { Collapsible, CollapsibleTrigger } from "../../collapsible";
 import { CollapsibleContent } from "@radix-ui/react-collapsible";
+import ThemeToggleButton from "@/features/shared/components/themeToggleButton";
 
 export interface HeaderSubContent {
   title: string;
@@ -196,7 +197,8 @@ export const BaseHeader = React.forwardRef<
             <Button className="hidden sm:block">Login</Button>
           </Link>
         )}
-  {/* Theme toggle intentionally omitted here */}
+        {/* i remove this because buggy */}
+        {/* <ThemeToggleButton /> */}
       </div>
     </header>
   );

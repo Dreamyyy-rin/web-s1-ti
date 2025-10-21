@@ -126,11 +126,11 @@ const ChatbotWindow: React.FC<ChatbotWindowProps> = ({ isOpen, onClose }) => {
 
           {/* right column: controls */}
           <div className="flex items-center justify-end gap-2">
-            <Button
+            {/* <Button
               variant="ghost"
               size="icon"
               onClick={handleReset}
-              className="h-8 w-8 text-white hover:bg-blue-600"
+              className="h-8 w-8 text-black hover:bg-blue-600"
               title="Reset chat">
               <RotateCcw className="w-4 h-4" />
             </Button>
@@ -138,15 +138,15 @@ const ChatbotWindow: React.FC<ChatbotWindowProps> = ({ isOpen, onClose }) => {
               variant="ghost"
               size="icon"
               onClick={() => setIsMinimized(!isMinimized)}
-              className="h-8 w-8 text-white hover:bg-blue-600 md:hidden"
+              className="h-8 w-8 text-black hover:bg-blue-600 md:hidden"
               title="Minimize">
               <Minimize2 className="w-4 h-4" />
-            </Button>
+            </Button> */}
             <Button
               variant="ghost"
               size="icon"
               onClick={onClose}
-              className="h-8 w-8 text-white hover:bg-blue-600">
+              className="h-8 w-8 text-black hover:bg-blue-600">
               <X className="w-4 h-4" />
             </Button>
           </div>
