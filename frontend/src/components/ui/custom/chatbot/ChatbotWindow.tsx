@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { X, Send, MessageCircle, RotateCcw } from "lucide-react";
+import { X, Send, MessageCircle, RotateCcw, Minimize2 } from "lucide-react";
 import { Message } from "./chat";
 import MessageBubble from "./messageBubble";
 import { sendMessage, resetChat, startChat } from "./chatService";
@@ -17,12 +17,13 @@ const ChatbotWindow: React.FC<ChatbotWindowProps> = ({ isOpen, onClose }) => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "welcome",
-      role: "ai",
+      role: "bot",
       text: "Hi! I'm your AI assistant. How can I help you today?",
     },
   ]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -97,8 +98,8 @@ const ChatbotWindow: React.FC<ChatbotWindowProps> = ({ isOpen, onClose }) => {
     setMessages([
       {
         id: "welcome",
-        role: "ai",
-        text: "Chat reset! How can I help you today?",
+        role: "bot",
+        text: "Aku TIMate, ada yang bisa saya bantu?",
       },
     ]);
     await startChat();
@@ -107,15 +108,23 @@ const ChatbotWindow: React.FC<ChatbotWindowProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 flex flex-col">
-      <Card className="w-[380px] h-[600px] flex flex-col shadow-2xl border-2">
+    <div className="fixed bottom-0 right-0 md:bottom-4 md:right-4 z-50 w-full h-full md:w-96 md:h-[600px] flex flex-col">
+      <Card className="w-full h-full flex flex-col shadow-2xl border-2 md:rounded-lg rounded-none">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-t-lg">
-          <div className="flex items-center gap-2">
-            <MessageCircle className="w-5 h-5" />
-            <h3 className="font-semibold">AI Chat Assistant</h3>
+        <div className="grid grid-cols-3 items-center mx-auto p-4 border-b bg-white text-black md:rounded-t-lg">
+          {/* left column (empty to balance layout) */}
+          <div></div>
+
+          {/* center column: icon + title */}
+          <div className="w-full h-full flex items-center justify-center gap-2">
+            <div className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0">
+              <img src="/src/assets/chatbot-icon.png" alt="Chatbot Icon" className="w-full h-full object-cover" />
+            </div>
+            <h3 className="font-medium text-xl font-poppins">TIMate</h3>
           </div>
-          <div className="flex items-center gap-2">
+
+          {/* right column: controls */}
+          <div className="flex items-center justify-end gap-2">
             <Button
               variant="ghost"
               size="icon"
@@ -124,6 +133,15 @@ const ChatbotWindow: React.FC<ChatbotWindowProps> = ({ isOpen, onClose }) => {
               title="Reset chat"
             >
               <RotateCcw className="w-4 h-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setIsMinimized(!isMinimized)}
+              className="h-8 w-8 text-white hover:bg-blue-600 md:hidden"
+              title="Minimize"
+            >
+              <Minimize2 className="w-4 h-4" />
             </Button>
             <Button
               variant="ghost"

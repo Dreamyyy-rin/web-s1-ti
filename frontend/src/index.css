@@ -257,5 +257,10 @@ button:focus-visible {
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Poppins', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
   }
+}
+
+@layer utilities {
+  .font-poppins { font-family: theme('fontFamily.poppins'); }
 }
