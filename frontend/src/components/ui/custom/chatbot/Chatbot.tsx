@@ -14,8 +14,7 @@ const Chatbot: React.FC = () => {
           onClick={() => setIsOpen(true)}
           className="fixed bottom-6 right-6 z-50 h-14 w-14 rounded-full shadow-2xl bg-blue-500 hover:bg-blue-600 transition-all hover:scale-110"
           size="icon"
-          aria-label="Open chat"
-        >
+          aria-label="Open chat">
           <MessageCircle className="w-6 h-6" />
         </Button>
       )}
