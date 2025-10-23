@@ -18,7 +18,7 @@ const ChatbotWindow: React.FC<ChatbotWindowProps> = ({ isOpen, onClose }) => {
     {
       id: "welcome",
       role: "bot",
-      text: "Hi! I'm your AI assistant. How can I help you today?",
+      text: "Hallo! Saya AI Asisten S1 FTI. Ada yang bisa dibantu?",
     },
   ]);
   const [inputValue, setInputValue] = useState("");
